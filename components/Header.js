@@ -16,7 +16,7 @@ export default function Header() {
                     <button className={styles.backButton} onClick={() => router.back()}>⬅ Back</button>
                 )}
 
-                <h1 className={styles.title} onClick={() => router.push('/login')}>GameFunder</h1>
+                <h1 className={styles.title} onClick={() => router.push('/login')}>PJBG</h1>
 
                 {!hideLoginButton && (
                     <button className={styles.loginButton} onClick={() => setShowPopover(true)}>Login</button>
