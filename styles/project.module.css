@@ -1,0 +1,37 @@
+/* Project Cards */
+.projectCard {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 15px auto;
+    max-width: 500px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.projectCard:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* SiretCheck */
+.siretCheckContainer {
+    text-align: center;
+    padding: 25px;
+    background: white;
+    border-radius: 10px;
+    max-width: 420px;
+    margin: 20px auto;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.projectPage {
+  text-align: center;
+    padding: 50%;
+    background: white;
+    border-radius: 10px;
+    max-width: 420px;
+    margin: 20px auto;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
