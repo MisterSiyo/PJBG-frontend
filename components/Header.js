@@ -19,19 +19,23 @@ export default function Header() {
                 <h1 className={styles.title} onClick={() => router.push('/login')}>PJBG</h1>
 
                 {!hideLoginButton && (
-                    <button className={styles.loginButton} onClick={() => setShowPopover(true)}>Login</button>
+                    <button className={styles.loginButton} onClick={() => setShowPopover(true)}>Login / Register</button>
                 )}
             </header>
 
-            {/* Popover */}
+            {/* Popover Login / Register */}
             {showPopover && (
                 <div className={styles.popoverContainer} onClick={() => setShowPopover(false)}>
                     <div className={styles.popover} onClick={(e) => e.stopPropagation()}>
                         <button className={styles.closeButton} onClick={() => setShowPopover(false)}>×</button>
-                        <h3>Login Options</h3>
+                        <h3>Log In</h3>
                         <button onClick={() => router.push('/signin-options')}>Sign In</button>
-                        <button onClick={() => router.push('/signup-user')}>Sign Up User</button>
-                        <button onClick={() => router.push('/signup-dev')}>Sign Up Dev</button>
+                        <br></br>
+                        <br></br>
+                        <br></br>
+                        <h3>Sign Up</h3>
+                        <button onClick={() => router.push('/signup-user')}>I am a financier and / or project creator</button>
+                        <button onClick={() => router.push('/signup-dev')}>I am a development studio</button>
                     </div>
                 </div>
             )}
