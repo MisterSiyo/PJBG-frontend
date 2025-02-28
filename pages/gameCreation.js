@@ -1,12 +1,12 @@
 import styles from '../styles/layout.module.css';
 import Header from '../components/Header';
-import ProjectInfo from '../components/ProjectInfo';
+import GameCreation from '../components/GameCreation';
 
-export default function Index() {
+export default function gameCreation() {
     return (
         <div className={styles.mainContainer}>
             <Header />
-            <Home />
+            <GameCreation />
         </div>
     );
 }

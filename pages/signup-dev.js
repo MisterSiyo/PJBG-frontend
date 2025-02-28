@@ -12,7 +12,7 @@ export default function SignupDev() {
             <Header />
             <h2>Inscription Développeur</h2>
             <SiretCheck />
-            <UserForm onSubmit={() => router.push('/main')} />
+            <UserForm onSubmit={() => router.push('/')} />
         </div>
     );
 }

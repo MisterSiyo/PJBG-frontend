@@ -1,12 +1,12 @@
 import styles from '../styles/layout.module.css';
 import Header from '../components/Header';
-import ProjectInfo from '../components/ProjectInfo';
+import Account from '../components/Account';
 
-export default function Index() {
+export default function account() {
     return (
         <div className={styles.mainContainer}>
             <Header />
-            <Home />
+            < Account/>
         </div>
     );
 }
