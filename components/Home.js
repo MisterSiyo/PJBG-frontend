@@ -30,16 +30,20 @@ export default function Home() {
     );
   });
 
-  return (
-    <>
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <h2>Discover our top projects</h2>
-      <div>{projects}</div>
-    </>
-  );
+    return (
+        <>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+            <h2>Want to create your own ?</h2>
+            <button onClick={() => router.push(`/gameCreation`)}>Create your project</button>
+            <h2>Discover our top projects</h2>
+            <div>
+                {projects}
+            </div>
+        </>
+    )
 }
