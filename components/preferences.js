@@ -3,7 +3,7 @@ import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import { useState, useEffect } from "react";
 import styles from "../styles/preferences.module.css";
 
-function Preferences({ username }) {
+function Preferences({ username = "test" }) {
   // État pour gérer les colonnes et leurs items
   const [columns, setColumns] = useState({
     genres: {
