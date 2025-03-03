@@ -5,9 +5,11 @@ import Login from './Login'
 
 export default function Header() {
     const [showPopover, setShowPopover] = useState(false);
-    const [isLoggedIn, setIsLoggedIn] = useState(false); // Ajout du state manquant
+    const [isLoggedIn, setIsLoggedIn] = useState(false); 
     const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [loginMethod, setLoginMethod] = useState('email'); // 'email' ou 'username'
     
     const router = useRouter();
     const isLoginPage = router.pathname === '/login';
@@ -15,26 +17,49 @@ export default function Header() {
 
     // Gestion de la connexion
     const handleLogin = async () => {
+        // Validation des champs
+        if ((loginMethod === 'email' && !email) || (loginMethod === 'username' && !username) || !password) {
+            alert("Please fill in all fields.");
+            return;
+        }
+    
         try {
+            // Préparation des données à envoyer
+            const loginData = loginMethod === 'email' ? { email, password } : { username, password };
+    
+            // Log des données envoyées pour vérifier
+            console.log("Données envoyées :", loginData);
+    
+            // Envoi de la requête
             const response = await fetch('http://localhost:3000/users/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, password })
+                body: JSON.stringify(loginData)
             });
-
-            const data = await response.json();
-
+    
+            // Vérifie la réponse brute avant de la parser
+            const rawResponse = await response.text();  // Utilise `text()` pour obtenir la réponse brute
+            console.log('Réponse brute:', rawResponse);
+    
+            // Essaie de parser la réponse en JSON seulement si la réponse est valide
+            const data = JSON.parse(rawResponse);
+    
             if (response.ok) {
-                localStorage.setItem('token', data.token);
-                localStorage.setItem('username', data.username);
-                localStorage.setItem('role', data.role);
-                setIsLoggedIn(true);
-                setShowPopover(false); // Ferme le popover après connexion
+                if (data.token) {
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('username', data.username);
+                    localStorage.setItem('role', data.role);
+                    setIsLoggedIn(true);
+                    setShowPopover(false); // Ferme le popover après connexion
+                } else {
+                    alert("Erreur inconnue. Veuillez réessayer.");
+                }
             } else {
-                alert(data.message);
+                alert(data.message || "Une erreur est survenue");
             }
         } catch (error) {
-            console.error("Erreur de connexion :", error);
+            console.error("Erreur lors de la connexion:", error);
+            alert('Une erreur est survenue');
         }
     };
 
@@ -52,7 +77,6 @@ export default function Header() {
         setIsLoggedIn(!!localStorage.getItem('token'));
     }, []);
 
-    
     return (
         <>
             <header className={styles.header}>
@@ -79,7 +103,6 @@ export default function Header() {
                 )}
             </header>
 
-
             {/* Popover Login / Register */}
             {showPopover && (
                 <div className={styles.popoverContainer} onClick={() => setShowPopover(false)}>
@@ -87,23 +110,38 @@ export default function Header() {
                         <button className={styles.closeButton} onClick={() => setShowPopover(false)}>×</button>
 
                         <h1>Log In</h1>
-                            <button onClick={() => router.push('/signin-options')}>Log in with Reddit</button>
-                            <br></br>
-                            <br></br>
-                            <button onClick={() => router.push('/signin-options')}>Log in with Google</button>                       
-                            <h5>Log in with your email & your password</h5>
+                        <button onClick={() => router.push('/signin-options')}>Log in with Reddit</button>
+                        <br></br>
+                        <br></br>
+                        <button onClick={() => router.push('/signin-options')}>Log in with Google</button>    
+
+                        <br/>
+                        <br/>
+                        <input type="radio" name="loginMethod" value="email" checked={loginMethod === 'email'} onChange={() => setLoginMethod('email')}/>
+                        <label>Login with email</label>
+                        <br/>
+                        <br/>
+                        <input type="radio" name="loginMethod" value="username"  checked={loginMethod === 'username'} onChange={() => setLoginMethod('username')}/>
+                        <label>Login with username</label>
+                        <br/>
+                        <br/>
+                        {/* Affichage des input en fonction du choix */}
+                        {loginMethod === 'email' ? (
                             <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} className={styles.input}/>
-                            <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} className={styles.input}/>
-                            <br></br>
-                            <br></br>
-                            <button className={styles.loginSubmit} onClick={handleLogin}>Enter</button>
+                        ) : (
+                            <input type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} className={styles.input}/>
+                        )}
+                        <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} className={styles.input}/>
+                        <br/>
+                        <br/>
+                        <button onClick={handleLogin}>Enter</button>
 
                         <h1>Don't have an account?</h1>
-                            <h4>Create one:</h4>
-                            <button onClick={() => router.push('/signup-user')}>I am a Patron</button>
-                            <br></br>
-                            <br></br>
-                            <button onClick={() => router.push('/signup-dev')}>I'm a Game Studio</button>
+                        <h4>Create one:</h4>
+                        <button onClick={() => router.push('/signup-user')}>I am a Patron</button>
+                        <br></br>
+                        <br></br>
+                        <button onClick={() => router.push('/signup-dev')}>I'm a Game Studio</button>
                     </div>
                 </div>
             )}
