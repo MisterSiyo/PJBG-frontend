@@ -20,7 +20,7 @@ export default function Home() {
         let totalContributed = 10000 // !!! remplacer par un map/boucle de data.progressions
         let percent = totalContributed / data.goal * 100
         return (
-            <div key={i} onClick={() => router.push(`/projects/${data.pageURL}`)}>
+            <div key={i} onClick={() => router.push(`/project/${data.pageURL}`)}>
                 <h3>{data.title}</h3>
                 <p>{data.pitch}</p>
                 <div>

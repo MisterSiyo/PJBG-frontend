@@ -1,13 +1,20 @@
 import styles from '../styles/layout.module.css';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
+import Login from './Login'
 
 export default function Header() {
     const [showPopover, setShowPopover] = useState(false);
+    const [showLoginPop, setShowLoginPop] = useState(false);
     const router = useRouter();
 
     const isLoginPage = router.pathname === '/login';
     const hideLoginButton = ['/signin-options', '/signup-user', '/signup-dev'].includes(router.pathname);
+
+    const loginFunc = () => {
+        setShowLoginPop(true)
+        setShowPopover(false)
+    }
 
     return (
         <>
@@ -29,7 +36,7 @@ export default function Header() {
                     <div className={styles.popover} onClick={(e) => e.stopPropagation()}>
                         <button className={styles.closeButton} onClick={() => setShowPopover(false)}>×</button>
                         <h3>Log In</h3>
-                        <button onClick={() => router.push('/signin-options')}>Sign In</button>
+                        <button onClick={() => loginFunc()}>Sign In</button>
                         <br></br>
                         <br></br>
                         <br></br>
@@ -38,6 +45,10 @@ export default function Header() {
                         <button onClick={() => router.push('/signup-dev')}>I am a development studio</button>
                     </div>
                 </div>
+            )}
+
+            {showLoginPop && (
+                    <Login/>
             )}
         </>
     );
