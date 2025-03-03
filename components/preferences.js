@@ -1,8 +1,10 @@
 "use client";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import { useState, useEffect } from "react";
+import styles from "../styles/preferences.module.css";
 
-function Question({ userId = "user123" }) {
+function Preferences({ username }) {
+  // État pour gérer les colonnes et leurs items
   const [columns, setColumns] = useState({
     genres: {
       title: "Genres",
@@ -31,6 +33,7 @@ function Question({ userId = "user123" }) {
     },
   });
 
+  // États pour gérer le chargement et les messages
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
 
@@ -40,7 +43,7 @@ function Question({ userId = "user123" }) {
       try {
         setIsLoading(true);
         const response = await fetch(
-          `http://localhost:3000/api/preferences/${userId}`
+          `http://localhost:3000/api/preferences/${username}`
         );
         const data = await response.json();
 
@@ -71,8 +74,9 @@ function Question({ userId = "user123" }) {
     };
 
     loadPreferences();
-  }, [userId]);
+  }, [username]);
 
+  // Gestion du drag and drop
   const onDragEnd = (result) => {
     if (!result.destination) return;
 
@@ -85,6 +89,7 @@ function Question({ userId = "user123" }) {
     const [removed] = sourceItems.splice(source.index, 1);
 
     if (source.droppableId === destination.droppableId) {
+      // Déplacement dans la même colonne
       sourceItems.splice(destination.index, 0, removed);
       setColumns({
         ...columns,
@@ -94,6 +99,7 @@ function Question({ userId = "user123" }) {
         },
       });
     } else {
+      // Déplacement entre colonnes
       destItems.splice(destination.index, 0, removed);
       setColumns({
         ...columns,
@@ -109,6 +115,7 @@ function Question({ userId = "user123" }) {
     }
   };
 
+  // Sauvegarde des préférences
   const savePreferences = async () => {
     try {
       setIsLoading(true);
@@ -118,7 +125,7 @@ function Question({ userId = "user123" }) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          userId: userId,
+          username: username,
           preferences: {
             plus: columns.plus.items,
             moins: columns.moins.items,
@@ -142,62 +149,35 @@ function Question({ userId = "user123" }) {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        height: "100vh",
-        padding: "20px",
-        color: "black",
-      }}
-    >
+    <div className={styles.container}>
+      {/* Affichage des messages */}
       {message && (
         <div
-          style={{
-            padding: "10px",
-            marginBottom: "20px",
-            backgroundColor: message.includes("Erreur") ? "#ffcccc" : "#ccffcc",
-            borderRadius: "4px",
-            width: "100%",
-            textAlign: "center",
-          }}
+          className={`${styles.message} ${
+            message.includes("Erreur")
+              ? styles.messageError
+              : styles.messageSuccess
+          }`}
         >
           {message}
         </div>
       )}
 
+      {/* Zone de drag and drop */}
       <DragDropContext onDragEnd={onDragEnd}>
-        <div style={{ display: "flex", marginBottom: "20px" }}>
+        {/* Colonnes principales (Genres, Plus, Moins) */}
+        <div className={styles.columnsContainer}>
           {Object.entries(columns)
             .filter(([columnId]) => columnId !== "blackList")
             .map(([columnId, column]) => (
-              <div
-                key={columnId}
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  margin: "0 10px",
-                }}
-              >
-                <h2>{column.title}</h2>
+              <div key={columnId} className={styles.columnWrapper}>
+                <h2 className={styles.columnTitle}>{column.title}</h2>
                 <Droppable droppableId={columnId}>
                   {(provided) => (
                     <div
                       {...provided.droppableProps}
                       ref={provided.innerRef}
-                      style={{
-                        background: "#f0f0f0",
-                        padding: 10,
-                        width: 500,
-                        minHeight: 500,
-                        borderRadius: 8,
-                        display: "flex",
-                        flexWrap: "wrap",
-                        gap: "10px",
-                        alignContent: "flex-start",
-                      }}
+                      className={`${styles.column} ${styles.genresColumn}`}
                     >
                       {column.items.map((item, index) => (
                         <Draggable key={item} draggableId={item} index={index}>
@@ -206,18 +186,8 @@ function Question({ userId = "user123" }) {
                               ref={provided.innerRef}
                               {...provided.draggableProps}
                               {...provided.dragHandleProps}
-                              style={{
-                                userSelect: "none",
-                                padding: 16,
-                                width: "100px",
-                                height: "100px",
-                                backgroundColor: "white",
-                                borderRadius: 4,
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                ...provided.draggableProps.style,
-                              }}
+                              className={styles.dragItem}
+                              style={provided.draggableProps.style}
                             >
                               {item}
                             </div>
@@ -232,37 +202,19 @@ function Question({ userId = "user123" }) {
             ))}
         </div>
 
+        {/* Colonne Black List */}
         <div>
           {Object.entries(columns)
             .filter(([columnId]) => columnId === "blackList")
             .map(([columnId, column]) => (
-              <div
-                key={columnId}
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  margin: "0 10px",
-                  width: "100%",
-                }}
-              >
-                <h2>{column.title}</h2>
+              <div key={columnId} className={styles.blackListWrapper}>
+                <h2 className={styles.columnTitle}>{column.title}</h2>
                 <Droppable droppableId={columnId}>
                   {(provided) => (
                     <div
                       {...provided.droppableProps}
                       ref={provided.innerRef}
-                      style={{
-                        background: "#f0f0f0",
-                        padding: 10,
-                        width: 1540,
-                        minHeight: 125,
-                        borderRadius: 8,
-                        display: "flex",
-                        flexWrap: "wrap",
-                        gap: "10px",
-                        alignContent: "flex-start",
-                      }}
+                      className={`${styles.column} ${styles.blackListColumn}`}
                     >
                       {column.items.map((item, index) => (
                         <Draggable key={item} draggableId={item} index={index}>
@@ -271,18 +223,8 @@ function Question({ userId = "user123" }) {
                               ref={provided.innerRef}
                               {...provided.draggableProps}
                               {...provided.dragHandleProps}
-                              style={{
-                                userSelect: "none",
-                                padding: 16,
-                                width: "100px",
-                                height: "100px",
-                                backgroundColor: "white",
-                                borderRadius: 4,
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                ...provided.draggableProps.style,
-                              }}
+                              className={styles.dragItem}
+                              style={provided.draggableProps.style}
                             >
                               {item}
                             </div>
@@ -298,19 +240,10 @@ function Question({ userId = "user123" }) {
         </div>
       </DragDropContext>
 
+      {/* Bouton de sauvegarde */}
       <button
         onClick={savePreferences}
-        style={{
-          marginTop: "20px",
-          padding: "10px 20px",
-          fontSize: "16px",
-          backgroundColor: "#4CAF50",
-          color: "white",
-          border: "none",
-          borderRadius: "4px",
-          cursor: "pointer",
-          opacity: isLoading ? 0.7 : 1,
-        }}
+        className={styles.saveButton}
         disabled={isLoading}
       >
         {isLoading ? "Sauvegarde en cours..." : "Sauvegarder mes préférences"}
@@ -319,4 +252,4 @@ function Question({ userId = "user123" }) {
   );
 }
 
-export default Question;
+export default Preferences;
