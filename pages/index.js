@@ -1,6 +1,7 @@
 import styles from '../styles/layout.module.css';
 import Header from '../components/Header';
 import ProjectInfo from '../components/ProjectInfo';
+import Home from '../components/Home'
 
 export default function Index() {
     return (

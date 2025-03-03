@@ -16,6 +16,7 @@ function Project(props) {
     const router = useRouter();
     const {project} = router.query;
     const [query, setQuery] = useState('');
+    const [ProjectData, setProjectData] = useState({});
 
     const dispatch = useDispatch();
     const user = useSelector((state) => state.user.value);
@@ -36,7 +37,7 @@ function Project(props) {
         fetch(`http://localhost:3000/projects/${project}`)
             .then(response => response.json())
                 .then(data => {
-                    data.result && dispatch(loadMessages(data.chatMessages))
+                    data.result && setProjectData(data.project)
                 })
 
     }, [project])
