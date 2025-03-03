@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { logout } from '../reducers/user';
-import { loadTweets } from '../reducers/tweets';
+// import { logout } from '../reducers/user';
+// import { loadTweets } from '../reducers/tweets';
 import { useRouter } from 'next/router';
-import styles from '../styles/Hashtag.module.css';
-import Link from 'next/link';
-import Tweet from './Tweet';
-import Trends from './Trends';
+// import styles from '../styles/Hashtag.module.css';
+// import Link from 'next/link';
+// import Tweet from './Tweet';
+// import Trends from './Trends';
 import Image from 'next/image';
-import {loadMessages} from '../reducers/chatMessage';
+// import {loadMessages} from '../reducers/chatMessage';
 
 function Project(props) {
 

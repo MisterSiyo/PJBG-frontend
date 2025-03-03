@@ -1,14 +1,20 @@
 import styles from "../styles/layout.module.css";
 import Header from "../components/Header";
-import ProjectInfo from "../components/ProjectInfo";
-import Home from "../components/Home";
+import ProjectCard from "../components/ProjectCard";
 import Preferences from "../components/preferences";
 
 export default function Index() {
   return (
     <div className={styles.mainContainer}>
       <Header />
-      <Home />
+
+      <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+      <ProjectCard />
       <Preferences />
     </div>
   );
