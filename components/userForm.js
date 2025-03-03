@@ -19,19 +19,6 @@ export default function SignupForm({ onSubmit }) {
     const handleChange = async (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
-
-    // Vérification en temps réel pour email et username
-    if (name === 'email' && emailRegex.test(value)) {
-        const response = await fetch(`http://localhost:3000/check-email?email=${value}`);
-        const data = await response.json();
-        setErrors((prevErrors) => ({ ...prevErrors, email: data.exists ? 'Cet email est déjà utilisé.' : '' }));
-    }
-
-    if (name === 'username' && value.trim() !== '') {
-        const response = await fetch(`http://localhost:3000/check-username?username=${value}`);
-        const data = await response.json();
-        setErrors((prevErrors) => ({ ...prevErrors, username: data.exists ? 'Ce nom d’utilisateur est déjà pris.' : '' }));
-    }
     };
 
     const handleSubmit = () => {
@@ -55,7 +42,17 @@ export default function SignupForm({ onSubmit }) {
             alert('Veuillez remplir tous les champs.');
             return;
         }
-        onSubmit(formData); // Soumettre le formulaire
+        fetch('http://localhost:3000/users/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({username: formData.username, email:formData.email, password: formData.password, role:"patron"}) //Mettre role dynamique patron + connection et logout + changer la radio
+        })
+        .then(response =>response.json())
+        .then(data => {
+            console.log(data) 
+            onSubmit(); // Soumettre le formulaire
+        })
+       
     };
 
     return (
