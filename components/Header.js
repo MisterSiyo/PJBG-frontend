@@ -1,6 +1,7 @@
 import styles from '../styles/layout.module.css';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import Login from './Login'
 
 export default function Header() {
     const [showPopover, setShowPopover] = useState(false);
@@ -105,6 +106,10 @@ export default function Header() {
                             <button onClick={() => router.push('/signup-dev')}>I'm a Game Studio</button>
                     </div>
                 </div>
+            )}
+
+            {showLoginPop && (
+                    <Login/>
             )}
         </>
     );
