@@ -2,6 +2,8 @@ import styles from '../styles/layout.module.css';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Login from './Login'
+import { useDispatch } from 'react-redux';
+import { addUserToStore, removeUserFromStore } from '../reducers/user';
 
 export default function Header() {
     const [showPopover, setShowPopover] = useState(false);
@@ -10,6 +12,8 @@ export default function Header() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [loginMethod, setLoginMethod] = useState('email'); // 'email' ou 'username'
+
+    const dispatch = useDispatch();
     
     const router = useRouter();
     const isLoginPage = router.pathname === '/login';
@@ -46,9 +50,7 @@ export default function Header() {
     
             if (response.ok) {
                 if (data.token) {
-                    localStorage.setItem('token', data.token);
-                    localStorage.setItem('username', data.username);
-                    localStorage.setItem('role', data.role);
+                    dispatch(addUserToStore(data))
                     setIsLoggedIn(true);
                     setShowPopover(false); // Ferme le popover après connexion
                 } else {
@@ -65,9 +67,7 @@ export default function Header() {
 
     // Gestion de la déconnexion
     const handleLogout = () => {
-        localStorage.removeItem('token');
-        localStorage.removeItem('username');
-        localStorage.removeItem('role');
+        dispatch(removeUserFromStore())
         setIsLoggedIn(false);
         router.push('/'); // Redirige vers la page d'accueil après déconnexion
     };
