@@ -1,5 +1,5 @@
 import styles from '../styles/layout.module.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
 
@@ -13,6 +13,16 @@ export default function GameCreation() {
     const [key, setKey] = useState('');
 
     const user = useSelector((state) => state.user.value)
+
+
+    // useEffect({})
+
+
+
+
+
+
+
 
     const handleTitleChange = (e) => {
         if (title.length < 30 || key === 'Backspace' ) {
