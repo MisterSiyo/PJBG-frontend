@@ -9,7 +9,6 @@ export default function SignupDev() {
 
     return (
         <div className={styles.authContainer}>
-            <Header />
             <h2>Inscription Développeur</h2>
             <SiretCheck />
             <UserForm onSubmit={() => router.push('/')} />

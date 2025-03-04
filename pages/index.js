@@ -31,7 +31,6 @@ export default function Index() {
     <> 
     <Home />
     <div className={styles.mainContainer}>
-      <Header />
       <h1 className={styles.sectionTitle}>Welcome To PJBG</h1>
       <p>PJBG is a crowdfunding website centered on the player’s needs.</p>
       

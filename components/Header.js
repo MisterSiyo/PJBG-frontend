@@ -1,3 +1,4 @@
+'use client'
 import styles from '../styles/layout.module.css';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
