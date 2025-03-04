@@ -23,29 +23,29 @@ export default function SignupForm({ onSubmit }) {
 
     const handleSubmit = () => {
         if (!emailRegex.test(formData.email)) {
-            alert('Veuillez entrer un email valide.');
+            alert('Please enter a valid email.');
             return;
         }
         if (errors.email) {
-            alert(errors.email);
+            alert("Email not recognized");
             return;
         }
         if (errors.username) {
-            alert(errors.username);
+            alert("Username not recognized");
             return;
         }
         if (formData.password !== formData.verifyPassword) {
-            alert('Les mots de passe ne correspondent pas.');
+            alert('Passwords do not match.');
             return;
         }
         if (!formData.email || !formData.password || !formData.username) {
-            alert('Veuillez remplir tous les champs.');
+            alert('Please complete all fields.');
             return;
         }
         fetch('http://localhost:3000/users/register', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({username: formData.username, email:formData.email, password: formData.password, role:"patron"}) //Mettre role dynamique patron + connection et logout + changer la radio
+            body: JSON.stringify({username: formData.username, email:formData.email, password: formData.password, role:"patron"})
         })
         .then(response =>response.json())
         .then(data => {
