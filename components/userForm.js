@@ -49,8 +49,12 @@ export default function SignupForm({ onSubmit }) {
         })
         .then(response =>response.json())
         .then(data => {
-            console.log(data) 
-            onSubmit(); // Soumettre le formulaire
+            console.log(data)
+            // if data.result = true
+            // const user = {username: data.username, token : data.token, role: data.role}
+            // dispatch(addUserToStore(user)) 
+            // mettre setIsLoggedIn(true) dans le onSubmit() ??? ou ailleurs, je sais pas, mais voir comment on remonte une info à son parent en gros
+            onSubmit(); // Soumettre le formulaire 
         })
        
     };
