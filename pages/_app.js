@@ -1,4 +1,4 @@
-import '../styles/globals.css';
+// import '../styles/globals.css';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 
@@ -7,7 +7,7 @@ import {Provider} from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 
 // import de notre reducer user (les datas stockées dans le store de l'utilisateur)
-import user from './reducers/user';
+import user from '../reducers/user';
 
 // import des éléments nécessaires à persistor redux 
 // (ce qui permet que les données du store restent après rafraichissement 
@@ -18,6 +18,7 @@ import storage from 'redux-persist/lib/storage'; // le storage qui est un store 
 import { combineReducers } from '@reduxjs/toolkit'; // pouvoir ranger tous les reducers dans le même stockage
 
 import Head from 'next/head'; // le header pour le SEO
+import Header from '../components/Header';
 
 const reducers = combineReducers({user}); // déclaration de tous nos reducers
 
@@ -45,6 +46,7 @@ function MyApp({ Component, pageProps }) {
                 <Head>
                     <title>PJBG</title>
                 </Head>
+                <Header/>
                 <Component {...pageProps} />
             </PersistGate>
         </Provider>

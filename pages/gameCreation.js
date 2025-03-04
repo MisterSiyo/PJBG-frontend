@@ -5,7 +5,6 @@ import GameCreation from '../components/GameCreation';
 export default function gameCreation() {
     return (
         <div className={styles.mainContainer}>
-            <Header />
             <GameCreation />
         </div>
     );

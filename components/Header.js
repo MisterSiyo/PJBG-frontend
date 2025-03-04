@@ -1,13 +1,18 @@
+'use client'
 import styles from '../styles/layout.module.css';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Login from './Login'
+import { useDispatch } from 'react-redux';
+import { addUserToStore, removeUserFromStore } from '../reducers/user';
 
 export default function Header() {
     const [showPopover, setShowPopover] = useState(false); // Pour afficher ou masquer le popover de connexion
     const [isLoggedIn, setIsLoggedIn] = useState(false);  // Pour savoir si l'utilisateur est connecté
     const [identifier, setIdentifier] = useState('');  // Email ou username pour la connexion
     const [password, setPassword] = useState(''); // Mot de passe pour la connexion
+
+    const dispatch = useDispatch();
     
     const router = useRouter();  // Initialisation du routeur de Next.js
     const isLoginPage = router.pathname === '/login';   // Détection si la page actuelle est celle de la connexion
@@ -46,9 +51,7 @@ export default function Header() {
             if (response.ok) {
                 if (data.token) {
                     // Sauvegarde du token, du nom d'utilisateur et du rôle dans le localStorage
-                    localStorage.setItem('token', data.token);
-                    localStorage.setItem('username', data.username);
-                    localStorage.setItem('role', data.role);
+                    dispatch(addUserToStore(data))
                     setIsLoggedIn(true); // Met à jour l'état pour indiquer que l'utilisateur est connecté
                     setShowPopover(false); // Ferme le popover après la connexion réussie
                 } else {
@@ -65,9 +68,7 @@ export default function Header() {
      // Fonction pour gérer la déconnexion de l'utilisateur
     const handleLogout = () => {
         // Suppression des informations de connexion dans le localStorage
-        localStorage.removeItem('token');
-        localStorage.removeItem('username');
-        localStorage.removeItem('role');
+        dispatch(removeUserFromStore())
         setIsLoggedIn(false); // Met à jour l'état pour indiquer que l'utilisateur est déconnecté
         router.push('/');  // Redirige l'utilisateur vers la page d'accueil après la déconnexion
     };

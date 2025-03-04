@@ -18,7 +18,6 @@ import Project from '../../components/project';
         <Head>
             <title> a video game project conceived by a gamer</title>
         </Head>
-        <Header/>
         <Project/>
     </>
     );
