@@ -1,12 +1,11 @@
 import styles from "../styles/layout.module.css";
 import ProjectCard from "../components/ProjectCard";
-import Header from "../components/Header";
 import { useEffect, useState } from "react";
 import Home from "../components/Home";
 
 export default function Index() {
   const [projects, setProjects] = useState([]);
-
+// On trie les 6 meilleures projet considerant la barre de progression
   useEffect(() => {
     fetch("http://localhost:3000/projects/all")
       .then((response) => response.json())
