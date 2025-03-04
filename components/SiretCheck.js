@@ -4,7 +4,7 @@ import { useState } from 'react';
 const API_BASE_URL = "https://api.societe.com/api/v1";
 const API_KEY = process.env.NEXT_PUBLIC_CLE_API_SOCIETE;
 
-export default function ValidateCompany() {
+export default function SiretCheck({ onCompanyInfoChange }) {
     const [siret, setSiret] = useState('');
     const [companyInfo, setCompanyInfo] = useState(null);
     const [error, setError] = useState('');
@@ -28,7 +28,7 @@ export default function ValidateCompany() {
 
             const data = await response.json();
 
-            setCompanyInfo({
+            const companyData = {
                 name: data.infolegales.denoinsee,
                 siren: data.infolegales.sirenformat,
                 siret: data.infolegales.siretsiegeformat,
@@ -39,7 +39,10 @@ export default function ValidateCompany() {
                 rcs: data.infolegales.rcs,
                 greffe: `${data.infolegales.nomgreffe} (${data.infolegales.codegreffe})`,
                 address: `${data.infolegales.voieadressagercs}, ${data.infolegales.codepostalrcs} ${data.infolegales.villercs}, ${data.infolegales.paysrcs}`
-            });
+            };
+
+            setCompanyInfo(companyData);
+            onCompanyInfoChange(companyData);  // Pass company data to SignupForm
 
         } catch (err) {
             setCompanyInfo(null);
@@ -70,10 +73,7 @@ export default function ValidateCompany() {
                     <p><strong>SIRET:</strong> {companyInfo.siret}</p>
                     <p><strong>Numéro TVA:</strong> {companyInfo.numtva}</p>
                     <p><strong>Statut:</strong> {companyInfo.status}</p>
-                    <p><strong>Capital Social:</strong> {companyInfo.capital}</p>
                     <p><strong>Code NAF:</strong> {companyInfo.naf}</p>
-                    <p><strong>RCS:</strong> {companyInfo.rcs}</p>
-                    <p><strong>Greffe:</strong> {companyInfo.greffe}</p>
                     <p><strong>Adresse:</strong> {companyInfo.address}</p>
                 </div>
             )}
