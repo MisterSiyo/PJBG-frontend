@@ -1,6 +1,7 @@
 import styles from '../styles/layout.module.css';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
+import { useSelector } from 'react-redux';
 
 export default function GameCreation() {
 
@@ -10,6 +11,8 @@ export default function GameCreation() {
     const [description, setDescription] = useState('');
     const [goal, setGoal] = useState('0');
     const [key, setKey] = useState('');
+
+    const user = useSelector((state) => state.user.value)
 
     const handleTitleChange = (e) => {
         if (title.length < 30 || key === 'Backspace' ) {
@@ -39,10 +42,15 @@ export default function GameCreation() {
     }
 
     const handleSubmit = () => {
+
+        if (!user.token){
+            return;
+        }
+
         fetch('http://localhost:3000/projects/', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({token: "ettaJ3W3wrwIQhhsV-nUvJoflnHCscdj", title, pitch, description, goal}),
+            body: JSON.stringify({token: user.token, title, pitch, description, goal}),
         }).then(response => response.json())
             .then(data => {
                 if (data.result) {
