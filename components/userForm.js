@@ -1,7 +1,12 @@
 import styles from '../styles/auth.module.css';
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { addUserToStore } from '../reducers/user';
 
 export default function SignupForm({ onSubmit }) {
+    const dispatch = useDispatch();
+    const role = useSelector((state) => state.user.value.role); // Récupère le rôle depuis Redux
+
     const [formData, setFormData] = useState({
         email: '',
         username: '',
@@ -16,9 +21,21 @@ export default function SignupForm({ onSubmit }) {
 
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
 
-    const handleChange = async (e) => {
+    const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
+
+        if (name === 'email' && !emailRegex.test(value)) {
+            setErrors({ ...errors, email: 'Invalid email format.' });
+        } else {
+            setErrors({ ...errors, email: '' });
+        }
+
+        if (name === 'username' && value.length < 3) {
+            setErrors({ ...errors, username: 'Username must be at least 3 characters long.' });
+        } else {
+            setErrors({ ...errors, username: '' });
+        }
     };
 
     const handleSubmit = () => {
@@ -26,37 +43,44 @@ export default function SignupForm({ onSubmit }) {
             alert('Please enter a valid email.');
             return;
         }
-        if (errors.email) {
-            alert("Email not recognized");
-            return;
-        }
-        if (errors.username) {
-            alert("Username not recognized");
-            return;
-        }
+
         if (formData.password !== formData.verifyPassword) {
             alert('Passwords do not match.');
             return;
         }
-        if (!formData.email || !formData.password || !formData.username) {
+
+        if (!formData.email || !formData.password || !formData.username || !role) {
             alert('Please complete all fields.');
             return;
         }
+
         fetch('http://localhost:3000/users/register', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({username: formData.username, email:formData.email, password: formData.password, role:"patron"})
+            body: JSON.stringify({
+                username: formData.username,
+                email: formData.email,
+                password: formData.password,
+                role: role,  
+            }),
         })
-        .then(response =>response.json())
+        .then(response => response.json())
         .then(data => {
             console.log(data)
-            // if data.result = true
-            // const user = {username: data.username, token : data.token, role: data.role}
-            // dispatch(addUserToStore(user)) 
-            // mettre setIsLoggedIn(true) dans le onSubmit() ??? ou ailleurs, je sais pas, mais voir comment on remonte une info à son parent en gros
-            onSubmit(); // Soumettre le formulaire 
+            if (data.token) {
+                dispatch(addUserToStore(data)); // Ajoute l'utilisateur au store Redux
+
+                if (onSubmit) onSubmit();
+
+                alert('Registration successful!');
+            } else {
+                alert('An error occurred. Please try again !!');
+            }
         })
-       
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Something went wrong. Please try again later.');
+        });
     };
 
     return (
@@ -78,9 +102,6 @@ export default function SignupForm({ onSubmit }) {
 
             <label>Verify Password :</label>
             <input className={styles.authInput} type="password" name="verifyPassword" value={formData.verifyPassword} onChange={handleChange} required />
-
-            <label>Social Links :</label>
-            <input className={styles.authInput} type="text" name="socialLinks" value={formData.socialLinks} onChange={handleChange} required />
 
             <button className={styles.authButton} onClick={handleSubmit}>Confirm</button>
         </div>

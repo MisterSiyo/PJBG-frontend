@@ -20,6 +20,9 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
+    setRole: (state, action) => {
+      state.value.role = action.payload;
+    },
     addUserToStore: (state, action) => { // ajouter le user au storage, contiendra les données récupérées depuis la BDD une fois le token envoyé
       state.value = action.payload;
     },
@@ -43,5 +46,5 @@ export const userSlice = createSlice({
 
 
 
-export const { addUserToStore, removeUserFromStore } = userSlice.actions;
+export const { addUserToStore, removeUserFromStore, setRole  } = userSlice.actions;
 export default userSlice.reducer;
