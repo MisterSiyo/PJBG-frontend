@@ -1,12 +1,14 @@
 // API route pour gérer les préférences d'un utilisateur spécifique
 export default async function handler(req, res) {
   const { username } = req.query;
+  // Utiliser username comme ID utilisateur
+  const userId = username;
 
   if (req.method === "GET") {
     try {
       // Appeler l'API backend pour récupérer les préférences
       const response = await fetch(
-        `http://localhost:5000/api/preferences/${username}`
+        `http://localhost:5000/api/preferences/${userId}`
       );
       const data = await response.json();
 

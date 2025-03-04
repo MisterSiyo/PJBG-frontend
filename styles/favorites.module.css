@@ -23,19 +23,41 @@
 
 .message {
   margin: 10px 0;
-  padding: 10px;
+  padding: 10px 15px;
   border-radius: 4px;
-  background-color: #f8f9fa;
-  width: 100%;
+  font-size: 16px;
   text-align: center;
+  animation: fadeIn 0.3s ease-in-out;
+  transition: all 0.3s ease;
 }
 
 .messageError {
-  background-color: #ffcccc;
+  background-color: #ffebee;
+  color: #d32f2f;
+  border-left: 4px solid #d32f2f;
 }
 
 .messageSuccess {
-  background-color: #ccffcc;
+  background-color: #e8f5e9;
+  color: #2e7d32;
+  border-left: 4px solid #2e7d32;
+}
+
+.messageWarning {
+  background-color: #fff8e1;
+  color: #ff8f00;
+  border-left: 4px solid #ff8f00;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .saveButton {
@@ -139,6 +161,14 @@
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
 }
 
+.dragging {
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  transform: scale(1.05);
+  z-index: 100;
+  background-color: #f0f8ff;
+  border: 2px solid #6e8efb;
+}
+
 /* Responsive design */
 @media (max-width: 768px) {
   .columnsContainer {
@@ -148,4 +178,24 @@
   .column {
     min-height: 300px;
   }
+}
+
+.debugButton {
+  margin-left: 10px;
+  padding: 8px 16px;
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.debugButton:hover {
+  background-color: #555;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
 }
