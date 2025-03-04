@@ -15,7 +15,9 @@ export default function GameCreation() {
     const user = useSelector((state) => state.user.value)
 
 
-    // useEffect({})
+    // useEffect(() => {
+    //     fetch()
+    // }, [])    attraper la route qui sert les gameMechanics et les pledges 
 
 
 
