@@ -2,8 +2,9 @@
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import { useState, useEffect } from "react";
 import styles from "../styles/preferences.module.css";
+import useAuth from "../hooks/useAuth";
 
-function Preferences({ username = "test" }) {
+function Preferences() {
   // État pour gérer les colonnes et leurs items
   const [columns, setColumns] = useState({
     genres: {
@@ -17,7 +18,7 @@ function Preferences({ username = "test" }) {
         "RTS",
         "MOBA",
         "Horror",
-      ],
+      ].filter((item, index, self) => self.indexOf(item) === index),
     },
     plus: {
       title: "Plus",
@@ -37,50 +38,65 @@ function Preferences({ username = "test" }) {
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
 
-  // Charger les préférences existantes au chargement du composant
+  // Utiliser le hook d'authentification pour récupérer l'utilisateur connecté
+  const { user, isAuthenticated, loading: authLoading } = useAuth();
+
+  // Charger les préférences existantes au chargement du composant et quand l'utilisateur change
   useEffect(() => {
-    const loadPreferences = async () => {
-      try {
-        setIsLoading(true);
-        const response = await fetch(
-          `http://localhost:3000/api/preferences/${username}`
-        );
-        const data = await response.json();
+    if (isAuthenticated && user) {
+      loadPreferences();
+    }
+  }, [isAuthenticated, user]);
 
-        if (data.success && data.preferences) {
-          // Mettre à jour les colonnes avec les préférences chargées
-          setColumns((prevColumns) => ({
-            ...prevColumns,
-            plus: {
-              ...prevColumns.plus,
-              items: data.preferences.plus || [],
-            },
-            moins: {
-              ...prevColumns.moins,
-              items: data.preferences.moins || [],
-            },
-            blackList: {
-              ...prevColumns.blackList,
-              items: data.preferences.blackList || [],
-            },
-          }));
-          setMessage("Préférences chargées avec succès");
-        }
-      } catch (error) {
-        console.error("Erreur lors du chargement des préférences:", error);
-      } finally {
-        setIsLoading(false);
+  const loadPreferences = async () => {
+    if (!isAuthenticated || !user) return;
+
+    try {
+      setIsLoading(true);
+      const response = await fetch(
+        `http://localhost:3000/api/preferences/${user.username}`
+      );
+      const data = await response.json();
+
+      if (data.success && data.preferences) {
+        setColumns((prevColumns) => ({
+          ...prevColumns,
+          plus: {
+            ...prevColumns.plus,
+            items: [...new Set(data.preferences.plus || [])],
+          },
+          moins: {
+            ...prevColumns.moins,
+            items: [...new Set(data.preferences.moins || [])],
+          },
+          blackList: {
+            ...prevColumns.blackList,
+            items: [...new Set(data.preferences.blackList || [])],
+          },
+        }));
+        setMessage("Preferences loaded successfully");
       }
-    };
-
-    loadPreferences();
-  }, [username]);
+    } catch (error) {
+      console.error("Error loading preferences:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   // Gestion du drag and drop
   const onDragEnd = (result) => {
     if (!result.destination) return;
 
     const { source, destination } = result;
+
+    // Si on dépose au même endroit, ne rien faire
+    if (
+      source.droppableId === destination.droppableId &&
+      source.index === destination.index
+    ) {
+      return;
+    }
+
     const sourceColumn = columns[source.droppableId];
     const destColumn = columns[destination.droppableId];
 
@@ -100,32 +116,53 @@ function Preferences({ username = "test" }) {
       });
     } else {
       // Déplacement entre colonnes
-      destItems.splice(destination.index, 0, removed);
-      setColumns({
-        ...columns,
-        [source.droppableId]: {
-          ...sourceColumn,
-          items: sourceItems,
-        },
-        [destination.droppableId]: {
-          ...destColumn,
-          items: destItems,
-        },
-      });
+      // Vérifier si l'élément existe déjà dans la colonne de destination
+      if (!destItems.includes(removed)) {
+        destItems.splice(destination.index, 0, removed);
+        setColumns({
+          ...columns,
+          [source.droppableId]: {
+            ...sourceColumn,
+            items: sourceItems,
+          },
+          [destination.droppableId]: {
+            ...destColumn,
+            items: destItems,
+          },
+        });
+      } else {
+        // Si l'élément existe déjà, on ne l'ajoute pas mais on met quand même à jour la source
+        setColumns({
+          ...columns,
+          [source.droppableId]: {
+            ...sourceColumn,
+            items: sourceItems,
+          },
+        });
+        // Afficher un message temporaire
+        setMessage("⚠️ Cet élément existe déjà dans cette catégorie");
+        setTimeout(() => setMessage(""), 2000);
+      }
     }
   };
 
   // Sauvegarde des préférences
   const savePreferences = async () => {
+    if (!isAuthenticated || !user) {
+      setMessage("Please log in to save your preferences");
+      return;
+    }
+
     try {
       setIsLoading(true);
       const response = await fetch("http://localhost:3000/api/preferences", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
         },
         body: JSON.stringify({
-          username: username,
+          username: user.username,
           preferences: {
             plus: columns.plus.items,
             moins: columns.moins.items,
@@ -134,120 +171,167 @@ function Preferences({ username = "test" }) {
         }),
       });
 
+      if (!response.ok) {
+        throw new Error(`HTTP error: ${response.status}`);
+      }
+
       const data = await response.json();
 
       if (data.success) {
-        setMessage("Vos préférences ont été sauvegardées !");
+        setMessage("✅ Vos préférences ont été enregistrées avec succès !");
+
+        // Faire disparaître le message après 3 secondes
+        setTimeout(() => {
+          setMessage("");
+        }, 3000);
       } else {
-        setMessage("Erreur lors de la sauvegarde : " + data.message);
+        setMessage("❌ Erreur lors de l'enregistrement : " + data.message);
       }
     } catch (error) {
-      setMessage("Erreur lors de la sauvegarde : " + error.message);
+      console.error("Error saving preferences:", error);
+      setMessage("❌ Erreur lors de l'enregistrement : " + error.message);
     } finally {
       setIsLoading(false);
     }
   };
 
+  // Générer un ID unique pour chaque élément
+  const getItemId = (item, index, columnId) => {
+    return `${item}-${columnId}-${index}`;
+  };
+
   return (
     <div className={styles.container}>
-      {/* Affichage des messages */}
-      {message && (
-        <div
-          className={`${styles.message} ${
-            message.includes("Erreur")
-              ? styles.messageError
-              : styles.messageSuccess
-          }`}
-        >
-          {message}
+      {authLoading ? (
+        <div className={styles.loading}>Loading user information...</div>
+      ) : !isAuthenticated || !user ? (
+        <div className={styles.notAuthenticated}>
+          <p>You need to be logged in to manage your preferences.</p>
         </div>
+      ) : (
+        <>
+          {/* Zone de drag and drop */}
+          <DragDropContext onDragEnd={onDragEnd}>
+            {/* Colonnes principales (Genres, Plus, Moins) */}
+            <div className={styles.columnsContainer}>
+              {Object.entries(columns)
+                .filter(([columnId]) => columnId !== "blackList")
+                .map(([columnId, column]) => (
+                  <div key={columnId} className={styles.columnWrapper}>
+                    <h2 className={styles.columnTitle}>{column.title}</h2>
+                    <Droppable droppableId={columnId}>
+                      {(provided) => (
+                        <div
+                          {...provided.droppableProps}
+                          ref={provided.innerRef}
+                          className={`${styles.column} ${styles.genresColumn}`}
+                        >
+                          {column.items.map((item, index) => (
+                            <Draggable
+                              key={getItemId(item, index, columnId)}
+                              draggableId={getItemId(item, index, columnId)}
+                              index={index}
+                            >
+                              {(provided, snapshot) => (
+                                <div
+                                  ref={provided.innerRef}
+                                  {...provided.draggableProps}
+                                  {...provided.dragHandleProps}
+                                  className={`${styles.dragItem} ${
+                                    snapshot.isDragging ? styles.dragging : ""
+                                  }`}
+                                  style={{
+                                    ...provided.draggableProps.style,
+                                    opacity: snapshot.isDragging ? 0.8 : 1,
+                                  }}
+                                >
+                                  {item}
+                                </div>
+                              )}
+                            </Draggable>
+                          ))}
+                          {provided.placeholder}
+                        </div>
+                      )}
+                    </Droppable>
+                  </div>
+                ))}
+            </div>
+
+            {/* Colonne Black List */}
+            <div>
+              {Object.entries(columns)
+                .filter(([columnId]) => columnId === "blackList")
+                .map(([columnId, column]) => (
+                  <div key={columnId} className={styles.blackListWrapper}>
+                    <h2 className={styles.columnTitle}>{column.title}</h2>
+                    <Droppable droppableId={columnId}>
+                      {(provided) => (
+                        <div
+                          {...provided.droppableProps}
+                          ref={provided.innerRef}
+                          className={`${styles.column} ${styles.blackListColumn}`}
+                        >
+                          {column.items.map((item, index) => (
+                            <Draggable
+                              key={getItemId(item, index, columnId)}
+                              draggableId={getItemId(item, index, columnId)}
+                              index={index}
+                            >
+                              {(provided, snapshot) => (
+                                <div
+                                  ref={provided.innerRef}
+                                  {...provided.draggableProps}
+                                  {...provided.dragHandleProps}
+                                  className={`${styles.dragItem} ${
+                                    snapshot.isDragging ? styles.dragging : ""
+                                  }`}
+                                  style={{
+                                    ...provided.draggableProps.style,
+                                    opacity: snapshot.isDragging ? 0.8 : 1,
+                                  }}
+                                >
+                                  {item}
+                                </div>
+                              )}
+                            </Draggable>
+                          ))}
+                          {provided.placeholder}
+                        </div>
+                      )}
+                    </Droppable>
+                  </div>
+                ))}
+            </div>
+          </DragDropContext>
+
+          {/* Bouton de sauvegarde */}
+          <button
+            onClick={savePreferences}
+            className={styles.saveButton}
+            disabled={isLoading}
+          >
+            {isLoading ? "Saving..." : "Save my preferences"}
+          </button>
+
+          {/* Affichage des messages */}
+          {message && (
+            <div
+              className={`${styles.message} ${
+                message.includes("Erreur") || message.includes("❌")
+                  ? styles.messageError
+                  : message.includes("✅")
+                  ? styles.messageSuccess
+                  : message.includes("⚠️")
+                  ? styles.messageWarning
+                  : ""
+              }`}
+            >
+              {message}
+            </div>
+          )}
+        </>
       )}
-
-      {/* Zone de drag and drop */}
-      <DragDropContext onDragEnd={onDragEnd}>
-        {/* Colonnes principales (Genres, Plus, Moins) */}
-        <div className={styles.columnsContainer}>
-          {Object.entries(columns)
-            .filter(([columnId]) => columnId !== "blackList")
-            .map(([columnId, column]) => (
-              <div key={columnId} className={styles.columnWrapper}>
-                <h2 className={styles.columnTitle}>{column.title}</h2>
-                <Droppable droppableId={columnId}>
-                  {(provided) => (
-                    <div
-                      {...provided.droppableProps}
-                      ref={provided.innerRef}
-                      className={`${styles.column} ${styles.genresColumn}`}
-                    >
-                      {column.items.map((item, index) => (
-                        <Draggable key={item} draggableId={item} index={index}>
-                          {(provided) => (
-                            <div
-                              ref={provided.innerRef}
-                              {...provided.draggableProps}
-                              {...provided.dragHandleProps}
-                              className={styles.dragItem}
-                              style={provided.draggableProps.style}
-                            >
-                              {item}
-                            </div>
-                          )}
-                        </Draggable>
-                      ))}
-                      {provided.placeholder}
-                    </div>
-                  )}
-                </Droppable>
-              </div>
-            ))}
-        </div>
-
-        {/* Colonne Black List */}
-        <div>
-          {Object.entries(columns)
-            .filter(([columnId]) => columnId === "blackList")
-            .map(([columnId, column]) => (
-              <div key={columnId} className={styles.blackListWrapper}>
-                <h2 className={styles.columnTitle}>{column.title}</h2>
-                <Droppable droppableId={columnId}>
-                  {(provided) => (
-                    <div
-                      {...provided.droppableProps}
-                      ref={provided.innerRef}
-                      className={`${styles.column} ${styles.blackListColumn}`}
-                    >
-                      {column.items.map((item, index) => (
-                        <Draggable key={item} draggableId={item} index={index}>
-                          {(provided) => (
-                            <div
-                              ref={provided.innerRef}
-                              {...provided.draggableProps}
-                              {...provided.dragHandleProps}
-                              className={styles.dragItem}
-                              style={provided.draggableProps.style}
-                            >
-                              {item}
-                            </div>
-                          )}
-                        </Draggable>
-                      ))}
-                      {provided.placeholder}
-                    </div>
-                  )}
-                </Droppable>
-              </div>
-            ))}
-        </div>
-      </DragDropContext>
-
-      {/* Bouton de sauvegarde */}
-      <button
-        onClick={savePreferences}
-        className={styles.saveButton}
-        disabled={isLoading}
-      >
-        {isLoading ? "Sauvegarde en cours..." : "Sauvegarder mes préférences"}
-      </button>
     </div>
   );
 }
