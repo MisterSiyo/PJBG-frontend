@@ -1,0 +1,151 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  padding: 20px;
+  color: black;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.description {
+  font-size: 16px;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #666;
+}
+
+.message {
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 4px;
+  background-color: #f8f9fa;
+  width: 100%;
+  text-align: center;
+}
+
+.messageError {
+  background-color: #ffcccc;
+}
+
+.messageSuccess {
+  background-color: #ccffcc;
+}
+
+.saveButton {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #6e8efb;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.saveButton:hover {
+  background-color: #5a7df9;
+}
+
+.saveButton:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.columnsContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 20px;
+  gap: 20px;
+}
+
+.columnWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.allGenresWrapper {
+  width: 80%;
+  margin-bottom: 20px;
+}
+
+.favoritesWrapper {
+  width: 60%; /* Réduit la largeur de la boîte 2 */
+}
+
+.column {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 15px;
+  min-height: 400px;
+  width: 100%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.allGenresColumn {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-content: flex-start;
+}
+
+.favoritesColumn {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-content: flex-start;
+  background-color: #f0f8ff; /* Légère teinte bleue pour différencier */
+  min-height: 250px; /* Hauteur réduite pour la boîte des favoris */
+}
+
+.columnTitle {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  text-align: center;
+  width: 100%;
+}
+
+.dragItem {
+  user-select: none;
+  padding: 16px;
+  margin: 0;
+  min-height: 50px;
+  color: black;
+  border-radius: 4px;
+  background-color: white;
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  transition: transform 0.2s, box-shadow 0.2s;
+  font-weight: 500;
+}
+
+.dragItem:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .columnsContainer {
+    flex-direction: column;
+  }
+
+  .column {
+    min-height: 300px;
+  }
+}
