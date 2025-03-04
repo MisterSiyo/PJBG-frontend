@@ -1,14 +1,14 @@
-/* Header */
+/* HEADER */
 .header {
-    width: 100vw; 
+    width: 100vw;
     display: flex;
-    justify-content: center; /* Centre le titre GameFunder */
+    justify-content: space-between;
     align-items: center;
     background: linear-gradient(135deg, #6e8efb, #a777e3);
-    padding: 15px 0;
+    padding: 15px 30px;
     color: white;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    position: fixed; 
+    position: fixed;
     top: 0;
     left: 0;
     height: 60px;
@@ -22,35 +22,35 @@
     text-align: center;
 }
 
-
-.backButton {
-    position: absolute;
-    left: 20px;
+.backButton,
+.loginButton {
     background-color: #ff6b6b;
     color: white;
     padding: 10px 15px;
     border-radius: 6px;
     font-size: 14px;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
 }
 
+.backButton:hover,
+.loginButton:hover {
+    background-color: #d9534f;
+}
 
 .loginButton {
-    position: absolute;
-    right: 20px;
-    background-color: #ff6b6b;
-    color: white;
-    padding: 10px 15px;
-    border-radius: 6px;
-    font-size: 14px;
+    margin-right: 4rem;
 }
 
+/* POPOVER */
 .popoverContainer {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.5); /* Fond semi-transparent */
+    background: rgba(0, 0, 0, 0.5);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -76,4 +76,47 @@
     border: none;
     font-size: 20px;
     cursor: pointer;
+}
+
+/* CONTENEUR PRINCIPAL */
+.mainContainer {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 80px;
+    text-align: center;
+}
+
+/* TITRES */
+.sectionTitle {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin: 30px 0;
+    text-align: center;
+    border-bottom: 2px solid #6e8efb;
+    display: inline-block;
+}
+
+/* GRID PROJECT CARDS */
+.projectGrid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(250px, 1fr));
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    max-width: 1200px;
+    margin: 5rem auto;
+    padding: 2rem;
+}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 1024px) {
+    .projectGrid {
+        grid-template-columns: repeat(2, minmax(250px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .projectGrid {
+        grid-template-columns: repeat(1, minmax(250px, 1fr));
+    }
 }
