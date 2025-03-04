@@ -36,7 +36,7 @@ export default function GameCreation() {
 
 
      const handleClickPledge = (pledge) => {
-        setSelectedPledges((current) => current.filter(e => e.contributionLevel === pledge.contributionLevel));
+        setSelectedPledges((current) => current.filter(e => e.contributionLevel !== pledge.contributionLevel));
         setSelectedPledges((current) => [...current, pledge]);
      }
 
@@ -132,13 +132,14 @@ const GMboxes = gameMechanics.map((data, i) => {
             return;
         }
 
-        const pledgesID = selectedPledges.map((data) => {
+        let pledgesID = selectedPledges.map((data) => {
             return data._id
         })
 
-        const GMID = selectedGameMechanics.map((data) => {
+        let GMID = selectedGameMechanics.map((data) => {
             return data._id
         })
+        
 
         fetch('http://localhost:3000/projects/', {
             method: 'POST',
