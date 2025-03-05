@@ -7,7 +7,7 @@ export default function Index() {
   const [projects, setProjects] = useState([]);
 // On trie les 6 meilleures projet considerant la barre de progression
   useEffect(() => {
-    fetch("http://localhost:3000/projects/all")
+    fetch("http://localhost:3000/projects/get/all")
       .then((response) => response.json())
       .then((data) => {
         if (data.result) {

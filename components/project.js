@@ -72,7 +72,7 @@ function Project(props) {
             <div className={styles.leftBar}>
                 <div className={styles.creatorContainer}>
                     <div className={styles.creatorUp}>
-
+                        
                     </div>
                     <div className={styles.creatorBottom}>
                         <div className={styles.creatorDescriptionContainer}>
