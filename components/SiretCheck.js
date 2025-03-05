@@ -1,8 +1,7 @@
 import styles from '../styles/project.module.css';
 import { useState } from 'react';
 
-const API_BASE_URL = "https://api.societe.com/api/v1";
-const API_KEY = process.env.NEXT_PUBLIC_CLE_API_SOCIETE;
+const API_SIRET_URL = "http://localhost:3000/users";
 
 export default function SiretCheck({ onCompanyInfoChange }) {
     const [siret, setSiret] = useState('');
@@ -17,32 +16,15 @@ export default function SiretCheck({ onCompanyInfoChange }) {
 
         setError('');
         try {
-            const response = await fetch(`${API_BASE_URL}/entreprise/${siret}/infoslegales`, {
+            const response = await fetch(`${API_SIRET_URL}/siret/${siret}`, {
                 method: 'GET',
-                headers: {
-                    'X-Authorization': `socapi ${API_KEY}`
-                }
             });
 
             if (!response.ok) throw new Error('SIRET introuvable');
 
             const data = await response.json();
-
-            const companyData = {
-                name: data.infolegales.denoinsee,
-                siren: data.infolegales.sirenformat,
-                siret: data.infolegales.siretsiegeformat,
-                numtva: data.infolegales.numtva,
-                status: data.infolegales.status,
-                capital: `${data.infolegales.capital} ${data.infolegales.libdevise}`,
-                naf: `${data.infolegales.nafinsee} - ${data.infolegales.naflibinsee}`,
-                rcs: data.infolegales.rcs,
-                greffe: `${data.infolegales.nomgreffe} (${data.infolegales.codegreffe})`,
-                address: `${data.infolegales.voieadressagercs}, ${data.infolegales.codepostalrcs} ${data.infolegales.villercs}, ${data.infolegales.paysrcs}`
-            };
-
-            setCompanyInfo(companyData);
-            onCompanyInfoChange(companyData);  // Pass company data to SignupForm
+            setCompanyInfo(data);
+            onCompanyInfoChange(data);  // Envoi des données à `SignupForm`
 
         } catch (err) {
             setCompanyInfo(null);
@@ -74,7 +56,7 @@ export default function SiretCheck({ onCompanyInfoChange }) {
                     <p><strong>Numéro TVA:</strong> {companyInfo.numtva}</p>
                     <p><strong>Statut:</strong> {companyInfo.status}</p>
                     <p><strong>Code NAF:</strong> {companyInfo.naf}</p>
-                    <p><strong>Adresse:</strong> {companyInfo.address}</p>
+                    <p><strong>Adresse:</strong> {`${companyInfo.address.street}, ${companyInfo.address.postalCode} ${companyInfo.address.city}, ${companyInfo.address.country}`}</p>
                 </div>
             )}
         </div>

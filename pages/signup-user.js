@@ -1,6 +1,5 @@
 import styles from '../styles/auth.module.css';
 import { useRouter } from 'next/router';
-import Header from '../components/Header';
 import SignupWithOAuth from '../components/SignupWithOAuth';
 import UserForm from '../components/userForm';
 
