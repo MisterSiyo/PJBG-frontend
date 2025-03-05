@@ -83,6 +83,7 @@ export default function Header() {
                         <div className={styles.userMenu}>
                             <span>Welcome, {user.username}!</span> 
                             <br /><br />
+                            <button className={styles.accountButton} onClick={() => router.push('/account')}>Account</button>
                             <button className={styles.logoutButton} onClick={handleLogout}>Logout</button>
                         </div>
                     ) : (
@@ -102,8 +103,8 @@ export default function Header() {
                         <button onClick={() => router.push('/signin-options')}>Log in with Google</button>
                         <br /><br />
                         <h5>Or log in with your email or your username and your password :</h5>
-                        <input type="text" placeholder="Email or Username" value={identifier} onChange={(e) => setIdentifier(e.target.value)} className={styles.input} />
-                        <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} className={styles.input} />
+                        <input type="text" placeholder="Email or Username" value={identifier} onChange={(e) => setIdentifier(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && handleLogin()}className={styles.input} />
+                        <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && handleLogin()}className={styles.input} />
                         <br /><br />
                         <button onClick={handleLogin}>Enter</button>
 

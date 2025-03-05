@@ -66,15 +66,14 @@ export default function SignupForm({ onSubmit }) {
         })
         .then(response => response.json())
         .then(data => {
-            console.log(data)
             if (data.token) {
                 dispatch(addUserToStore(data)); // Ajoute l'utilisateur au store Redux
-
                 if (onSubmit) onSubmit();
-
                 alert('Registration successful!');
+            } else if (data.message === "Email already registered") {
+                alert("This email is already linked to an existing account.");
             } else {
-                alert('An error occurred. Please try again !!');
+                alert(data.message || "An error occurred. Please try again.");
             }
         })
         .catch(error => {
@@ -90,18 +89,18 @@ export default function SignupForm({ onSubmit }) {
             <div className={styles.divider}></div>
 
             <label>Email :</label>
-            <input className={styles.authInput} type="email" name="email" value={formData.email} onChange={handleChange} required />
+            <input className={styles.authInput} type="email" name="email" value={formData.email} onChange={handleChange} onKeyDown={(e) => e.key === 'Enter' && handleSubmit()} required/>
 
             <label>Username :</label>
-            <input className={styles.authInput} type="text" name="username" value={formData.username} onChange={handleChange} required />
+            <input className={styles.authInput} type="text" name="username" value={formData.username} onChange={handleChange} onKeyDown={(e) => e.key === 'Enter' && handleSubmit()} required/>
 
             <div className={styles.divider}></div>
 
             <label>Password :</label>
-            <input className={styles.authInput} type="password" name="password" value={formData.password} onChange={handleChange} required />
+            <input className={styles.authInput} type="password" name="password" value={formData.password} onChange={handleChange} onKeyDown={(e) => e.key === 'Enter' && handleSubmit()} required />
 
             <label>Verify Password :</label>
-            <input className={styles.authInput} type="password" name="verifyPassword" value={formData.verifyPassword} onChange={handleChange} required />
+            <input className={styles.authInput} type="password" name="verifyPassword" value={formData.verifyPassword} onChange={handleChange} onKeyDown={(e) => e.key === 'Enter' && handleSubmit()} required />
 
             <button className={styles.authButton} onClick={handleSubmit}>Confirm</button>
         </div>
