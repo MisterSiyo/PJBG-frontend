@@ -76,7 +76,7 @@ function Project(props) {
                     </div>
                     <div className={styles.creatorBottom}>
                         <div className={styles.creatorDescriptionContainer}>
-                            <p>{project.user.description}</p>
+                            {/* <p>{project.user.description}</p> */}
                         </div>
                     </div>
                 </div>
