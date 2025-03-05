@@ -4,6 +4,7 @@ import { logout } from '../reducers/user';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import {loadMessages} from '../reducers/chatMessage';
+import styles from '../styles/project.module.css';
 
 function Project(props) {
 
@@ -64,7 +65,56 @@ function Project(props) {
         <br></br>
         <br></br>
         <br></br>
-            <p>ca marche {project}</p>
+        <div className={styles.titleContainer}>
+            <h2 className={styles.title}>{project}</h2>
+        </div>
+        <div className={styles.pageContent}>
+            <div className={styles.leftBar}>
+                <div className={styles.creatorContainer}>
+                    <div className={styles.creatorUp}>
+
+                    </div>
+                    <div className={styles.creatorBottom}>
+                        <div className={styles.creatorDescriptionContainer}>
+                            <p>{project.user.description}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className={styles.centralBar}>
+                <div className={styles.progressContainer}>
+
+                </div>
+                <div className={styles.studiosContainer}>
+
+                </div>
+                <div className='characBox'>
+                    <div className='characTitle'>
+
+                    </div>
+                    <div className='characContentDiv'>
+                        <div className='leftCharacBox'>
+
+                        </div>
+                        <div className='rightCharacBox'>
+
+                        </div>
+                    </div>
+                    <div className='buttonDownload'>
+
+                    </div>
+                </div>
+            </div>
+            <div className='rightBar'>
+    
+            </div>
+        </div>
+        <div className='buttonBox'>
+            <button>Take on the adventure</button>
+        </div>
+        
+        
+            
             <p>{ProjectData.title}</p>
             <p>{ProjectData.pitch}</p>
         </>
