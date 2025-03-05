@@ -160,14 +160,14 @@ export default function Header() {
               placeholder="Email or Username"
               value={identifier}
               onChange={(e) => setIdentifier(e.target.value)}
-              className={styles.input}
+              onKeyDown={(e) => e.key === 'Enter' && handleLogin()}className={styles.input}
             />
             <input
               type="password"
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className={styles.input}
+              onKeyDown={(e) => e.key === 'Enter' && handleLogin()}className={styles.input}
             />
             <br />
             <br />

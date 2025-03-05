@@ -5,6 +5,11 @@ const initialState = { // notre valeur initiale de user dans le store, initialis
     token: null,
     username: null,
     role: null,
+    email: null,           // Ajout de l'email
+    name: null,            // Ajout du prénom
+    surname: null,         // Ajout du nom de famille
+    address: null,         // Ajout de l'adresse postale
+    socialLinks: [],       // Ajout des liens sociaux
     followedProjects: [],
     createdProjects: [],
     fundedProjects: [],
@@ -31,6 +36,11 @@ export const userSlice = createSlice({
         token: null,
         username: null,
         role: null,
+        email: null,
+        name: null,
+        surname: null,
+        address: null,
+        socialLinks: [],
         followedProjects: [],
         createdProjects: [],
         fundedProjects: [],
@@ -39,12 +49,20 @@ export const userSlice = createSlice({
         restrictions: [],
         appliedProjects: [],
         developpedProjects: []
-      }
-    }
+      };
+    },
+    updateUser: (state, action) => {
+      // Mettez à jour le profil de l'utilisateur dans le store
+      state.value = { ...state.value, ...action.payload };
+    },
+    updateUserAddress: (state, action) => {
+      state.value.address = action.payload; // Mise à jour de l'adresse de l'utilisateur
+    },
+    updateUserSocialLinks: (state, action) => {
+      state.value.socialLinks = action.payload; // Mise à jour des réseaux sociaux
   },
+},
 });
 
-
-
-export const { addUserToStore, removeUserFromStore, setRole  } = userSlice.actions;
+export const { addUserToStore, removeUserFromStore, setRole, updateUser, updateUserAddress, updateUserSocialLinks } = userSlice.actions;
 export default userSlice.reducer;
