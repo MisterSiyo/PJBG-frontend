@@ -148,6 +148,81 @@
   padding: 2rem;
 }
 
+/* USEFUL LINKS*/
+/* Conteneur général des liens */
+.usefulLinks {
+  margin-top: 40px;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 10px;
+}
+
+
+.usefulTitle {
+  font-size: 1.8rem;
+  font-weight: bold;
+  text-align: left;
+  position: relative;
+  padding-bottom: 5px;
+}
+.usefulTitle::after {
+  content: "";
+  display: block;
+  width: 40%;
+  height: 3px;
+  background-color: #000000;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+
+.linksContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 15px;
+  margin-top: 20px;
+}
+
+
+.linkCard {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  text-align: center;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.linkCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+  background-color: #f5f5f5;
+}
+
+
+.linkImage {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+
+.linkCard a {
+  display: block;
+  margin-top: 10px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #000000;
+  text-decoration: none;
+}
+
+.linkCard a:hover {
+  text-decoration: underline;
+}
+
 /* RESPONSIVE DESIGN */
 @media (max-width: 1024px) {
   .projectGrid {
