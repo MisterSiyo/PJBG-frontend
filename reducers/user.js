@@ -39,7 +39,7 @@ export const userSlice = createSlice({
         email: null,
         name: null,
         surname: null,
-        address: null,
+        address: {},
         socialLinks: [],
         followedProjects: [],
         createdProjects: [],
@@ -51,8 +51,7 @@ export const userSlice = createSlice({
         developpedProjects: []
       };
     },
-    updateUser: (state, action) => {
-      // Mettez à jour le profil de l'utilisateur dans le store
+    updateUser: (state, action) => {// Mettez à jour le profil de l'utilisateur dans le store
       state.value = { ...state.value, ...action.payload };
     },
     updateUserAddress: (state, action) => {
