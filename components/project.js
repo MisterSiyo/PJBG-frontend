@@ -15,15 +15,17 @@ function Project(props) {
     const [projectData, setProjectData] = useState({});
     const [isLoading, setIsLoading] = useState(true);
     const [key, setKey] = useState('');
-    const [news, setNews] = useState([]);
     const userAccount = useSelector((state) => state.user.value);
+    const [news, setNews] = useState([]);
 
     // const dispatch = useDispatch();
     // const user = useSelector((state) => state.user.value);
     console.log(projectData)
-    const handlePledge = 0;
+
+
 
     
+
 
     useEffect(() => {
         if (!project) {
@@ -34,6 +36,7 @@ function Project(props) {
             .then(response => response.json())
                 .then(data => {
                     data.result && setProjectData(data.project)
+                    setNews(data.project.histories)
                     setIsLoading(false)
                 })
 
@@ -57,8 +60,8 @@ function Project(props) {
             body: JSON.stringify({token: userAccount.token, message: chatMessage}),
         }).then(response => response.json())
             .then(data => {
-                    setChatMessage('');
-                    setNews([...news, data.updatedMessage])
+                setNews([...news, data.updatedMessage])
+                setChatMessage('');
             })
     };
 
@@ -119,7 +122,7 @@ function Project(props) {
         })
 
         return (
-            <div key={i} className={styles.pledgeBox}>
+            <div key={i} className={styles.pledgeBox} onClick={() => handlePledge(data.pledgeId)}>
                 <div className={styles.pledgeTitle}>
                     <p>${data.contributionLevel} - {tier}</p>
                 </div>
@@ -147,7 +150,7 @@ function Project(props) {
         )
     })
 
-    const messages = projectData.histories.map((data, i) => {
+    const messages = news.map((data, i) => {
         return (
             <div key={i} className={styles.messageContainer}>
                 <p className={styles.userposting}>{data.userPosting.username} - {data.userPosting.role}</p>
@@ -156,6 +159,11 @@ function Project(props) {
             </div>
         )
     })
+
+    const handlePledge = (pid) => {
+        router.push({path:'/checkoutPayment', pid, gurl:projectData.pageURL})
+        // router.push('/checkoutPayment')
+    }
     
     return (
         <>
