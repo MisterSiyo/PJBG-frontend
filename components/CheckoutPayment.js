@@ -5,26 +5,22 @@ export default function CheckoutPayment(props) {
 
     const [payment, setPayment] = useState('');
 
-    const [project, setProject] = useState({});
 
     const user = useSelector((state) => state.user.value);
-    
-    useEffect(() => {
 
-        fetch(`/projects/${props.gurl}`)
-        .then(response => response.json())
-        .then(data => {
-            setProject(data.project)
-        });
-    }, [])
+    const {pid, pcl, gid, title} = props;
 
 
 const handlePayment = () => {
+    if (payment) {
+        return;
+    }
+    console.log('data to send to put/backin : gid:  ', gid, 'user.token', user.token, 'pid:', pid)
 
-    fetch(`/projects/backing`, {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({projectId: project._id, token: user.token, pledgeId: props.pid})
+    fetch(`http://localhost:3000/projects/backing`, {
+        method: 'PUT',
+        headers: {'Content-Type' : 'application/json'},
+        body: JSON.stringify({projectId: gid, token: user.token, pledgeId: pid})
         })
         .then(response => response.json())
         .then(data => {
@@ -36,12 +32,13 @@ const handlePayment = () => {
             }
         })
 }
-        
+
   return (
     <>
-      <p>PAYMENT FOR {project.title}</p>
-      <p>{project.detail.pledges[gid-1].contributionLevel} €</p>
+      <p>PAYMENT FOR {title}</p>
+      <p>{pcl} €</p>
       <button onClick={() => handlePayment()}>VALIDATE PAYMENT</button>
+    <p>{payment}</p>
       
     </>
   );

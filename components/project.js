@@ -20,7 +20,7 @@ function Project(props) {
 
     // const dispatch = useDispatch();
     // const user = useSelector((state) => state.user.value);
-    console.log(projectData)
+
 
 
 
@@ -122,7 +122,7 @@ function Project(props) {
         })
 
         return (
-            <div key={i} className={styles.pledgeBox} onClick={() => handlePledge(data.pledgeId)}>
+            <div key={i} className={styles.pledgeBox} onClick={() => handlePledge(data.pledgeId, data.contributionLevel)}>
                 <div className={styles.pledgeTitle}>
                     <p>${data.contributionLevel} - {tier}</p>
                 </div>
@@ -160,8 +160,8 @@ function Project(props) {
         )
     })
 
-    const handlePledge = (pid) => {
-        router.push({path:'/checkoutPayment', pid, gurl:projectData.pageURL})
+    const handlePledge = (pid, pcl) => {
+        router.push({pathname:'/checkoutPayment', query: {pid, pcl, gid:projectData._id, title: projectData.title}})
         // router.push('/checkoutPayment')
     }
     
