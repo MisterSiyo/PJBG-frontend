@@ -69,7 +69,7 @@ const pledgesBoxes = pledges.map((data, i) => {
             tier = "Ultimate Patron Tier"
             break;
         default:
-          tier = "Supporter Pack"
+          tier = "Supporter Pack Tier"
       }
     const rewards = data.rewards.map((reward, j) => {
         return (
