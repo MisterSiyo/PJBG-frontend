@@ -88,7 +88,7 @@ export default function Header() {
 
         <h1
           className={styles.title}
-          onClick={() => router.push(isLoggedIn ? "/" : "/login")}
+          onClick={() => router.push("/")}
         >
           PJBG
         </h1>
