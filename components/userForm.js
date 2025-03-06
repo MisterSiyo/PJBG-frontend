@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addUserToStore } from '../reducers/user';
 
-export default function SignupForm({ onSubmit }) {
+export default function SignupForm({ onSubmit, companyInfo }) {
     const dispatch = useDispatch();
     const role = useSelector((state) => state.user.value.role); // Récupère le rôle depuis Redux
 
@@ -53,19 +53,21 @@ export default function SignupForm({ onSubmit }) {
             alert('Please complete all fields.');
             return;
         }
-
+       
         fetch('http://localhost:3000/users/register', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                username: formData.username,
-                email: formData.email,
-                password: formData.password,
-                role: role,  
+            username: formData.username,
+            email: formData.email,
+            password: formData.password,
+            role: role,
+            companyInfo: role === "studio" ? companyInfo : null,
             }),
         })
         .then(response => response.json())
         .then(data => {
+            // console.log(data)
             if (data.token) {
                 dispatch(addUserToStore(data)); // Ajoute l'utilisateur au store Redux
                 if (onSubmit) onSubmit();

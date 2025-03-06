@@ -1,4 +1,4 @@
-import styles from "../styles/project.module.css";
+import styles from "../styles/projectCard.module.css";
 import { useRouter } from "next/router";
 import { useState } from "react";
 

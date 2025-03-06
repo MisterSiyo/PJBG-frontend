@@ -11,17 +11,18 @@ export default function Index() {
       .then((response) => response.json())
       .then((data) => {
         if (data.result) {
-          const sortedProjects = data.projectsData
-            .map((project) => ({
-              ...project,
-              totalContributed: project.progressions?.reduce((sum, p) => sum + (p.amount || 0), 0) || 0,
-              fundingPercentage: project.goal
-                ? Math.round((project.progressions?.reduce((sum, p) => sum + (p.amount || 0), 0) / project.goal) * 100)
-                : 0,
-            }))
-            .sort((a, b) => b.fundingPercentage - a.fundingPercentage)
-            .slice(0, 6);
-          setProjects(sortedProjects);
+          // const sortedProjects = data.projectsData
+          //   .map((project) => ({
+          //     ...project,
+          //     totalContributed: project.progressions?.reduce((sum, p) => sum + (p.amount || 0), 0) || 0,
+          //     fundingPercentage: project.goal
+          //       ? Math.round((project.progressions?.reduce((sum, p) => sum + (p.amount || 0), 0) / project.goal) * 100)
+          //       : 0,
+          //   }))
+          //   .sort((a, b) => b.fundingPercentage - a.fundingPercentage)
+          //   .slice(0, 6);
+          // setProjects(sortedProjects);
+          setProjects(data.projectsData)
         }
       });
   }, []);
