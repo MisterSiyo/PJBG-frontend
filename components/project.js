@@ -17,7 +17,7 @@ function Project(props) {
     const [key, setKey] = useState('');
     const userAccount = useSelector((state) => state.user.value);
     const [news, setNews] = useState([]);
-
+    const user = useSelector((state) => state.user.value)
     // const dispatch = useDispatch();
     // const user = useSelector((state) => state.user.value);
 
@@ -73,7 +73,7 @@ function Project(props) {
 
     const favorited = projectData.user.followedProjects.map((data, i) => {
             return (
-                <p key={i}>{data}</p>
+                <p className={styles.favoriteText} key={i}>{data}</p>
             )
         })
     
@@ -81,7 +81,7 @@ function Project(props) {
 
     const funded = projectData.user.fundedProjects.map((data, i) => {
             return (
-                <p key={i}>{data}</p>
+                <p className={styles.fundedText} key={i}>{data}</p>
             )
         })
     
@@ -117,14 +117,14 @@ function Project(props) {
 
         const rewardsToShow = data.rewards.map((rew, j) => {
             return (
-                <p key={j}>{rew}</p>
+                <p className={styles.rewardText} key={j}>{rew}</p>
             )
         })
 
         return (
             <div key={i} className={styles.pledgeBox} onClick={() => handlePledge(data.pledgeId, data.contributionLevel)}>
                 <div className={styles.pledgeTitle}>
-                    <p>${data.contributionLevel} - {tier}</p>
+                    <p className={styles.contributionLevelText} >${data.contributionLevel} - {tier}</p>
                 </div>
                 <div className={styles.pledgeDescContainer}>
                     {rewardsToShow}
@@ -145,8 +145,11 @@ function Project(props) {
     })
 
     const genres = projectData.detail.gameMechanics.map((data, i) => {
+        if (data.GMType !== "genre") {
+            return;
+        }
         return (
-            <p key={i}>{data.name}</p>
+            <p className={styles.gmText} key={i}>{data.name}</p>
         )
     })
 
@@ -183,25 +186,38 @@ function Project(props) {
             <div className={styles.leftBar}>
                 <div className={styles.creatorContainer}>
                     <div className={styles.creatorUp}>
-                        <image/>
                         <div className={styles.creatorInfo}>
+                            {/* <image/> */}
                             <div className={styles.usernameContainer}>
-                                <p className={styles.creatorInfoTitle}>Username</p>
-                                <p>{projectData.user.username}</p>
+                                <div className={styles.usernameBG}>
+                                    <p className={styles.username}>{projectData.user.username}</p>
+                                </div>
+                                
                             </div>
                             <div className={styles.favorites}>
-                                <p className={styles.creatorInfoTitle}>Favorited Games</p>
+                                <div className={styles.favBG}>
+                                    <p>testFav1</p>
+                                    <p>testFav2</p>
+                                    <p>testFav3</p>
+                                    <p>testFav4</p>
                                 {favorited}
+                                </div>
                             </div>
                             <div className={styles.funded}>
-                                <p className={styles.creatorInfoTitle}>Funded Games</p>
-                                {funded}
+                                <div className={styles.fundedBG}>
+                                    <p>testFunded1</p>
+                                    <p>testFunded2</p>
+                                    <p>testFunded</p>
+                                    <p>testFunded</p>
+                                    {funded}
+                                </div>
                             </div> 
                         </div>
                     </div>
                     <div className={styles.creatorBottom}>
                         <div className={styles.creatorDescriptionContainer}>
-                            {/* <p>{project.user.description}</p> */}
+                            <p>lorem ipsum</p>
+                            <p>{projectData.user.description}</p>
                         </div>
                     </div>
                 </div>
@@ -222,7 +238,9 @@ function Project(props) {
                     <h3>{projectData.pitch}</h3>
                 </div>
                 <div className={styles.progressContainer}>
-
+                    <div className={styles.progressBar}>
+                        <p className={styles.progressText}>% € super</p>
+                    </div>
                 </div>
                 <div className={styles.studiosContainer}>
                     <image/>
@@ -238,7 +256,7 @@ function Project(props) {
                         <h3 className={styles.characTitle}>Characteristics</h3>
                     </div>
                     <div className={styles.characContentContainer}>
-                        <div className={styles.DescContainer}>
+                        <div className={styles.descContainer}>
                             <p>{projectData.detail.description}</p>
                         </div>
                         <div className={styles.otherCharac}>
@@ -314,13 +332,10 @@ function Project(props) {
                         </div>
                     </div>
                     <div className={styles.downloadButton}>
-                        <button>Download</button>
+                        Download all information on this project
                     </div>
                 </div>
-                <div className={styles.buttonBox}>
-                    <button>Take on the adventure</button>
-                    {/* <button>Develop this Project</button>  if user.role = studio sinon l'autre bouton*/}
-                </div>
+                    {user.role == "patron" && <div className={styles.takeon}>Take on the adventure and Develop this project</div>}
             </div>
 
 {/* RIGHT BAR */}
@@ -332,7 +347,7 @@ function Project(props) {
                     </div>
                     <div className={styles.chattingBox}>
                         <input placeholder='chat here' className={styles.messageInput} onChange={(e) => handleInputChange(e)} value={chatMessage} onKeyDown={(e) => setKey(e.key)}></input>
-                        <button className={styles.send} onClick={() => handleChat()}>Send</button>
+                        <div className={styles.send} onClick={() => handleChat()}>Send</div>
                     </div>
 
                 </div>

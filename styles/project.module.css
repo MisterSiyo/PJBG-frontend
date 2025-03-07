@@ -1,15 +1,251 @@
+@import url('https://fonts.googleapis.com/css2?family=Anta&display=swap');
+
 /* CARD BOTTOM */
-.cardBottom {
+/* .cardBottom {
     position: absolute;
     transform: translateX(-50%);
     left: 50%;
     bottom: -0.5rem;
     width: 70%;
+} */
+
+/* CATEGORIES CONTAINER */
+/* .categoriesContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin: auto;
+    margin-top: 1rem;
+    margin-bottom: 4rem;
+    padding: 1rem;
+} */
+
+/* CATEGORY TAGS */
+/* .categoryTag {
+    color: white;
+    border-radius: 1rem;
+    padding: 5px 15px;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    display: inline-block;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    
+} */
+
+
+
+/* UP PAGE */
+
+.titleContainer {
+    text-align: center;
+    padding: 20px 0;
 }
 
-/* PROGRESS BAR */
+.title {
+    font-size: 2.5em;
+    margin: 0;
+    color: #333;
+    font-family: "Anta"
+}
+
+.pageContent {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+
+/* LEFT */
+
+.leftBar {
+    flex-grow: 1;
+    padding: 20px;
+    background-color: #f0f8ff;
+    border-radius: 10px;
+    font-family: 'Anta';
+}
+
+.creatorInfo{
+    height: 100%;
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+}
+
+.creatorContainer {
+    margin-bottom: 20px;
+    font-family: "Anta";
+    background-color: #A0C7E3;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
+
+.creatorUp {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    text-align: right;
+}
+
+.usernameContainer {
+    margin-left: 10px;
+}
+
+.usernameBG {
+    background-color: #BEE4FF;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    position: relative;
+    margin-left: 10px;
+    padding: 2px;
+    border: 2px solid black;
+    margin-bottom: 10px;
+}
+
+.usernameBG::before {
+    content: 'Username';
+    position: absolute;
+    top: -10px; 
+    left: 10px; 
+    background-color: #A0C7E3; 
+    border-radius: 10px;
+    padding: 0 5px;
+    font-size: 14px; 
+    color: #333; 
+}
+
+.favBG {
+    background-color: #BEE4FF;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    position: relative;
+    margin-left: 10px;
+    padding: 2px;
+    border: 2px solid black;
+    margin-bottom: 10px;
+}
+
+.favBG::before {
+    content: 'Favorited Games';
+    position: absolute;
+    top: -10px; 
+    left: 10px; 
+    background-color: #A0C7E3; 
+    border-radius: 10px;
+    padding: 0 5px;
+    font-size: 14px; 
+    color: #333; 
+}
+
+.fundedBG {
+    background-color: #BEE4FF;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    position: relative;
+    margin-left: 10px;
+    padding: 2px;
+    border: 2px solid black;
+    margin-bottom: 10px;
+}
+
+.fundedBG::before {
+    content: 'Funded Games';
+    position: absolute;
+    top: -10px; 
+    left: 10px; 
+    background-color: #A0C7E3; 
+    border-radius: 10px;
+    padding: 0 5px;
+    font-size: 14px; 
+    color: #333; 
+}
+
+.creatorDescriptionContainer {
+    background-color: #BEE4FF;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    position: relative;
+    margin-left: 10px;
+    padding: 2px;
+    border: 2px solid black;
+    margin-bottom: 10px;
+}
+
+.creatorDescriptionContainer::before {
+    content: 'Description';
+    position: absolute;
+    top: -10px; 
+    left: 10px; 
+    background-color: #A0C7E3; 
+    border-radius: 10px;
+    padding: 0 5px;
+    font-size: 14px; 
+    color: #333; 
+}
+
+
+.favorites, .funded {
+    margin-bottom: 10px;
+    width: 40%;
+
+}
+
+.creatorInfoTitle {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+
+.pledgeContainer {
+    margin-bottom: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+.pledgeUpContainer {
+    margin-bottom: 10px;
+    font-family: "Anta";
+    font-size: x-large;
+    background-color: darkblue;
+    color: white;
+    text-align: center;
+}
+
+.pledgesContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: red;
+    text-align: center;
+    justify-content: center;
+}
+
+.pledgeTitle {
+    font-family: 'Anta';
+}
+
+/* CENTER */
+
+.centralBar {
+    flex-grow: 4;
+    padding: 20px;
+    background-color: #f0f8ff;
+    border-radius: 10px;
+}
+
+.pitchContainer {
+    margin-bottom: 20px;
+}
+
 .progressContainer {
-    background: #000000;
+    background: #000;
     border-radius: 10px;
     overflow: hidden;
     height: 2rem;
@@ -28,93 +264,182 @@
     justify-content: center;
 }
 
-/* PROGRESS TEXT */
 .progressText {
-    position: absolute;
-    width: 100%;
-    font-size: 14px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-weight: bold;
-    text-align: center;
     color: white;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
 }
 
-/* CATEGORIES CONTAINER */
-.categoriesContainer {
+.studiosContainer {
+    margin-bottom: 20px;
+}
+
+.studioBoxesContainer {
+    display: flex;
+    justify-content: space-around;
+    gap: 10px;
+}
+
+.characContainer {
+    margin-bottom: 20px;
+}
+
+.characTitleBox {
+    margin-bottom: 10px;
+}
+
+.characTitle {
+    font-size: 1.5em;
+    margin: 0;
+}
+
+.characContentContainer {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
-    gap: 1rem;
-    margin: auto;
-    margin-top: 1rem;
-    margin-bottom: 4rem;
-    padding: 1rem;
+    gap: 10px;
 }
 
-/* CATEGORY TAGS */
-.categoryTag {
-    color: white;
-    border-radius: 1rem;
-    padding: 5px 15px;
-    font-size: 12px;
-    font-weight: bold;
-    text-transform: uppercase;
-    display: inline-block;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
-    
+.descContainer, .otherCharac, .characLeftBox, .genreContainer, .characTitleContainer, .characIterationContainer {
+    flex: 1 1 45%;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.downloadButton {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: grey;
+    color: #fff;
+    text-align: center;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.takeon {
+    margin-top: 20px;
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #cc0000;
+    color: #fff;
+    text-align: center;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
 
-
-.titleContainer {
-    border: solid 2px black;
-}
-
-.title {
-    color: blue;
-}
-
-.pageContent {
-    border-width: 2px;
-    border: solid 2px blue;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.leftBar {
-    border-width: 2px;
-    border: solid 2px blue;
-    flex-grow: 1;
-
-}
-
-.centralBar {
-    border-width: 2px;
-    border: solid 2px blue;
-    flex-grow: 4;
-}
+/* RIGHT */
 
 .rightBar {
-    border-width: 2px;
-    border: solid 2px blue;
     flex-grow: 1;
+    padding: 20px;
+    background-color: #f0f8ff;
+    border-radius: 10px;
+}
+
+.NewschatContainer {
+    margin-bottom: 20px;
+}
+
+.NewsChatBox {
+    margin-bottom: 10px;
+}
+
+.chattingBox {
+    margin-bottom: 10px;
+}
+
+.messageInput {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.send {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #1abc9c;
+    color: #fff;
+    text-align: center;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
 
-.creatorContainer {
-    border-width: 2px;
-    border: solid 2px red;
+/* VARIABLES */
+
+.favoriteText {
+    color: orange;
 }
 
-.creatorUp {
-    border-width: 2px;
-    border: solid 2px green;
+.fundedText {
+    color: green;
 }
 
-.creatorBottom {
-    border-width: 2px;
-    border: solid 2px green;
+.rewardText {
+    color: black;
+    font-weight: 20;
+}
+
+.pledgeBox {
+    padding: 10px;
+    background-color: #A0C7E3;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    width: 70%;
+}
+
+.pledgeTitle {
+    font-weight: bold;
+    margin-bottom: 10px;
+    background-color: #7A2048;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    text-align: center;
+}
+
+.contributionLevelText {
+    color: white;
+    font-size: x-large;
+    font-weight: 40;
+}
+
+.pledgeDescContainer {
+    margin-bottom: 10px;
+}
+
+.studioBox {
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.gmText {
+    color: peru;
+}
+
+.messageContainer {
+    margin-bottom: 10px;
+}
+
+.userPosting {
+    color: blueviolet;
+}
+
+.message {
+    color: red;
+}
+
+.messageDate {
+    color: yellowgreen;
 }
