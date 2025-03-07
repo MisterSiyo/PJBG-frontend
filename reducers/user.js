@@ -5,11 +5,12 @@ const initialState = { // notre valeur initiale de user dans le store, initialis
     token: null,
     username: null,
     role: null,
-    email: null,           // Ajout de l'email
-    name: null,            // Ajout du prénom
-    surname: null,         // Ajout du nom de famille
-    address: null,         // Ajout de l'adresse postale
-    socialLinks: [],       // Ajout des liens sociaux
+    email: null,           
+    name: null,
+    surname: null,      
+    address: null,         
+    studio: null,
+    socialLinks: [],       
     followedProjects: [],
     createdProjects: [],
     fundedProjects: [],
