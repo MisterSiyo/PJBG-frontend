@@ -73,7 +73,7 @@ function Project(props) {
 
     const favorited = projectData.user.followedProjects.map((data, i) => {
             return (
-                <p className={styles.favoriteText} key={i}>{data}</p>
+                <p className={styles.favoriteText} key={i}>{data.project.title}</p>
             )
         })
     
@@ -81,7 +81,7 @@ function Project(props) {
 
     const funded = projectData.user.fundedProjects.map((data, i) => {
             return (
-                <p className={styles.fundedText} key={i}>{data}</p>
+                <p className={styles.fundedText} key={i}>{data.project.title}</p>
             )
         })
     
@@ -167,7 +167,7 @@ function Project(props) {
         router.push({pathname:'/checkoutPayment', query: {pid, pcl, gid:projectData._id, title: projectData.title}})
         // router.push('/checkoutPayment')
     }
-    
+
     return (
         <>
         <br></br>
@@ -205,10 +205,6 @@ function Project(props) {
                             </div>
                             <div className={styles.funded}>
                                 <div className={styles.fundedBG}>
-                                    <p>testFunded1</p>
-                                    <p>testFunded2</p>
-                                    <p>testFunded</p>
-                                    <p>testFunded</p>
                                     {funded}
                                 </div>
                             </div> 
