@@ -1,4 +1,4 @@
-import styles from '../styles/layout.module.css';
+import styles from '../styles/GameCreation.module.css';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
@@ -13,9 +13,9 @@ export default function GameCreation() {
     const [key, setKey] = useState('');
     const [gameMechanics, setGameMechanics] = useState([]);
     const [pledges, setPledges] = useState([]);
-    const [showPopover, setShowPopover] = useState(false);
     const [selectedPledges, setSelectedPledges] = useState([]);
     const [selectedGameMechanics, setSelectedGameMechanics] = useState([]);
+    const [hoveredGMIndex, setHoveredGMIndex] = useState(null);
 
     const user = useSelector((state) => state.user.value);
     console.log(selectedGameMechanics, selectedPledges)
@@ -89,9 +89,9 @@ const pledgesBoxes = pledges.map((data, i) => {
 
 const GMboxes = gameMechanics.map((data, i) => {
     return (
-        <div key={i} onMouseOver={() => setShowPopover(true)} onMouseLeave={() => setShowPopover(false)} onClick={() => handleClickGM(data)}>
+        <div key={i} onMouseOver={() => setHoveredGMIndex(i)} onMouseLeave={() => setHoveredGMIndex(null)} onClick={() => handleClickGM(data)}>
             <p>{data.name}</p>
-            {showPopover && 
+            {hoveredGMIndex === i && 
                 <div>
                     <p>{data.description}</p>
                 </div>}
@@ -172,27 +172,25 @@ const GMboxes = gameMechanics.map((data, i) => {
 
 
     return (
-        <>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-            <h2>You have a videogame idea, great ! Use the inputs below to describe it</h2>
-
-            <input type='text' placeholder='title of your game (max 30 char)' onChange={(e) => handleTitleChange(e)} value={title} onKeyDown={(e) => setKey(e.key)}></input>
-            <input type='text' placeholder='a quick summary of your game (max 100 char)' onChange={(e) => handlePitchChange(e)} value={pitch} onKeyDown={(e) => setKey(e.key)}></input>
-            <input type='text' placeholder='a description of your game (max 1,000 char)' onChange={(e) => handleDescriptionChange(e)} value={description} onKeyDown={(e) => setKey(e.key)}></input>
-            <input type='text' placeholder='How much should it cost ? (optionnal)' onChange={(e) => handleGoalChange(e)} value={goal} onKeyDown={(e) => setKey(e.key)}></input>
-            <div>
+    <>
+        <div className={styles.container}>
+            <h2 className={styles.header}>You have a videogame idea, great ! Can you please describe it to everybody ?</h2>
+            <div className={styles.inputsContainer}>
+                <input className={styles.inputField1} type='text' placeholder='title of your game (max 30 char)' onChange={(e) => handleTitleChange(e)} value={title} onKeyDown={(e) => setKey(e.key)}></input>
+                <input className={styles.inputField2} type='text' placeholder='a quick summary of your game (max 100 char)' onChange={(e) => handlePitchChange(e)} value={pitch} onKeyDown={(e) => setKey(e.key)}></input>
+                <input className={styles.inputField3} type='text' placeholder='a description of your game (max 1,000 char)' onChange={(e) => handleDescriptionChange(e)} value={description} onKeyDown={(e) => setKey(e.key)}></input>
+                <input className={styles.inputField4} type='text' placeholder='How much should it cost ? (optionnal)' onChange={(e) => handleGoalChange(e)} value={goal} onKeyDown={(e) => setKey(e.key)}></input>
+            </div>
+            <div className={styles.pledgesContainer}>
                 <p>What pledges do you want to see in your projet ? only one option per tier</p>
                 {pledgesBoxes}
             </div>
-            <div>
+            <div className={styles.gameMechanicsContainer}>
                 <p>What game mechanics do you think characterize your idea ?</p>
                 {GMboxes}
             </div>
-            <button onClick={() => handleSubmit()}>Press F</button>
-        </>
+            <button className={styles.button} onClick={() => handleSubmit()}>Press F</button>
+        </div>   
+    </>
     )
 }

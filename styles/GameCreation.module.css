@@ -1,0 +1,162 @@
+@import url('https://fonts.googleapis.com/css2?family=Anta&display=swap');
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    /* background-color: #f0f8ff; */
+    background-color: #A0C7E3
+}
+
+.header {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #ffffff;
+    font-family: 'Anta';
+    background-color: #408EC6;
+    border-radius: 20px;
+    padding: 10px;
+    font-weight: 30;
+}
+
+.inputField1 {
+    width: 80%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.inputField2 {
+    width: 80%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.inputField3 {
+    width: 80%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.inputField4 {
+    width: 80%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+
+.inputField1::before {
+    font-family: "Anta";
+    content: 'Game Title';
+    position:relative;
+    top: -10px;
+    left: 40px;
+    background-color: #A0C7E3; 
+    border-radius: 10px;
+    padding: 0 5px;
+    font-size: 14px; 
+    color: #333; 
+}
+
+.inputField2::before {
+    font-family: "Anta";
+    content: 'Game Description';
+    position:relative;
+    top: -10px;
+    left: 40px;
+    background-color: #A0C7E3; 
+    border-radius: 10px;
+    padding: 0 5px;
+    font-size: 14px; 
+    color: #333; 
+}
+
+.inputField3::before {
+    font-family: "Anta";
+    content: 'Game Description';
+    position:relative;
+    top: -10px;
+    left: 40px;
+    background-color: #A0C7E3; 
+    border-radius: 10px;
+    padding: 0 5px;
+    font-size: 14px; 
+    color: #333; 
+}
+
+.inputField4::before {
+    font-family: "Anta";
+    content: 'Game Description';
+    position:relative;
+    top: -10px;
+    left: 40px;
+    background-color: #A0C7E3; 
+    border-radius: 10px;
+    padding: 0 5px;
+    font-size: 14px; 
+    color: #333; 
+}
+
+.pledgesContainer, .gameMechanicsContainer {
+    width: 80%;
+    margin: 20px 0;
+}
+
+.pledgeBox, .gameMechanicBox {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px 0;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.pledgeBox:hover, .gameMechanicBox:hover {
+    background-color: #e0e0e0;
+}
+
+.selected {
+    background-color: #add8e6;
+}
+
+.button {
+    padding: 10px 20px;
+    background-color: #800000;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.button:hover {
+    background-color: #a52a2a;
+}
+
+.inputsContainer {
+    width: 40%;
+    background-color: #408EC6;
+    border-radius: 20px;
+}
+
+.inputsContainer::before {
+    font-family: "Anta";
+    content: 'Game Description';
+    position:relative;
+    top: -10px;
+    left: 40px;
+    background-color: #A0C7E3; 
+    border-radius: 10px;
+    padding: 0 5px;
+    font-size: 14px; 
+    color: #333; 
+}

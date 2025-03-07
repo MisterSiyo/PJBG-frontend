@@ -153,6 +153,78 @@ function Project(props) {
         )
     })
 
+    const gameplays = projectData.detail.gameMechanics.map((data, i) => {
+        if (data.GMType !== "gameplay") {
+            return;
+        }
+        return (
+            <p className={styles.gmText} key={i}>{data.name}</p>
+        )
+    })
+
+    const storytellings = projectData.detail.gameMechanics.map((data, i) => {
+        if (data.GMType !== "storytelling") {
+            return;
+        }
+        return (
+            <p className={styles.gmText} key={i}>{data.name}</p>
+        )
+    })
+
+    const universes = projectData.detail.gameMechanics.map((data, i) => {
+        if (data.GMType !== "universe") {
+            return;
+        }
+        return (
+            <p className={styles.gmText} key={i}>{data.name}</p>
+        )
+    })
+
+    const gamemodes = projectData.detail.gameMechanics.map((data, i) => {
+        if (data.GMType !== "gamemode") {
+            return;
+        }
+        return (
+            <p className={styles.gmText} key={i}>{data.name}</p>
+        )
+    })
+
+    const rewardsystem = projectData.detail.gameMechanics.map((data, i) => {
+        if (data.GMType !== "rewardsystem") {
+            return;
+        }
+        return (
+            <p className={styles.gmText} key={i}>{data.name}</p>
+        )
+    })
+
+    const difficulties = projectData.detail.gameMechanics.map((data, i) => {
+        if (data.GMType !== "difficulty") {
+            return;
+        }
+        return (
+            <p className={styles.gmText} key={i}>{data.name}</p>
+        )
+    })
+
+    const npctypes = projectData.detail.gameMechanics.map((data, i) => {
+        if (data.GMType !== "npctype") {
+            return;
+        }
+        return (
+            <p className={styles.gmText} key={i}>{data.name}</p>
+        )
+    })
+
+    const tropes = projectData.detail.gameMechanics.map((data, i) => {
+        if (data.GMType !== "tropes") {
+            return;
+        }
+        return (
+            <p className={styles.gmText} key={i}>{data.name}</p>
+        )
+    })
+
     const messages = news.map((data, i) => {
         return (
             <div key={i} className={styles.messageContainer}>
@@ -212,7 +284,6 @@ function Project(props) {
                     </div>
                     <div className={styles.creatorBottom}>
                         <div className={styles.creatorDescriptionContainer}>
-                            <p>lorem ipsum</p>
                             <p>{projectData.user.description}</p>
                         </div>
                     </div>
@@ -244,7 +315,7 @@ function Project(props) {
                         <h4>Interested Studios</h4>
                         <div className={styles.studioBoxesContainer}>
                             {intStudios}
-                        </div>    
+                        </div>
                     </div>
                 </div>
                 <div className={styles.characContainer}>
@@ -270,7 +341,7 @@ function Project(props) {
                                         <h6>Gameplay & Mechanics</h6>
                                     </div>
                                     <div className={styles.characIterationContainer}>
-                                        {genres}
+                                        {gameplays}
                                     </div>
                                 </div>
                                 <div className={styles.genreContainer}>
@@ -278,15 +349,15 @@ function Project(props) {
                                         <h6>Story & Narrative</h6>
                                     </div>
                                     <div className={styles.characIterationContainer}>
-                                        {genres}
+                                        {storytellings}
                                     </div>
                                 </div>
                                 <div className={styles.genreContainer}>
                                     <div className={styles.characTitleContainer}>
-                                        <h6>World Design</h6>
+                                        <h6>Difficulty Modes</h6>
                                     </div>
                                     <div className={styles.characIterationContainer}>
-                                        {genres}
+                                        {difficulties}
                                     </div>
                                 </div>
                             </div>
@@ -297,7 +368,7 @@ function Project(props) {
                                         <h6>Universe & Ambiance</h6>
                                     </div>
                                     <div className={styles.characIterationContainer}>
-                                        {genres}
+                                        {universes}
                                     </div>
                                 </div>
                                 <div className={styles.genreContainer}>
@@ -305,23 +376,31 @@ function Project(props) {
                                         <h6>Game Modes</h6>
                                     </div>
                                     <div className={styles.characIterationContainer}>
-                                        {genres}
+                                        {gamemodes}
                                     </div>
                                 </div>
                                 <div className={styles.genreContainer}>
                                     <div className={styles.characTitleContainer}>
-                                        <h6>Entities Behavior</h6>
+                                        <h6>NPC Behavior</h6>
                                     </div>
                                     <div className={styles.characIterationContainer}>
-                                        {genres}
+                                        {npctypes}
                                     </div>
                                 </div>
                                 <div className={styles.genreContainer}>
                                     <div className={styles.characTitleContainer}>
-                                        <h6>Progressions & Rewards</h6>
+                                        <h6>Progressions & Reward System</h6>
                                     </div>
                                     <div className={styles.characIterationContainer}>
-                                        {genres}
+                                        {rewardsystem}
+                                    </div>
+                                </div>
+                                <div className={styles.genreContainer}>
+                                    <div className={styles.characTitleContainer}>
+                                        <h6>Tropes</h6>
+                                    </div>
+                                    <div className={styles.characIterationContainer}>
+                                        {tropes}
                                     </div>
                                 </div>
                             </div>
