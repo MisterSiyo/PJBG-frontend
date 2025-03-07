@@ -3,16 +3,18 @@ import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import styles from '../styles/project.module.css';
 
-
 function ProjectValidated() {
     const [chatMessage, setChatMessage] = useState('');
+    const [updateTitle, setUpdateTitle] = useState('');
+    const [updateContent, setUpdateContent] = useState('');
+    const [stages, setStages] = useState([]);
+
     const router = useRouter();
     const { project } = router.query;
     const [projectData, setProjectData] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [key, setKey] = useState('');
     const [news, setNews] = useState([]);
-    const [showCharacteristics, setShowCharacteristics] = useState(false); // État pour afficher les caractéristiques
     const userAccount = useSelector((state) => state.user.value);
 
     useEffect(() => {
@@ -24,6 +26,7 @@ function ProjectValidated() {
                 if (data.result) {
                     setProjectData(data.project);
                     setNews(data.project.histories);
+                    setStages(data.project.stages || []);
                 }
                 setIsLoading(false);
             });
@@ -49,6 +52,32 @@ function ProjectValidated() {
             });
     };
 
+    const handleSubmitUpdate = async () => {
+        if (!updateTitle.trim() || !updateContent.trim()) {
+            alert("Title and content cannot be empty.");
+            return;
+        }
+
+        const response = await fetch(`http://localhost:3000/projects/update/${projectData._id}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                title: updateTitle,
+                content: updateContent,
+                token: userAccount.token
+            })
+        });
+
+        const data = await response.json();
+        if (response.ok) {
+            setStages([...stages, { title: updateTitle, content: updateContent, date: new Date() }]);
+            setUpdateTitle("");
+            setUpdateContent("");
+        } else {
+            alert("Error posting update: " + data.message);
+        }
+    };
+
     if (isLoading) return <div>Loading...</div>;
     if (!projectData) return <div>Project not found</div>;
 
@@ -66,24 +95,41 @@ function ProjectValidated() {
                         <p><strong>Username:</strong> {projectData.user.username}</p>
                         <p><strong>Description:</strong> {projectData.user.description || "No description available."}</p>
                     </div>
+                </div>
 
-                    {/* Bouton pour afficher les caractéristiques */}
-                    <div className={styles.characContainer}>
-                        <button onClick={() => setShowCharacteristics(!showCharacteristics)} className={styles.characButton}>
-                            {showCharacteristics ? "Hide Characteristics" : "Show Characteristics"}
-                        </button>
+                {/* Mises à jour du développement */}
+                <div className={styles.centerBar}>
+                    <h3>Development Updates</h3>
 
-                        {showCharacteristics && (
-                            <div className={styles.characList}>
-                                {projectData.detail.gameMechanics.map((mechanic, i) => (
-                                    <div key={i} className={styles.characItem}>
-                                        <strong>{mechanic.name}</strong>
-                                        <p>{mechanic.description}</p>
-                                    </div>
-                                ))}
-                            </div>
-                        )}
-                    </div>
+                    {/* Formulaire pour les studios */}
+                    {userAccount.role === "studio" && (
+                        <div className={styles.updateForm}>
+                            <h4>Add a new update</h4>
+                            <input
+                                type="text"
+                                placeholder="Update Title"
+                                value={updateTitle}
+                                onChange={(e) => setUpdateTitle(e.target.value)}
+                            />
+                            <textarea
+                                placeholder="Write a progress update..."
+                                value={updateContent}
+                                onChange={(e) => setUpdateContent(e.target.value)}
+                            />
+                            <button onClick={handleSubmitUpdate}>Submit Update</button>
+                        </div>
+                    )}
+
+                    {/* Affichage de l'historique des mises à jour */}
+                    <h4>Update History</h4>
+                    <ul>
+                        {stages.map((stage, index) => (
+                            <li key={index}>
+                                <strong>{stage.title}</strong> - {new Date(stage.date).toLocaleDateString()}
+                                <p>{stage.content}</p>
+                            </li>
+                        ))}
+                    </ul>
                 </div>
 
                 {/* RIGHT BAR - Chat */}
@@ -98,16 +144,6 @@ function ProjectValidated() {
                                     <p className={styles.messageDate}>{new Date(data.date).toLocaleString()}</p>
                                 </div>
                             ))}
-                        </div>
-                        <div className={styles.chattingBox}>
-                            <input 
-                                placeholder='Chat here...' 
-                                className={styles.messageInput} 
-                                onChange={handleInputChange} 
-                                value={chatMessage} 
-                                onKeyDown={(e) => setKey(e.key)}
-                            />
-                            <button className={styles.send} onClick={handleChat}>Send</button>
                         </div>
                     </div>
                 </div>
