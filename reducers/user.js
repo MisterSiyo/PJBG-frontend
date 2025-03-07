@@ -41,6 +41,7 @@ export const userSlice = createSlice({
         name: null,
         surname: null,
         address: {},
+        studio: null,
         socialLinks: [],
         followedProjects: [],
         createdProjects: [],
