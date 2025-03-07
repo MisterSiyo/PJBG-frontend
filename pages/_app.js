@@ -1,56 +1,80 @@
-// import '../styles/globals.css';
-import { useEffect } from 'react';
-import { useRouter } from 'next/router';
+import "../styles/globals.css";
+import { GoogleOAuthProvider } from "@react-oauth/google";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 
 // Imports nécessaires à l'utilisation du store (redux)
-import {Provider} from 'react-redux';
-import { configureStore } from '@reduxjs/toolkit';
+import { Provider } from "react-redux";
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
+import { persistStore, persistReducer } from "redux-persist";
+import { PersistGate } from "redux-persist/integration/react";
+import storage from "redux-persist/lib/storage";
+import userReducer from "../reducers/user";
 
-// import de notre reducer user (les datas stockées dans le store de l'utilisateur)
-import user from '../reducers/user';
+import Head from "next/head"; // le header pour le SEO
+import Header from "../components/Header";
+import AuthHandler from "../components/AuthHandler";
 
-// import des éléments nécessaires à persistor redux 
-// (ce qui permet que les données du store restent après rafraichissement 
-// de la page, les données sont vraiment stockées par l'utilisateur dans son navigateur)
-import { persistStore, persistReducer } from 'redux-persist'; // les config qui permettent au store et aux reducers de 'rester'
-import { PersistGate } from 'redux-persist/integration/react'; // la balise qui contient le persistor
-import storage from 'redux-persist/lib/storage'; // le storage qui est un store amélioré du coup (je schématise)
-import { combineReducers } from '@reduxjs/toolkit'; // pouvoir ranger tous les reducers dans le même stockage
+// Configuration de redux-persist
+console.log("Configuration de redux-persist");
+const persistConfig = {
+  key: "pjbg-root",
+  storage,
+  whitelist: ["user"], // On ne persiste que le reducer user
+  debug: true,
+};
 
-import Head from 'next/head'; // le header pour le SEO
-import Header from '../components/Header';
-
-const reducers = combineReducers({user}); // déclaration de tous nos reducers
-
-const persistConfig = {key: 'PJBG', storage}; // le nom du storage dans le nav de l'utilisateur : le nom de notre site
-
-const store = configureStore({ // déclarer le store avec les premiers imports
-    reducer: persistReducer(persistConfig, reducers),
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware({
-        serializableCheck: false
-    }),
+// Combiner les reducers
+const reducers = combineReducers({
+  user: userReducer,
+  // Autres reducers si nécessaires
 });
 
-const persistor = persistStore(store); // déclarer le store persistant en utilisant les imports
+// Créer le reducer persistent
+const persistedReducer = persistReducer(persistConfig, reducers);
+
+// Configurer le store avec le reducer persistant
+const store = configureStore({
+  reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        // Ignorer les actions de redux-persist dans les vérifications de sérialisation
+        ignoredActions: ["persist/PERSIST", "persist/REHYDRATE"],
+      },
+    }),
+  devTools: process.env.NODE_ENV !== "production",
+});
+
+// Créer le persistor
+const persistor = persistStore(store, null, () => {
+  console.log("Rehydratation redux-persist terminée");
+  console.log("État initial:", store.getState());
+});
 
 function MyApp({ Component, pageProps }) {
-    const router = useRouter();
+  const router = useRouter();
 
-    useEffect(() => {
-        console.log(`Navigated to ${router.pathname}`);
-    }, [router.pathname]);
+  useEffect(() => {
+    console.log(`Navigated to ${router.pathname}`);
+  }, [router.pathname]);
 
-    return (
-        <Provider store={store}>
-            <PersistGate persistor={persistor}>
-                <Head>
-                    <title>PJBG</title>
-                </Head>
-                <Header/>
-                <Component {...pageProps} />
-            </PersistGate>
-        </Provider>
-);
+  console.log("Initialisation de l'application");
+
+  return (
+    <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}>
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <Head>
+            <title>PJBG</title>
+          </Head>
+          <Header />
+          <AuthHandler />
+          <Component {...pageProps} />
+        </PersistGate>
+      </Provider>
+    </GoogleOAuthProvider>
+  );
 }
 
 export default MyApp;

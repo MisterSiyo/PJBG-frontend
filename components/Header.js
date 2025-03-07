@@ -1,9 +1,12 @@
 "use client";
 import styles from "../styles/layout.module.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { useDispatch, useSelector } from "react-redux";
-import { setRole, addUserToStore, removeUserFromStore } from "../reducers/user";
+import { useDispatch } from "react-redux";
+import { setRole, addUserToStore } from "../reducers/user";
+import GoogleAuthButton from "./GoogleAuthButton";
+import RedditAuthButton from "./RedditAuthButton";
+import useAuth from "../hooks/useAuth";
 
 export default function Header() {
   const [showPopover, setShowPopover] = useState(false);
@@ -12,8 +15,7 @@ export default function Header() {
   const [showNavMenu, setShowNavMenu] = useState(false);
 
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user.value);
-  const isLoggedIn = !!user.token;
+  const { user, isLoggedIn, logout } = useAuth();
 
   const router = useRouter();
   const isLoginPage = router.pathname === "/login";
@@ -23,17 +25,39 @@ export default function Header() {
     "/signup-dev",
   ].includes(router.pathname);
 
+  // Afficher l'état de connexion à chaque rendu
+  useEffect(() => {
+    console.log("🔍 Header - État actuel:", {
+      isLoggedIn,
+      username: user?.username || "non connecté",
+      authType: user?.authType || "aucun",
+      showPopover,
+      showNavMenu,
+    });
+  });
+
+  // Fermer le popover quand l'utilisateur est connecté
+  useEffect(() => {
+    if (isLoggedIn) {
+      console.log("✅ Header - Utilisateur connecté, fermeture du popover");
+      setShowPopover(false);
+    }
+  }, [isLoggedIn]);
+
   const handleRoleSelection = (selectedRole, signupPath) => {
+    console.log(`🔄 Header - Sélection du rôle: ${selectedRole}`);
     dispatch(setRole(selectedRole));
     setShowPopover(false);
     router.push(signupPath);
   };
 
   const handleLogin = async () => {
+    console.log("🔄 Header - Tentative de connexion classique");
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
 
     if (!identifier || !password) {
-      alert("Please fill in all fields.");
+      console.log("❌ Header - Champs incomplets");
+      alert("Veuillez remplir tous les champs.");
       return;
     }
 
@@ -43,6 +67,7 @@ export default function Header() {
       password,
     };
 
+    console.log("🔄 Header - Envoi de la requête de connexion");
     try {
       const response = await fetch("http://localhost:3000/users/login", {
         method: "POST",
@@ -50,31 +75,75 @@ export default function Header() {
         body: JSON.stringify(loginData),
       });
 
+      console.log("📥 Header - Réponse du serveur:", {
+        status: response.status,
+        ok: response.ok,
+      });
+
       const data = await response.json();
 
       if (response.ok) {
         if (data.token) {
-          dispatch(addUserToStore(data));
+          console.log(
+            "✅ Header - Connexion réussie, token reçu:",
+            data.token.substring(0, 10) + "..."
+          );
+
+          // Mettre à jour le state Redux
+          const userForStore = {
+            ...data,
+            authType: "local",
+            isAuthenticated: true,
+          };
+
+          console.log("🔄 Header - Mise à jour Redux:", userForStore.username);
+          dispatch(addUserToStore(userForStore));
+
+          // Stocker le token dans localStorage pour la persistance
+          console.log("💾 Header - Sauvegarde du token dans localStorage");
+          localStorage.setItem("authToken", data.token);
+
+          // Fermer le popover
           setShowPopover(false);
         } else {
-          alert("Unknown error. Please try again.");
+          console.error("❌ Header - Token manquant dans la réponse");
+          alert("Erreur inconnue. Veuillez réessayer.");
         }
       } else {
-        alert(data.message || "An error has occurred.");
+        console.error("❌ Header - Erreur de connexion:", data.message);
+        alert(data.message || "Une erreur s'est produite.");
       }
     } catch (error) {
-      alert("An error has occurred.");
+      console.error("❌ Header - Exception lors de la connexion:", error);
+      alert("Une erreur s'est produite.");
     }
   };
 
   const handleLogout = () => {
-    dispatch(removeUserFromStore());
+    console.log("🔄 Header - Déconnexion de l'utilisateur:", user?.username);
+
+    // Utiliser la fonction de déconnexion du hook useAuth
+    logout();
+
+    // Rediriger vers l'accueil
+    console.log("🔄 Header - Redirection vers l'accueil");
     router.push("/");
   };
 
   const navigateTo = (path) => {
+    console.log(`🔄 Header - Navigation vers: ${path}`);
     router.push(path);
     setShowNavMenu(false);
+  };
+
+  // Handler pour la connexion réussie via OAuth
+  const handleOAuthSuccess = (userData) => {
+    console.log(
+      "✅ Header - Connexion OAuth réussie pour:",
+      userData?.name || "inconnu"
+    );
+    // Fermer le popover après connexion réussie
+    setShowPopover(false);
   };
 
   return (
@@ -86,10 +155,7 @@ export default function Header() {
           </button>
         )}
 
-        <h1
-          className={styles.title}
-          onClick={() => router.push("/")}
-        >
+        <h1 className={styles.title} onClick={() => router.push("/")}>
           PJBG
         </h1>
 
@@ -142,14 +208,10 @@ export default function Header() {
             </button>
 
             <h1>Log In</h1>
-            <button onClick={() => router.push("/signin-options")}>
-              Log in with Reddit
-            </button>
+            <RedditAuthButton onLoginSuccess={handleOAuthSuccess} />
             <br />
             <br />
-            <button onClick={() => router.push("/signin-options")}>
-              Log in with Google
-            </button>
+            <GoogleAuthButton onLoginSuccess={handleOAuthSuccess} />
             <br />
             <br />
             <h5>
@@ -160,14 +222,16 @@ export default function Header() {
               placeholder="Email or Username"
               value={identifier}
               onChange={(e) => setIdentifier(e.target.value)}
-              onKeyDown={(e) => e.key === 'Enter' && handleLogin()}className={styles.input}
+              onKeyDown={(e) => e.key === "Enter" && handleLogin()}
+              className={styles.input}
             />
             <input
               type="password"
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              onKeyDown={(e) => e.key === 'Enter' && handleLogin()}className={styles.input}
+              onKeyDown={(e) => e.key === "Enter" && handleLogin()}
+              className={styles.input}
             />
             <br />
             <br />
