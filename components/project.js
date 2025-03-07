@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import {loadMessages} from '../reducers/chatMessage';
 import styles from '../styles/project.module.css';
+import ProjectValidated from './projectValidated';
 
 function Project(props) {
 
@@ -41,6 +42,15 @@ function Project(props) {
                 })
 
     }, [project])
+
+    // ajout de la page validated
+
+    if (isLoading) return <div>loading...</div>;
+    if (!projectData) return <div>Project Not Found</div>;
+
+    if (projectData.layoutType === "validated") {
+        return <ProjectValidated projectData={projectData} />
+    }
 
 
     const handleInputChange = (e) => {
