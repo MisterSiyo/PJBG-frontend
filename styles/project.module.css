@@ -193,8 +193,6 @@
 
 .favorites, .funded {
     margin-bottom: 10px;
-    width: 40%;
-
 }
 
 .creatorInfoTitle {
@@ -216,13 +214,15 @@
     background-color: darkblue;
     color: white;
     text-align: center;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
 }
 
 .pledgesContainer {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    background-color: red;
+    background-color: white;
     text-align: center;
     justify-content: center;
 }
@@ -294,6 +294,7 @@
 
 .characContentContainer {
     display: flex;
+    flex-direction: column;
     flex-wrap: wrap;
     gap: 10px;
 }
@@ -395,7 +396,10 @@
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     border-bottom-right-radius: 20px;
     border-bottom-left-radius: 20px;
-    width: 70%;
+    width: 80%;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    
 }
 
 .pledgeTitle {
