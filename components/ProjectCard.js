@@ -1,6 +1,6 @@
 import styles from "../styles/projectCard.module.css";
 import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 // Dictionnaire associant une couleur à chaque catégorie, a voir si il y a peut être une méthode lié à la BDD
 // const categoryColors = {
@@ -25,21 +25,9 @@ import { useState, useEffect } from "react";
 //   "Fighting": "#e53935"
 // };
 
-// const [genres, setGenres] = useState([]);
-
-// useEffect(() => {
-
-//   fetch('http://localhost:3000/genres')
-//   .then(response => response.json())
-//   .then(genresData => {
-//     setGenres(genresData.genres)
-//   })
-
-// }, []);
-
 // Fonction pour récupérer la couleur d'une catégorie
 // Si la catégorie n'existe pas dans `categoryColors`, la couleur par défaut est grise
-const getCategoryColor = (category) => categoryColors[category] || "#cccccc";
+// const getCategoryColor = (category) => categoryColors[category] || "#cccccc";
 
 export default function ProjectCard({ project }) {
   console.log('voici ce que je recup de project : ', project)
