@@ -16,6 +16,7 @@ export default function GameCreation() {
     const [selectedPledges, setSelectedPledges] = useState([]);
     const [selectedGameMechanics, setSelectedGameMechanics] = useState([]);
     const [hoveredGMIndex, setHoveredGMIndex] = useState(null);
+    const [popoverPosition, setPopoverPosition] = useState({ x: 0, y: 0 });
 
     const user = useSelector((state) => state.user.value);
     console.log(selectedGameMechanics, selectedPledges)
@@ -41,8 +42,13 @@ export default function GameCreation() {
      }
 
      const handleClickGM = (GM) => {
-        setSelectedGameMechanics((current) => [...current, GM])
-     }
+        setSelectedGameMechanics((current) => {
+            if (current.includes(GM)) {
+                return current.filter(item => item !== GM);
+            }
+            return [...current, GM];
+        });
+    };
     
 const pledgesBoxes = pledges.map((data, i) => {
     let tier;
@@ -73,13 +79,13 @@ const pledgesBoxes = pledges.map((data, i) => {
       }
     const rewards = data.rewards.map((reward, j) => {
         return (
-            <p>{reward}</p>
+            <p key={j}>{reward}</p>
         )
     });
 
     return (
-        <div key={i} onClick={() => handleClickPledge(data)}>
-            <p>{tier}</p>
+        <div className={`${styles.pledgeBox} ${selectedPledges.includes(data) ? styles.selected : ''}`}
+         data-title={tier} key={i} onClick={() => handleClickPledge(data)}>
             <p>{data.contributionLevel} €</p>
             
             {rewards}
@@ -88,11 +94,25 @@ const pledgesBoxes = pledges.map((data, i) => {
 })
 
 const GMboxes = gameMechanics.map((data, i) => {
+    const handleMouseEnter = (e) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        setPopoverPosition({
+            x: rect.left + (rect.width / 2),
+            y: rect.bottom + window.scrollY + 10
+        });
+        setHoveredGMIndex(i);
+    };
     return (
-        <div key={i} onMouseOver={() => setHoveredGMIndex(i)} onMouseLeave={() => setHoveredGMIndex(null)} onClick={() => handleClickGM(data)}>
+        <div className={`${styles.gameMechanicBox} ${selectedGameMechanics.includes(data) ? styles.selected : ''}`}
+        key={i}
+        onMouseEnter={handleMouseEnter} 
+        onMouseLeave={() => setHoveredGMIndex(null)} 
+        onClick={() => handleClickGM(data)}
+        style={{position: 'relative'}}
+        >
             <p>{data.name}</p>
             {hoveredGMIndex === i && 
-                <div>
+                <div className={styles.popover}>
                     <p>{data.description}</p>
                 </div>}
         </div>
@@ -181,14 +201,19 @@ const GMboxes = gameMechanics.map((data, i) => {
                 <input className={styles.inputField3} type='text' placeholder='a description of your game (max 1,000 char)' onChange={(e) => handleDescriptionChange(e)} value={description} onKeyDown={(e) => setKey(e.key)}></input>
                 <input className={styles.inputField4} type='text' placeholder='How much should it cost ? (optionnal)' onChange={(e) => handleGoalChange(e)} value={goal} onKeyDown={(e) => setKey(e.key)}></input>
             </div>
-            <div className={styles.pledgesContainer}>
-                <p>What pledges do you want to see in your projet ? only one option per tier</p>
-                {pledgesBoxes}
+            <div className={styles.pledgesSection}>
+                <h2 className={styles.pledgesSectionTitle}>What pledges do you want to see in your projet ? only one option per tier</h2>
+                <div className={styles.pledgesContainer}>
+                    {pledgesBoxes}
+                </div>
             </div>
-            <div className={styles.gameMechanicsContainer}>
-                <p>What game mechanics do you think characterize your idea ?</p>
-                {GMboxes}
+            <div className={styles.gameMechanicsSection}>
+                <h2 className={styles.gameMechanicsSectionTitle}>What game mechanics do you think characterize your idea ?</h2>
+                <div className={styles.gameMechanicsContainer}>
+                    {GMboxes}
+                </div>
             </div>
+            
             <button className={styles.button} onClick={() => handleSubmit()}>Press F</button>
         </div>   
     </>

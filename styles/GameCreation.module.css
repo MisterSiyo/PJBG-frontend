@@ -106,26 +106,123 @@
     color: #333; 
 }
 
-.pledgesContainer, .gameMechanicsContainer {
+.pledgesSectionTitle {
+    font-family: 'Anta';
+    color: #1e4b6d;
+    font-size: 1.5em;
+    text-align: center;
+    margin-bottom: 20px;
+    background-color: #ffffff;
+    padding: 10px 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.pledgesSection {
     width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     margin: 20px 0;
 }
 
+.pledgesContainer {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding: 20px;
+    position: relative;
+}
+
+.gameMechanicsSectionTitle {
+    font-family: 'Anta';
+    color: #1e4b6d;
+    font-size: 1.5em;
+    text-align: center;
+    margin-bottom: 20px;
+    background-color: #ffffff;
+    padding: 10px 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.gameMechanicsSection {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.gameMechanicsContainer {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    position: relative;
+}
+
 .pledgeBox, .gameMechanicBox {
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 10px;
-    margin: 10px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    min-height: 120px;
+    background-color: #408EC6;
+    color: white;
+    border: 3px solid rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    padding: 20px 15px;
+    margin: 0;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: all 0.3s ease;
+    font-family: 'Anta';
+    position: relative;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    overflow: visible;
+}
+
+.pledgeBox::before, .gameMechanicBox::before {
+    content: attr(data-title);
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #1e4b6d;
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.9em;
+    white-space: nowrap;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.3);
 }
 
 .pledgeBox:hover, .gameMechanicBox:hover {
-    background-color: #e0e0e0;
+    background-color: #2c6a98;
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    border-color: rgba(255, 255, 255, 0.4);
 }
 
 .selected {
-    background-color: #add8e6;
+    background-color: #1e4b6d !important;
+    border: 3px solid rgba(255, 255, 255, 0.8) !important;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25) !important;
+}
+
+.selected::before {
+    background-color: #0d2b41;
+    border-color: rgba(255, 255, 255, 0.8);
 }
 
 .button {
@@ -159,4 +256,57 @@
     padding: 0 5px;
     font-size: 14px; 
     color: #333; 
+}
+
+.popover {
+    position: absolute; 
+    background-color: #1e4b6d;
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    max-width: 250px;
+    z-index: 9999; 
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    font-family: 'Anta';
+    font-size: 0.9em;
+    line-height: 1.4;
+    pointer-events: none;
+    left: -250px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.popover::before {
+    content: '';
+    position: absolute;
+    right: -8px; /* Changed from left to right */
+    top: 50%;
+    transform: translateY(-50%); /* Changed transform */
+    border-width: 8px 0 8px 8px; /* Changed border width */
+    border-style: solid;
+    border-color: transparent transparent transparent #1e4b6d; /* Changed border color direction */
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
 }
