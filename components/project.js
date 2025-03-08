@@ -155,7 +155,12 @@ function Project(props) {
             return;
         }
         return (
-            <p className={styles.gmText} key={i}>{data.name}</p>
+            <p key={i} className={styles.categoryTag} style={{ 
+                background: data.color2 === "#" ?
+                data.color
+                : `linear-gradient(45deg, ${data.color} 0%, ${data.color} 15%, ${data.color2} 85%, ${data.color2} 100%)`,
+                transition: 'background 0.3s ease'
+              }}>{data.name}</p>
         )
     })
 

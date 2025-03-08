@@ -447,3 +447,15 @@
 .messageDate {
     color: yellowgreen;
 }
+
+.categoryTag {
+    color: white;
+    border-radius: 1rem;
+    padding: 5px 15px;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    display: inline-block;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    
+}

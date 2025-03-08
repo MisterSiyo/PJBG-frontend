@@ -76,9 +76,11 @@ export default function ProjectCard({ project }) {
               key={index}
               className={styles.categoryTag}
               style={{ 
-                background: category.color2 
-                  ? `linear-gradient(45deg, ${category.color} 0%, ${category.color} 15%, ${category.color2} 85%, ${category.color2} 100%)`
-                  : category.color,
+                background: category.color2==="#" ?
+                category.color
+                :
+                 `linear-gradient(45deg, ${category.color} 0%, ${category.color} 15%, ${category.color2} 85%, ${category.color2} 100%)`
+                 ,
                 transition: 'background 0.3s ease'
               }}
             >
