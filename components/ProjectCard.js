@@ -1,35 +1,48 @@
 import styles from "../styles/projectCard.module.css";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 // Dictionnaire associant une couleur à chaque catégorie, a voir si il y a peut être une méthode lié à la BDD
-const categoryColors = {
-  "Action": "#d32f2f",
-  "RPG": "#8e24aa",
-  "Strategy": "#1976d2",
-  "Adventure": "#ff7043",
-  "Simulation": "#43a047",
-  "Horror": "#c2185b",
-  "Sci-Fi": "#1a237e",
-  "Sports": "#7cb342",
-  "Multiplayer": "#b71c1c",
-  "Puzzle": "#fdd835",
-  "Tactical": "#455a64",
-  "Medieval": "#6a1b9a",
-  "Cyberpunk": "#009688",
-  "Stealth": "#263238",
-  "OpenWorld": "#ffeb3b",
-  "Fantasy": "#673ab7",
-  "City Builder": "#388e3c",
-  "Exploration": "#0277bd",
-  "Fighting": "#e53935"
-};
+// const categoryColors = {
+//   "Action": "#d32f2f",
+//   "RPG": "#8e24aa",
+//   "Strategy": "#1976d2",
+//   "Adventure": "#ff7043",
+//   "Simulation": "#43a047",
+//   "Horror": "#c2185b",
+//   "Sci-Fi": "#1a237e",
+//   "Sports": "#7cb342",
+//   "Multiplayer": "#b71c1c",
+//   "Puzzle": "#fdd835",
+//   "Tactical": "#455a64",
+//   "Medieval": "#6a1b9a",
+//   "Cyberpunk": "#009688",
+//   "Stealth": "#263238",
+//   "OpenWorld": "#ffeb3b",
+//   "Fantasy": "#673ab7",
+//   "City Builder": "#388e3c",
+//   "Exploration": "#0277bd",
+//   "Fighting": "#e53935"
+// };
+
+// const [genres, setGenres] = useState([]);
+
+// useEffect(() => {
+
+//   fetch('http://localhost:3000/genres')
+//   .then(response => response.json())
+//   .then(genresData => {
+//     setGenres(genresData.genres)
+//   })
+
+// }, []);
 
 // Fonction pour récupérer la couleur d'une catégorie
 // Si la catégorie n'existe pas dans `categoryColors`, la couleur par défaut est grise
 const getCategoryColor = (category) => categoryColors[category] || "#cccccc";
 
 export default function ProjectCard({ project }) {
+  console.log('voici ce que je recup de project : ', project)
   const router = useRouter();
   const [showNews, setShowNews] = useState(false);
 
@@ -69,14 +82,19 @@ export default function ProjectCard({ project }) {
 
       {/* J'vais chercher les catégories ici et j'applique une couleur */}
       <div className={styles.categoriesContainer}>
-        {project.categories?.length > 0 ? (
-          project.categories.map((category, index) => (
+        {project.detail.gameMechanics?.length > 0 ? (
+          project.detail.gameMechanics.filter(e => e.GMType === 'genre').map((category, index) => (
             <span
               key={index}
               className={styles.categoryTag}
-              style={{ backgroundColor: getCategoryColor(category) }}
+              style={{ 
+                background: category.color2 
+                  ? `linear-gradient(45deg, ${category.color} 0%, ${category.color} 15%, ${category.color2} 85%, ${category.color2} 100%)`
+                  : category.color,
+                transition: 'background 0.3s ease'
+              }}
             >
-              {category}
+              {category.name}
             </span>
           ))
         ) : (

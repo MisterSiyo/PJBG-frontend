@@ -86,18 +86,14 @@ function Project(props) {
                 <p className={styles.favoriteText} key={i}>{data.project.title}</p>
             )
         })
-    
-    
 
     const funded = projectData.user.fundedProjects.map((data, i) => {
             return (
                 <p className={styles.fundedText} key={i}>{data.project.title}</p>
             )
         })
-    
-    
 
-    const pledgesToShow = projectData.detail.pledges.map((data, i) => {
+    const pledgesToShow = projectData.detail.pledges.sort((a,b) => a.pledgeId - b.pledgeId).map((data, i) => {
         let tier;
     switch(data.contributionLevel) {
         case 15:

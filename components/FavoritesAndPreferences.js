@@ -415,8 +415,8 @@ function FavoritesAndPreferences() {
   };
 
   // Générer un ID unique pour chaque élément
-  const getItemId = (item, index, columnId) => {
-    return `${item}-${columnId}-${index}`;
+  const getItemId = (item) => {
+    return `${item.replace(/\s+/g, '-')}`;
   };
 
   return (
