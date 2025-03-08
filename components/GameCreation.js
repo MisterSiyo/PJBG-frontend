@@ -9,7 +9,7 @@ export default function GameCreation() {
     const [title, setTitle] = useState('');
     const [pitch, setPitch] = useState('');
     const [description, setDescription] = useState('');
-    const [goal, setGoal] = useState('0');
+    const [goal, setGoal] = useState('');
     const [key, setKey] = useState('');
     const [gameMechanics, setGameMechanics] = useState([]);
     const [pledges, setPledges] = useState([]);
@@ -93,31 +93,74 @@ const pledgesBoxes = pledges.map((data, i) => {
     )
 })
 
-const GMboxes = gameMechanics.map((data, i) => {
-    const handleMouseEnter = (e) => {
-        const rect = e.currentTarget.getBoundingClientRect();
-        setPopoverPosition({
-            x: rect.left + (rect.width / 2),
-            y: rect.bottom + window.scrollY + 10
-        });
-        setHoveredGMIndex(i);
-    };
-    return (
-        <div className={`${styles.gameMechanicBox} ${selectedGameMechanics.includes(data) ? styles.selected : ''}`}
-        key={i}
-        onMouseEnter={handleMouseEnter} 
-        onMouseLeave={() => setHoveredGMIndex(null)} 
-        onClick={() => handleClickGM(data)}
-        style={{position: 'relative'}}
-        >
-            <p>{data.name}</p>
-            {hoveredGMIndex === i && 
-                <div className={styles.popover}>
-                    <p>{data.description}</p>
-                </div>}
+
+const GMboxesByType = () => {
+    const groupedMechanics = gameMechanics.reduce((acc, gm) => {
+        if (!acc[gm.GMType]) {
+            acc[gm.GMType] = [];
+        }
+        acc[gm.GMType].push(gm);
+        return acc;
+    }, {});
+
+    return Object.entries(groupedMechanics).map(([type, mechanics], typeIndex) => (
+        <div key={typeIndex} className={styles.gmTypeSection}>
+            <h3 className={styles.gmTypeTitle}>{type}</h3>
+            <div className={styles.gmTypeContainer}>
+                {mechanics.map((data, i) => (
+                    <div 
+                        className={`${styles.gameMechanicBox} ${selectedGameMechanics.includes(data) ? styles.selected : ''}`}
+                        key={i}
+                        onMouseEnter={() => setHoveredGMIndex(`${type}-${i}`)}
+                        onMouseLeave={() => setHoveredGMIndex(null)}
+                        onClick={() => handleClickGM(data)}
+                        style={{position: 'relative'}}
+                    >
+                        <p>{data.name}</p>
+                        {hoveredGMIndex === `${type}-${i}` && 
+                            <div className={styles.popover}>
+                                <p>{data.description}</p>
+                            </div>
+                        }
+                    </div>
+                ))}
+            </div>
         </div>
-    )
-})
+    ));
+};
+
+
+
+
+
+
+
+
+// const GMboxes = gameMechanics.map((data, i) => {
+//     const handleMouseEnter = (e) => {
+//         const rect = e.currentTarget.getBoundingClientRect();
+//         setPopoverPosition({
+//             x: rect.left + (rect.width / 2),
+//             y: rect.bottom + window.scrollY + 10
+//         });
+//         setHoveredGMIndex(i);
+//     };
+//     return (
+//         <div className={`${styles.gameMechanicBox} ${selectedGameMechanics.includes(data) ? styles.selected : ''}`}
+//         key={i}
+//         onMouseEnter={handleMouseEnter} 
+//         onMouseLeave={() => setHoveredGMIndex(null)} 
+//         onClick={() => handleClickGM(data)}
+//         style={{position: 'relative'}}
+//         >
+//             <p>{data.name}</p>
+//             {hoveredGMIndex === i && 
+//                 <div className={styles.popover}>
+//                     <p>{data.description}</p>
+//                 </div>}
+//         </div>
+//     )
+// })
 
     const handleTitleChange = (e) => {
         if (title.length < 30 || key === 'Backspace' ) {
@@ -138,7 +181,7 @@ const GMboxes = gameMechanics.map((data, i) => {
     }
 
     const handleGoalChange = (e) => {
-        if (!/[0-9]/.test(key)) {
+        if (!/[0-9]/.test(key) && key !== 'Backspace') {
             return;
         }
         if (goal.length < 7 || key === 'Backspace' ) { // max à 10 million exclu
@@ -210,7 +253,7 @@ const GMboxes = gameMechanics.map((data, i) => {
             <div className={styles.gameMechanicsSection}>
                 <h2 className={styles.gameMechanicsSectionTitle}>What game mechanics do you think characterize your idea ?</h2>
                 <div className={styles.gameMechanicsContainer}>
-                    {GMboxes}
+                    {GMboxesByType()}
                 </div>
             </div>
             

@@ -163,14 +163,14 @@
 
 .gameMechanicsContainer {
     width: 100%;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    display: flex;
+    flex-wrap: wrap;
     gap: 20px;
     padding: 20px;
-    position: relative;
+    justify-content: center;
 }
 
-.pledgeBox, .gameMechanicBox {
+.pledgeBox {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -190,6 +190,31 @@
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
     overflow: visible;
 }
+
+.gameMechanicBox {
+    display: inline-flex;  /* Changed from flex to inline-flex */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    min-height: 50px;  /* Reduced min-height */
+    width: fit-content;  /* Added to fit content width */
+    background-color: #408EC6;
+    color: white;
+    border: 3px solid rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    padding: 10px 15px;  /* Adjusted padding */
+    margin: 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Anta';
+    position: relative;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    overflow: visible;
+}
+
+
+
 
 .pledgeBox::before, .gameMechanicBox::before {
     content: attr(data-title);
@@ -286,6 +311,35 @@
     border-width: 8px 0 8px 8px; /* Changed border width */
     border-style: solid;
     border-color: transparent transparent transparent #1e4b6d; /* Changed border color direction */
+}
+
+.gmTypeSection {
+    display: inline-block;
+    margin: 10px;
+    vertical-align: top;
+    width: auto;
+    min-width: auto;
+}
+
+.gmTypeContainer {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 10px;
+    justify-content: flex-start;
+}
+
+.gmTypeTitle {
+    display: inline-block;
+    font-family: 'Anta';
+    color: #1e4b6d;
+    font-size: 1.2em;
+    padding: 10px 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: fit-content;
 }
 
 @keyframes fadeIn {
