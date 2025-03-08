@@ -129,39 +129,6 @@ const GMboxesByType = () => {
     ));
 };
 
-
-
-
-
-
-
-
-// const GMboxes = gameMechanics.map((data, i) => {
-//     const handleMouseEnter = (e) => {
-//         const rect = e.currentTarget.getBoundingClientRect();
-//         setPopoverPosition({
-//             x: rect.left + (rect.width / 2),
-//             y: rect.bottom + window.scrollY + 10
-//         });
-//         setHoveredGMIndex(i);
-//     };
-//     return (
-//         <div className={`${styles.gameMechanicBox} ${selectedGameMechanics.includes(data) ? styles.selected : ''}`}
-//         key={i}
-//         onMouseEnter={handleMouseEnter} 
-//         onMouseLeave={() => setHoveredGMIndex(null)} 
-//         onClick={() => handleClickGM(data)}
-//         style={{position: 'relative'}}
-//         >
-//             <p>{data.name}</p>
-//             {hoveredGMIndex === i && 
-//                 <div className={styles.popover}>
-//                     <p>{data.description}</p>
-//                 </div>}
-//         </div>
-//     )
-// })
-
     const handleTitleChange = (e) => {
         if (title.length < 30 || key === 'Backspace' ) {
             setTitle(e.target.value);
@@ -175,7 +142,7 @@ const GMboxesByType = () => {
     }
 
     const handleDescriptionChange = (e) => {
-        if (description.length < 1000 || key === 'Backspace' ) {
+        if (description.length < 10000 || key === 'Backspace' ) {
             setDescription(e.target.value);
         }
     }
@@ -241,8 +208,14 @@ const GMboxesByType = () => {
             <div className={styles.inputsContainer}>
                 <input className={styles.inputField1} type='text' placeholder='title of your game (max 30 char)' onChange={(e) => handleTitleChange(e)} value={title} onKeyDown={(e) => setKey(e.key)}></input>
                 <input className={styles.inputField2} type='text' placeholder='a quick summary of your game (max 100 char)' onChange={(e) => handlePitchChange(e)} value={pitch} onKeyDown={(e) => setKey(e.key)}></input>
-                <input className={styles.inputField3} type='text' placeholder='a description of your game (max 1,000 char)' onChange={(e) => handleDescriptionChange(e)} value={description} onKeyDown={(e) => setKey(e.key)}></input>
-                <input className={styles.inputField4} type='text' placeholder='How much should it cost ? (optionnal)' onChange={(e) => handleGoalChange(e)} value={goal} onKeyDown={(e) => setKey(e.key)}></input>
+                <textarea 
+                    className={styles.inputField3} 
+                    placeholder='a description of your game (max 10,000 char)' 
+                    onChange={(e) => handleDescriptionChange(e)} 
+                    value={description} 
+                    onKeyDown={(e) => setKey(e.key)}
+                    ></textarea>
+                <input className={styles.inputField4} type='text' placeholder='How much should it cost ? (optional)' onChange={(e) => handleGoalChange(e)} value={goal} onKeyDown={(e) => setKey(e.key)}></input>
             </div>
             <div className={styles.pledgesSection}>
                 <h2 className={styles.pledgesSectionTitle}>What pledges do you want to see in your projet ? only one option per tier</h2>

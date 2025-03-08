@@ -43,6 +43,15 @@
     margin: 10px 0;
     border: 1px solid #ccc;
     border-radius: 5px;
+    height: 600px;
+    resize: none;
+    text-align: left;
+    vertical-align: top;
+}
+
+.inputField3::placeholder {
+    position: static;
+    vertical-align: top;
 }
 
 .inputField4 {
@@ -265,21 +274,22 @@
 }
 
 .inputsContainer {
-    width: 40%;
+    width: 80%;
     background-color: #408EC6;
     border-radius: 20px;
+    padding-bottom: 20px
 }
 
 .inputsContainer::before {
     font-family: "Anta";
     content: 'Game Description';
     position:relative;
-    top: -10px;
-    left: 40px;
+    top: -20px;
+    left: 0px;
     background-color: #A0C7E3; 
     border-radius: 10px;
     padding: 0 5px;
-    font-size: 14px; 
+    font-size: 30px; 
     color: #333; 
 }
 
