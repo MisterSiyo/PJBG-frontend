@@ -49,22 +49,22 @@ const Account = () => {
             description: '',
             brand: '',
             subBrand: '',
-            contactPerson: [
+            contactPerson:
                 {
                     name: '',
                     surname: '',
                     email: '',
                     phone: '',
                 }
-            ],
-            contactManager: [
+            ,
+            contactManager: 
                 {
                     name: '',
                     surname: '',
                     email: '',
                     phone: '',
                 }
-            ],
+            ,
             address: {
                 streetNumber: '',
                 street: '',
@@ -88,19 +88,14 @@ const Account = () => {
                 surname: user.surname || '',
                 phone: user.phone || '',
                 description: user.description || '',
-                address: user.address && user.address.length > 0 ? {
-                    streetNumber: user.address[0].streetNumber || '',
-                    street: user.address[0].street || '',
-                    postalCode: user.address[0].postalCode || '',
-                    city: user.address[0].city || '',
-                    country: user.address[0].country || '',
-                } : {
-                    streetNumber: '',
-                    street: '',
-                    postalCode: '',
-                    city: '',
-                    country: ''
-                },
+                address: {
+                    streetNumber: user.address?.streetNumber || '',
+                    street: user.address?.street || '',
+                    postalCode: user.address?.postalCode || '',
+                    city: user.address?.city || '',
+                    country: user.address?.country || '',
+                }
+                ,
                 socialLinks: [
                     { platform: 'Facebook', url: user.socialLinks?.[0]?.url || '' },
                     { platform: 'Twitter', url: user.socialLinks?.[1]?.url || '' },
@@ -118,20 +113,18 @@ const Account = () => {
                     description: user.studio?.description || '',
                     brand: user.studio?.brand || '',
                     subBrand: user.studio?.subBrand || '',
-                    contactPerson: user.studio?.contactPerson && user.studio.contactPerson.length > 0 ? 
-                        user.studio.contactPerson : [{
+                    contactPerson: user.studio?.contactPerson || {
                             name: '',
                             surname: '',
                             email: '',
                             phone: '',
-                        }],
-                    contactManager: user.studio?.contactManager && user.studio.contactManager.length > 0 ? 
-                        user.studio.contactManager : [{
+                        },
+                    contactManager: user.studio?.contactManager || {
                             name: '',
                             surname: '',
                             email: '',
                             phone: '',
-                        }],
+                        },
                     address: user.studio?.address || {
                         streetNumber: '',
                         street: '',
@@ -250,11 +243,12 @@ const Account = () => {
 
     const handleSave = () => {
         // Préparation des données pour le format attendu par l'API
+        console.log('voici ma data : ', editingData)
         const dataToSave = { 
             ...editingData, 
             token: user.token,
             // Transformer l'objet address en tableau pour correspondre au format de l'API
-            address: [editingData.address]
+            // address: [editingData.address]
         };
 
         fetch(`http://localhost:3000/account/`, {

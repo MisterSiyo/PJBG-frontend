@@ -2,8 +2,8 @@
 import styles from "../styles/layout.module.css";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { useDispatch } from "react-redux";
-import { setRole, addUserToStore } from "../reducers/user";
+import { useDispatch, useSelector } from "react-redux";
+import { setRole, addUserToStore, removeUserFromStore } from "../reducers/user";
 import GoogleAuthButton from "./GoogleAuthButton";
 import RedditAuthButton from "./RedditAuthButton";
 import useAuth from "../hooks/useAuth";
