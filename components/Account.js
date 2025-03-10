@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUser, updateUserProfile } from '../reducers/user';
+import ProjectCard from './ProjectCard';
 
 const Account = () => {
     const dispatch = useDispatch();
@@ -566,26 +567,11 @@ const Account = () => {
             {user.role === "patron" && (
                 <>
                    <h4>Funded Projects :</h4>
-                    <ul>
-                        {user.fundedProjects && user.fundedProjects.length > 0 && (
-                            <>
-                                {user.fundedProjects[0] && <li>{user.fundedProjects[0].name} - {user.fundedProjects[0].amount}€ on {new Date(user.fundedProjects[0].date).toLocaleDateString()}</li>}
-                                {user.fundedProjects[1] && <li>{user.fundedProjects[1].name} - {user.fundedProjects[1].amount}€ on {new Date(user.fundedProjects[1].date).toLocaleDateString()}</li>}
-                                {user.fundedProjects[2] && <li>{user.fundedProjects[2].name} - {user.fundedProjects[2].amount}€ on {new Date(user.fundedProjects[2].date).toLocaleDateString()}</li>}
-                            </>
-                        )}
-                    </ul>
-
-                    <h4>Created Projects :</h4>
-                    <ul>
-                        {user.createdProjects && user.createdProjects.length > 0 && (
-                            <>
-                                {user.createdProjects[0] && <li>{user.createdProjects[0].name} - Created on {new Date(user.createdProjects[0].creationDate).toLocaleDateString()}</li>}
-                                {user.createdProjects[1] && <li>{user.createdProjects[1].name} - Created on {new Date(user.createdProjects[1].creationDate).toLocaleDateString()}</li>}
-                                {user.createdProjects[2] && <li>{user.createdProjects[2].name} - Created on {new Date(user.createdProjects[2].creationDate).toLocaleDateString()}</li>}
-                            </>
-                        )}
-                    </ul>
+                    {user.fundedProjects.length > 0 ? (
+                              user.fundedProjects.map((proj, i) => <ProjectCard key={i} project={proj.project} />)
+                            ) : (
+                              <p>you did not fund any project</p>
+                            )}
                 </>
             )}
 
