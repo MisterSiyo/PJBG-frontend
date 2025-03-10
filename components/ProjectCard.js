@@ -70,7 +70,7 @@ export default function ProjectCard({ project }) {
 
       {/* J'vais chercher les catégories ici et j'applique une couleur */}
       <div className={styles.categoriesContainer}>
-        {project.detail.gameMechanics?.length > 0 ? (
+        {project.detail?.gameMechanics?.length > 0 ? (
           project.detail.gameMechanics.filter(e => e.GMType === 'genre').map((category, index) => (
             <span
               key={index}

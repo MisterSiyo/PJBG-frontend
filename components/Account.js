@@ -262,7 +262,7 @@ const Account = () => {
             if (!data) return;
             
             // Après la sauvegarde, mettre à jour le state global (Redux)
-            dispatch(updateUser(dataToSave));
+            dispatch(updateUser(data));
             
             // Mettre à jour formData avec les nouvelles valeurs après la sauvegarde
             setFormData(editingData);
