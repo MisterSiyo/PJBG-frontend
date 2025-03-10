@@ -417,11 +417,11 @@ function Project(props) {
                             </div>
                         </div>
                     </div>
-                    <div className={styles.downloadButton}>
+                    {user.role === 'studio' && <div className={styles.downloadButton}>
                         Download all information on this project
-                    </div>
+                    </div>}
                 </div>
-                    {user.role == "patron" && <div className={styles.takeon}>Take on the adventure and Develop this project</div>}
+                    {user.role == "studio" && <div className={styles.takeon}>Take on the adventure and Develop this project</div>}
             </div>
 
 {/* RIGHT BAR */}
