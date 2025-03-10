@@ -441,12 +441,6 @@ const Account = () => {
                             <p>SIRET : <input type="text" name="studio.siret" value={displayData.studio.siret} onChange={handleChange} /></p>
                             <p>SIREN : <input type="text" name="studio.siren" value={displayData.studio.siren} onChange={handleChange} /></p>
                             <p>Company Name : <input type="text" name="studio.companyName" value={displayData.studio.companyName} onChange={handleChange} /></p>
-                            <p>TVA Number : <input type="text" name="studio.numtva" value={displayData.studio.numtva} onChange={handleChange} /></p>
-                            <p>NAF Code : <input type="text" name="studio.naf" value={displayData.studio.naf} onChange={handleChange} /></p>
-                            <p>RCS : <input type="text" name="studio.rcs" value={displayData.studio.rcs} onChange={handleChange} /></p>
-                            <p>Greffe : <input type="text" name="studio.greffe" value={displayData.studio.greffe} onChange={handleChange} /></p>
-                            <p>Capital : <input type="text" name="studio.capital" value={displayData.studio.capital} onChange={handleChange} /></p>
-                            <p>Legal Status : <input type="text" name="studio.status" value={displayData.studio.status} onChange={handleChange} /></p>
                             <p>Website : <input type="text" name="studio.webSite" value={displayData.studio.webSite} onChange={handleChange} /></p>
                             <p>Description : <textarea name="studio.description" value={displayData.studio.description} onChange={handleChange} /></p>
                             <p>Brand : <input type="text" name="studio.brand" value={displayData.studio.brand} onChange={handleChange} /></p>
@@ -507,12 +501,6 @@ const Account = () => {
                             <p>SIRET : {formData.studio.siret}</p>
                             <p>SIREN : {formData.studio.siren}</p>
                             <p>Company Name : {formData.studio.companyName}</p>
-                            <p>TVA Number : {formData.studio.numtva}</p>
-                            <p>NAF Code : {formData.studio.naf}</p>
-                            <p>RCS : {formData.studio.rcs}</p>
-                            <p>Greffe : {formData.studio.greffe}</p>
-                            <p>Capital : {formData.studio.capital}</p>
-                            <p>Legal Status : {formData.studio.status}</p>
                             <p>Website : {formData.studio.webSite}</p>
                             <p>Description : {formData.studio.description}</p>
                             <p>Brand : {formData.studio.brand}</p>
@@ -570,7 +558,14 @@ const Account = () => {
                     {user.fundedProjects.length > 0 ? (
                               user.fundedProjects.map((proj, i) => <ProjectCard key={i} project={proj.project} />)
                             ) : (
-                              <p>you did not fund any project</p>
+                              <p>You did not fund any project</p>
+                            )}
+                        <br/>
+                    <h4>Favorite Projects :</h4>
+                    {user.followedProjects.length > 0 ? (
+                              user.followedProjects.map((proj, i) => <ProjectCard key={i} project={proj.project} />)
+                            ) : (
+                              <p>You don't have any favorite project yet</p>
                             )}
                 </>
             )}
