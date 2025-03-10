@@ -19,6 +19,7 @@ function Project(props) {
     const userAccount = useSelector((state) => state.user.value);
     const [news, setNews] = useState([]);
     const user = useSelector((state) => state.user.value)
+    const [dlmessage, setDlmessage] = useState('');
     // const dispatch = useDispatch();
     // const user = useSelector((state) => state.user.value);
 
@@ -143,9 +144,9 @@ function Project(props) {
 
     const intStudios = projectData.studiosPreVote.map((data, i) => {
         return (
-            <div className={styles.studioBox}>
-                {/* <h6>{data.studio.companyName}</h6>    il va falloir mettre les mains dans la collection user/studio            */}
-                {/* <p> infos à mettre sur le lien entre le studio et ce projet </p> */}
+            <div key={i} className={styles.studioBox}>
+                <h6>{data.studio.companyName}</h6> 
+                <p> {data.studio.description} </p>
             </div>
         )
     })
@@ -251,6 +252,20 @@ function Project(props) {
         // router.push('/checkoutPayment')
     }
 
+    const handleDev = () => {
+
+        
+
+
+    }
+
+
+
+
+    const totalCollected = (projectData.progressions?.reduce((acc, p) => acc + ((p.pledgeChosen.contributionLevel) || 0), 0) || 0).toLocaleString();
+    const goal = projectData.goal?.toLocaleString();
+    const fundingPercentage = projectData.goal ? Math.round((totalCollected / projectData.goal) * 100) : 0;
+
     return (
         <>
         <br></br>
@@ -316,8 +331,10 @@ function Project(props) {
                     <h3>{projectData.pitch}</h3>
                 </div>
                 <div className={styles.progressContainer}>
-                    <div className={styles.progressBar}>
-                        <p className={styles.progressText}>% € super</p>
+                    <span className={styles.progressText}>
+                        {fundingPercentage}% | {totalCollected}€ / {goal}€
+                    </span>
+                    <div className={styles.progressBar} style={{ width: `${fundingPercentage}%` }}> 
                     </div>
                 </div>
                 <div className={styles.studiosContainer}>
@@ -417,11 +434,15 @@ function Project(props) {
                             </div>
                         </div>
                     </div>
-                    {user.role === 'studio' && <div className={styles.downloadButton}>
-                        Download all information on this project
-                    </div>}
+                    {user.role === 'studio' && <>
+                            <div className={styles.downloadButton} onClick={() => setDlmessage('Project Downloaded!')}>
+                                    Download all information on this project
+                            </div>
+                            <p>{dlmessage}</p>
+                    
+                    </>}
                 </div>
-                    {user.role == "studio" && <div className={styles.takeon}>Take on the adventure and Develop this project</div>}
+                    {user.role == "studio" && <div className={styles.takeon} onClick={() => handleDev()}>Take on the adventure and Develop this project</div>}
             </div>
 
 {/* RIGHT BAR */}
