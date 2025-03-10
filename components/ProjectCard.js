@@ -38,8 +38,9 @@ export default function ProjectCard({ project }) {
   if (!project) return null;
 
   // Calcul du total des contributions reçues ( acc = accumateur, acc commence à 0, on met 0 au lieu du undefined/null pour éviter erreur )
-  const totalCollected = project.progressions?.reduce((acc, p) => acc + ((p.amount) || 0), 0) || 0;
+  const totalCollected = (project.progressions?.reduce((acc, p) => acc + ((p.pledgeChosen.contributionLevel) || 0), 0) || 0).toLocaleString();
 
+  const goal = project.goal?.toLocaleString();
   // calcul pour le pourcentage
   const fundingPercentage = project.goal ? Math.round((totalCollected / project.goal) * 100) : 0;
 
@@ -95,10 +96,10 @@ export default function ProjectCard({ project }) {
       {/* Barre de progression du financement */}
       <div className={styles.cardBottom}>
         <div className={styles.progressContainer}>
-          <div className={styles.progressBar} style={{ width: `${fundingPercentage}%` }}>
-            <span className={styles.progressText}>
-              {fundingPercentage}% | {totalCollected.toLocaleString()}€ / {project.goal?.toLocaleString()}€
-            </span>
+          <span className={styles.progressText}>
+            {fundingPercentage}% | {totalCollected}€ / {goal}€
+          </span>
+          <div className={styles.progressBar} style={{ width: `${fundingPercentage}%` }}> 
           </div>
         </div>
       </div>
