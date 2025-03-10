@@ -27,7 +27,12 @@ export const userSlice = createSlice({
       console.log("Redux: setRole", action.payload);
       state.value.role = action.payload;
     },
+
     addUserToStore: (state, action) => {
+      state.value = action.payload;
+    },
+
+    addGoogleUserToStore: (state, action) => {
       // ajouter le user au storage, contiendra les données récupérées depuis la BDD une fois le token envoyé
       console.log("Redux: addUserToStore", {
         token: action.payload.token?.substring(0, 10) + "...",
@@ -50,6 +55,7 @@ export const userSlice = createSlice({
       state.value = userData;
       console.log("Redux: État mis à jour avec succès");
     },
+
     removeUserFromStore: (state, action) => {
       // retirer le user du storage lors de l'appui sur le bouton déconnexion
       console.log("Redux: removeUserFromStore");
