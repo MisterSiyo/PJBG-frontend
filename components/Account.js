@@ -49,7 +49,7 @@ const Account = () => {
             description: '',
             brand: '',
             subBrand: '',
-            contactPerson:
+            contactPerson: 
                 {
                     name: '',
                     surname: '',

@@ -97,7 +97,7 @@ export default function ProjectCard({ project }) {
         <div className={styles.progressContainer}>
           <div className={styles.progressBar} style={{ width: `${fundingPercentage}%` }}>
             <span className={styles.progressText}>
-              {fundingPercentage}% | {totalCollected.toLocaleString()}€ / {project.goal.toLocaleString()}€
+              {/* {fundingPercentage}% | {totalCollected.toLocaleString()}€ / {project.goal.toLocaleString()}€ */}
             </span>
           </div>
         </div>

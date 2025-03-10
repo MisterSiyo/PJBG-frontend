@@ -51,6 +51,7 @@ export default function SiretCheck({ onCompanyInfoChange }) {
             {companyInfo && (
                 <div className={styles.companyDetails}>
                     <h4>{companyInfo.name}</h4>
+                    <p><strong>NAME:</strong> {companyInfo.companyName}</p>
                     <p><strong>SIREN:</strong> {companyInfo.siren}</p>
                     <p><strong>SIRET:</strong> {companyInfo.siret}</p>
                     <p><strong>Numéro TVA:</strong> {companyInfo.numtva}</p>
