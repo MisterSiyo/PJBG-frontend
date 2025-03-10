@@ -44,9 +44,9 @@ export default function ProjectCard({ project }) {
   const fundingPercentage = project.goal ? Math.round((totalCollected / project.goal) * 100) : 0;
 
   // Récupération de la dernière news publiée (tri par date décroissante) peut être qu'on en veut plus qu'un ? faudrait aussi mettre une limite sur la date
-  const latestNews = project.histories?.length
+  const latestNews = project.histories?.length > 1
     ? project.histories.sort((a, b) => new Date(b.date) - new Date(a.date))[0].message
-    : "No recent news.";
+    : "New Project, check it out !";
 
   return (
     <div className={styles.projectCard} onClick={() => router.push(`/project/${project.pageURL}`)}>
