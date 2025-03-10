@@ -58,7 +58,6 @@ export const userSlice = createSlice({
 
     removeUserFromStore: (state, action) => {
       // retirer le user du storage lors de l'appui sur le bouton déconnexion
-      console.log("Redux: removeUserFromStore");
       state.value = {
         token: null,
         username: null,
@@ -74,7 +73,6 @@ export const userSlice = createSlice({
         fundedProjects: [],
         userFavorites: [],
       };
-      console.log("Redux: Utilisateur supprimé du store");
     },
     updateUser: (state, action) => {
       // Mettez à jour le profil de l'utilisateur dans le store
