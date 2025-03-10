@@ -32,6 +32,28 @@ export const userSlice = createSlice({
       state.value = action.payload;
     },
 
+    toggleFollowedProject: (state, action) => {
+      const { projectId } = action.payload;
+
+      if (!state.value.followedProjects) {
+        state.value.followedProjects = [];
+      }
+
+      const isFollowing = state.value.followedProjects.includes(projectId);
+
+      if (isFollowing) {
+        state.value.followedProjects = state.value.followedProjects.filter(
+          (id) => id !== projectId
+        );
+      } else {
+        state.value.followedProjects.push(projectId);
+      }
+    },
+
+    setFollowedProjects: (state, action) => {
+      state.value.followedProjects = action.payload;
+    },
+
     addGoogleUserToStore: (state, action) => {
       // ajouter le user au storage, contiendra les données récupérées depuis la BDD une fois le token envoyé
       console.log("Redux: addUserToStore", {
@@ -99,5 +121,6 @@ export const {
   updateUser,
   updateUserAddress,
   updateUserSocialLinks,
+  toggleFollowedProject,
 } = userSlice.actions;
 export default userSlice.reducer;

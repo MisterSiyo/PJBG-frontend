@@ -1,6 +1,11 @@
 import styles from "../styles/projectCard.module.css";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleFollowedProject } from "../reducers/user";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart as RegularHeart } from "@fortawesome/free-regular-svg-icons";
+import { faHeart as SolidHeart } from "@fortawesome/free-solid-svg-icons";
 
 // Dictionnaire associant une couleur à chaque catégorie, a voir si il y a peut être une méthode lié à la BDD
 // const categoryColors = {
@@ -30,26 +35,83 @@ import { useState } from "react";
 // const getCategoryColor = (category) => categoryColors[category] || "#cccccc";
 
 export default function ProjectCard({ project }) {
-  console.log('voici ce que je recup de project : ', project)
+  console.log("voici ce que je recup de project : ", project);
   const router = useRouter();
   const [showNews, setShowNews] = useState(false);
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.value);
+
+  const isLoggedIn = !!user.token;
+  const isFollowed =
+    isLoggedIn &&
+    user.followedProjects &&
+    user.followedProjects.includes(project._id);
 
   // Si le projet n'existe pas, on ne retourne rien
   if (!project) return null;
 
+  const handleFollowClick = async (e) => {
+    e.stopPropagation();
+    if (!isLoggedIn) {
+      router.push("/login");
+      return;
+    }
+
+    dispatch(toggleFollowedProject({ projectId: project._id }));
+
+    try {
+      const response = await fetch("/api/users/toggleFollow", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+        body: JSON.stringify({ projectId: project._id }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        console.error(
+          "Erreur lors de la mise à jour des favoris:",
+          data.message
+        );
+        // Optionnel : annuler le changement dans Redux si l'API échoue
+        dispatch(toggleFollowedProject({ projectId: project._id }));
+      } else {
+        console.log(data.message);
+        // Mettre à jour les projets suivis dans Redux avec les données du serveur
+        // si vous avez un action setFollowedProjects
+        // dispatch(setFollowedProjects(data.followedProjects));
+      }
+    } catch (error) {
+      console.error("Erreur réseau:", error);
+      // Annuler le changement dans Redux en cas d'erreur réseau
+      dispatch(toggleFollowedProject({ projectId: project._id }));
+    }
+  };
+
   // Calcul du total des contributions reçues ( acc = accumateur, acc commence à 0, on met 0 au lieu du undefined/null pour éviter erreur )
-  const totalCollected = project.progressions?.reduce((acc, p) => acc + ((p.amount) || 0), 0) || 0;
+  const totalCollected =
+    project.progressions?.reduce((acc, p) => acc + (p.amount || 0), 0) || 0;
 
   // calcul pour le pourcentage
-  const fundingPercentage = project.goal ? Math.round((totalCollected / project.goal) * 100) : 0;
+  const fundingPercentage = project.goal
+    ? Math.round((totalCollected / project.goal) * 100)
+    : 0;
 
   // Récupération de la dernière news publiée (tri par date décroissante) peut être qu'on en veut plus qu'un ? faudrait aussi mettre une limite sur la date
-  const latestNews = project.histories?.length > 1
-    ? project.histories.sort((a, b) => new Date(b.date) - new Date(a.date))[0].message
-    : "New Project, check it out !";
+  const latestNews =
+    project.histories?.length > 1
+      ? project.histories.sort((a, b) => new Date(b.date) - new Date(a.date))[0]
+          .message
+      : "New Project, check it out !";
 
   return (
-    <div className={styles.projectCard} onClick={() => router.push(`/project/${project.pageURL}`)}>
+    <div
+      className={styles.projectCard}
+      onClick={() => router.push(`/project/${project.pageURL}`)}
+    >
       {/* Bouton pour afficher/cacher les dernières news */}
       <button
         className={styles.newsButton}
@@ -59,6 +121,16 @@ export default function ProjectCard({ project }) {
         }}
       >
         ! {/* peut etre remplacer par un logo ? */}
+      </button>
+      <button
+        className={styles.favoriteButton}
+        onClick={handleFollowClick}
+        title={isFollowed ? "Retirer des favoris" : "Ajouter aux favoris"}
+      >
+        <FontAwesomeIcon
+          icon={isFollowed ? SolidHeart : RegularHeart}
+          color={isFollowed ? "#ff4d4d" : "#888"}
+        />
       </button>
 
       <h3>{project.title}</h3>
@@ -71,22 +143,23 @@ export default function ProjectCard({ project }) {
       {/* J'vais chercher les catégories ici et j'applique une couleur */}
       <div className={styles.categoriesContainer}>
         {project.detail?.gameMechanics?.length > 0 ? (
-          project.detail.gameMechanics.filter(e => e.GMType === 'genre').map((category, index) => (
-            <span
-              key={index}
-              className={styles.categoryTag}
-              style={{ 
-                background: category.color2==="#" ?
-                category.color
-                :
-                 `linear-gradient(45deg, ${category.color} 0%, ${category.color} 15%, ${category.color2} 85%, ${category.color2} 100%)`
-                 ,
-                transition: 'background 0.3s ease'
-              }}
-            >
-              {category.name}
-            </span>
-          ))
+          project.detail.gameMechanics
+            .filter((e) => e.GMType === "genre")
+            .map((category, index) => (
+              <span
+                key={index}
+                className={styles.categoryTag}
+                style={{
+                  background:
+                    category.color2 === "#"
+                      ? category.color
+                      : `linear-gradient(45deg, ${category.color} 0%, ${category.color} 15%, ${category.color2} 85%, ${category.color2} 100%)`,
+                  transition: "background 0.3s ease",
+                }}
+              >
+                {category.name}
+              </span>
+            ))
         ) : (
           <p className={styles.noCategory}>No categories assigned</p>
         )}
@@ -95,9 +168,13 @@ export default function ProjectCard({ project }) {
       {/* Barre de progression du financement */}
       <div className={styles.cardBottom}>
         <div className={styles.progressContainer}>
-          <div className={styles.progressBar} style={{ width: `${fundingPercentage}%` }}>
+          <div
+            className={styles.progressBar}
+            style={{ width: `${fundingPercentage}%` }}
+          >
             <span className={styles.progressText}>
-              {fundingPercentage}% | {totalCollected.toLocaleString()}€ / {project.goal?.toLocaleString()}€
+              {fundingPercentage}% | {totalCollected.toLocaleString()}€ /{" "}
+              {project.goal?.toLocaleString()}€
             </span>
           </div>
         </div>

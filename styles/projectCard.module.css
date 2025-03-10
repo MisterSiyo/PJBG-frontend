@@ -1,173 +1,196 @@
 /* PROJECT CARDS */
 .projectCard {
-    background: #408EC6;
-    color: white;
-    border-radius: 15px;
-    margin: auto;
-    margin-bottom: 4rem;
-    width: 20rem;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: normal;
+  background: #408ec6;
+  color: white;
+  border-radius: 15px;
+  margin: auto;
+  margin-bottom: 4rem;
+  width: 20rem;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: normal;
 }
 
 .projectCard:hover {
-    transform: translateY(-2px);
-    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 .projectCard:hover .newsPopover {
-    display: block;
-    opacity: 1;
+  display: block;
+  opacity: 1;
 }
 
 /* DESCRIPTION CONTAINER */
 .descriptionContainer {
-    background-color: #1E2761;
-    border-radius: 2rem;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    margin: auto;
-    padding: 1vw;
-    width: 80%;
-    text-align: center;
-    color: white;
-    font-weight: bold;
-    font-size: 14px;
+  background-color: #1e2761;
+  border-radius: 2rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  margin: auto;
+  padding: 1vw;
+  width: 80%;
+  text-align: center;
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
 }
 
 /* CARD BOTTOM */
 .cardBottom {
-    position: absolute;
-    transform: translateX(-50%);
-    left: 50%;
-    bottom: -0.5rem;
-    width: 70%;
+  position: absolute;
+  transform: translateX(-50%);
+  left: 50%;
+  bottom: -0.5rem;
+  width: 70%;
 }
 
 /* NEWS BUTTON */
 .newsButton {
-    position: absolute;
-    top: -12px;
-    right: -12px;
-    background: #27ae60;
-    color: white;
-    border-radius: 50%;
-    width: 32px;
-    height: 32px;
-    font-size: 1.3rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  background: #27ae60;
+  color: white;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  font-size: 1.3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
 }
 
 .newsButton:hover {
-    background-color: #00c261;
+  background-color: #00c261;
 }
 
 /* NEWS POPOVER */
 .newsPopover {
-    position: absolute;
-    top: -50px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(26, 42, 79, 0.9);
-    color: white;
-    padding: 10px;
-    border-radius: 8px;
-    width: 220px;
-    text-align: center;
-    font-size: 12px;
-    display: none;
-    transition: opacity 0.3s;
+  position: absolute;
+  top: -50px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(26, 42, 79, 0.9);
+  color: white;
+  padding: 10px;
+  border-radius: 8px;
+  width: 220px;
+  text-align: center;
+  font-size: 12px;
+  display: none;
+  transition: opacity 0.3s;
 }
 
 /* PROGRESS BAR */
 .progressContainer {
-    background: #000000;
-    border-radius: 10px;
-    overflow: hidden;
-    height: 2rem;
-    margin: 0px;
-    position: relative;
-    display: flex;
-    align-items: center;
+  background: #000000;
+  border-radius: 10px;
+  overflow: hidden;
+  height: 2rem;
+  margin: 0px;
+  position: relative;
+  display: flex;
+  align-items: center;
 }
 
 .progressBar {
-    height: 100%;
-    background: #1abc9c;
-    position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  height: 100%;
+  background: #1abc9c;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* PROGRESS TEXT */
 .progressText {
-    position: absolute;
-    width: 100%;
-    font-size: 14px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-weight: bold;
-    text-align: center;
-    color: white;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+  position: absolute;
+  width: 100%;
+  font-size: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-weight: bold;
+  text-align: center;
+  color: white;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
 }
 
 /* CATEGORIES CONTAINER */
 .categoriesContainer {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1rem;
-    margin: auto;
-    margin-top: 1rem;
-    margin-bottom: 4rem;
-    padding: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin: auto;
+  margin-top: 1rem;
+  margin-bottom: 4rem;
+  padding: 1rem;
 }
 
 /* CATEGORY TAGS */
 .categoryTag {
-    color: white;
-    border-radius: 1rem;
-    padding: 5px 15px;
-    font-size: 12px;
-    font-weight: bold;
-    text-transform: uppercase;
-    display: inline-block;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
-    
+  color: white;
+  border-radius: 1rem;
+  padding: 5px 15px;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+  display: inline-block;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 /* RESPONSIVE DESIGN */
 @media (max-width: 1024px) {
-    .projectCard {
-        width: 40vw;
-        height: 40vh;
-    }
+  .projectCard {
+    width: 40vw;
+    height: 40vh;
+  }
 }
 
 @media (max-width: 768px) {
-    .projectCard {
-        width: 60vw;
-        height: 45vh;
-    }
+  .projectCard {
+    width: 60vw;
+    height: 45vh;
+  }
 }
 
 @media (max-width: 480px) {
-    .projectCard {
-        width: 80vw;
-        height: 50vh;
-    }
+  .projectCard {
+    width: 80vw;
+    height: 50vh;
+  }
 
-    .newsPopover {
-        width: 90%;
-    }
+  .newsPopover {
+    width: 90%;
+  }
+}
+
+.favoriteButton {
+  position: absolute;
+  top: -12px;
+  left: -12px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-size: 2rem;
+  z-index: 2;
+  transition: all 0.2s ease;
+  text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.3);
+  width: 32px;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.favoriteButton:hover {
+  transform: scale(1.15);
+  text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.4);
 }
