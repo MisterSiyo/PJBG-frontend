@@ -459,24 +459,17 @@ const Account = () => {
                             <p>Country : <input type="text" name="studio.address.country" value={displayData.studio.address.country} onChange={handleChange} /></p>
                             
                             <h4>Contact Person :</h4>
-                            {displayData.studio.contactPerson.map((contact, index) => (
-                                <div key={`contact-person-${index}`}>
-                                    <p>Name : <input type="text" name={`studio.contactPerson[${index}].name`} value={contact.name} onChange={handleChange} /></p>
-                                    <p>Surname : <input type="text" name={`studio.contactPerson[${index}].surname`} value={contact.surname} onChange={handleChange} /></p>
-                                    <p>Email : <input type="email" name={`studio.contactPerson[${index}].email`} value={contact.email} onChange={handleChange} /></p>
-                                    <p>Phone : <input type="text" name={`studio.contactPerson[${index}].phone`} value={contact.phone} onChange={handleChange} /></p>
-                                </div>
-                            ))}
-                            
+                                    <p>Name : <input type="text" name={`studio.contactPerson.name`} value={displayData.studio.contactPerson.name} onChange={handleChange} /></p>
+                                    <p>Surname : <input type="text" name={`studio.contactPerson.surname`} value={displayData.studio.contactPerson.surname} onChange={handleChange} /></p>
+                                    <p>Email : <input type="email" name={`studio.contactPerson.email`} value={displayData.studio.contactPerson.email} onChange={handleChange} /></p>
+                                    <p>Phone : <input type="text" name={`studio.contactPerson.phone`} value={displayData.studio.contactPerson.phone} onChange={handleChange} /></p>
+
                             <h4>Contact Manager :</h4>
-                            {displayData.studio.contactManager.map((manager, index) => (
-                                <div key={`contact-manager-${index}`}>
-                                    <p>Name : <input type="text" name={`studio.contactManager[${index}].name`} value={manager.name} onChange={handleChange} /></p>
-                                    <p>Surname : <input type="text" name={`studio.contactManager[${index}].surname`} value={manager.surname} onChange={handleChange} /></p>
-                                    <p>Email : <input type="email" name={`studio.contactManager[${index}].email`} value={manager.email} onChange={handleChange} /></p>
-                                    <p>Phone : <input type="text" name={`studio.contactManager[${index}].phone`} value={manager.phone} onChange={handleChange} /></p>
-                                </div>
-                            ))}
+                                    <p>Name : <input type="text" name={`studio.contactManager.name`} value={displayData.studio.contactManager.name} onChange={handleChange} /></p>
+                                    <p>Surname : <input type="text" name={`studio.contactManager.surname`} value={displayData.studio.contactManager.surname} onChange={handleChange} /></p>
+                                    <p>Email : <input type="email" name={`studio.contactManager.email`} value={displayData.studio.contactManager.email} onChange={handleChange} /></p>
+                                    <p>Phone : <input type="text" name={`studio.contactManager.phone`} value={displayData.studio.contactManager.phone} onChange={handleChange} /></p>
+     
                         </>
                     )}
                 </>
@@ -534,26 +527,24 @@ const Account = () => {
                             
                             <br /><br />
                             <h4>Contact Person :</h4>
-                            {formData.studio.contactPerson && formData.studio.contactPerson.map((contact, index) => (
-                                <div key={`contact-person-${index}`}>
-                                    <p>Name : {contact.name}</p>
-                                    <p>Surname : {contact.surname}</p>
-                                    <p>Email : {contact.email}</p>
-                                    <p>Phone : {contact.phone}</p>
+                                <div key={`contact-person`}>
+                                    <p>Name : {displayData.studio.contactPerson.name}</p>
+                                    <p>Surname : {displayData.studio.contactPerson.surname}</p>
+                                    <p>Email : {displayData.studio.contactPerson.email}</p>
+                                    <p>Phone : {displayData.studio.contactPerson.phone}</p>
                                     <br />
                                 </div>
-                            ))}
+
                             
                             <h4>Contact Manager :</h4>
-                            {formData.studio.contactManager && formData.studio.contactManager.map((manager, index) => (
-                                <div key={`contact-manager-${index}`}>
-                                    <p>Name : {manager.name}</p>
-                                    <p>Surname : {manager.surname}</p>
-                                    <p>Email : {manager.email}</p>
-                                    <p>Phone : {manager.phone}</p>
+                                <div key={`contact-manager-`}>
+                                    <p>Name : {displayData.studio.contactManager.name}</p>
+                                    <p>Surname : {displayData.studio.contactManager.surname}</p>
+                                    <p>Email : {displayData.studio.contactManager.email}</p>
+                                    <p>Phone : {displayData.studio.contactManager.phone}</p>
                                     <br />
                                 </div>
-                            ))}
+
                         </>
                     )}
                 </>

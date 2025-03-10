@@ -162,7 +162,7 @@ export default function Header() {
         {!hideLoginButton &&
           (isLoggedIn ? (
             <div className={styles.userMenu}>
-              <span>Welcome, {user.username}!</span>
+              <span>Welcome, {user.username} !</span>
               <br />
               <br />
               <button

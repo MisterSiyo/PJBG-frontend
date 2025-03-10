@@ -15,11 +15,7 @@ const initialState = {
     followedProjects: [],
     createdProjects: [],
     fundedProjects: [],
-    preferences: [],
-    secondChoices: [],
-    restrictions: [],
-    appliedProjects: [],
-    developpedProjects: [],
+    userFavorites: [],
   },
 };
 
@@ -70,11 +66,7 @@ export const userSlice = createSlice({
         followedProjects: [],
         createdProjects: [],
         fundedProjects: [],
-        preferences: [],
-        secondChoices: [],
-        restrictions: [],
-        appliedProjects: [],
-        developpedProjects: [],
+        userFavorites: [],
       };
       console.log("Redux: Utilisateur supprimé du store");
     },
