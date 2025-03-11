@@ -20,6 +20,7 @@ function Project(props) {
     const [news, setNews] = useState([]);
     const user = useSelector((state) => state.user.value)
     const [dlmessage, setDlmessage] = useState('');
+    const [devMessage, setDevMessage] = useState('');
     // const dispatch = useDispatch();
     // const user = useSelector((state) => state.user.value);
 
@@ -254,7 +255,20 @@ function Project(props) {
 
     const handleDev = () => {
 
-        
+        fetch('/dev', {
+            method: 'PUT',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({token: user.token, projectId: projectData._id})
+        })
+        .then(response => response.json())
+        .then(data => {
+
+            if (data.result) {
+                setDevMessage('Project added to your chosen projects')
+            }
+
+
+        })
 
 
     }
@@ -443,6 +457,7 @@ function Project(props) {
                     </>}
                 </div>
                     {user.role == "studio" && <div className={styles.takeon} onClick={() => handleDev()}>Take on the adventure and Develop this project</div>}
+                    <p>{devMessage}</p>
             </div>
 
 {/* RIGHT BAR */}

@@ -585,11 +585,7 @@ const Account = () => {
                 <>
                     <h4>Chosen Projects :</h4>
                     {user.studio?.chosenProjects?.length > 0 ? (
-                        <ul>
-                            {user.studio.chosenProjects.map((proj, i) => (
-                                <li key={i}>{proj.name}</li>
-                            ))}
-                        </ul>
+                            user.studio.chosenProjects.map((proj, i) => <ProjectCard key={i} project={proj} />)
                     ) : (
                         <p>No chosen projects yet</p>
                     )}
@@ -597,11 +593,8 @@ const Account = () => {
                     <br/><br/>
                     <h4>Developed Projects :</h4>
                     {user.studio?.developedProjects?.length > 0 ? (
-                        <ul>
-                            {user.studio.developedProjects.map((proj, i) => (
-                                <li key={i}>{proj.name}</li>
-                            ))}
-                        </ul>
+                            user.studio.developedProjects.map((proj, i) => <ProjectCard key={i} project={proj} />
+                            )
                     ) : (
                         <p>No developed projects yet</p>
                     )}
