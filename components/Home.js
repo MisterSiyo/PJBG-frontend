@@ -134,6 +134,7 @@ export default function Home() {
 
   // re render du redux 
   // useEffect(() => {
+    
   //   if (user.token) {
   //     fetch('http://localhost:3000/users/reduxrender', {
   //       method: 'POST',
