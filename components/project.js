@@ -26,25 +26,32 @@ function Project(props) {
     // const user = useSelector((state) => state.user.value);
 
 
-
-
-    
-
-
     useEffect(() => {
         if (!project) {
-            return;
+          return;
         }
-        // setQuery(project);
+    
         fetch(`http://localhost:3000/projects/${project}`)
-            .then(response => response.json())
-                .then(data => {
-                    data.result && setProjectData(data.project)
-                    setNews(data.project.histories)
-                    setIsLoading(false)
-                })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.result) {
+              setProjectData(data.project);
+              setNews(data.project.histories);
+              setIsLoading(false);
+    
+              const validatedByStaff = data.project.isValidatedByStaff;
+              const studioPreVote = data.project.studiosPreVote || [];
+    
+              if (
+                validatedByStaff &&
+                studioPreVote.some((studio) => studio.studioId === user.studioId)
+              ) {
+                setProjectData((prev) => ({ ...prev, layoutType: "validated" }));
+              }
+            }
+          });
+      }, [project]);
 
-    }, [project])
 
     // ajout de la page validated
 
