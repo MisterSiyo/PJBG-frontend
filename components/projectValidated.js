@@ -46,7 +46,7 @@ function ProjectValidated() {
       .then((res) => res.json())
       .then((data) => {
         if (data.result) {
-          // console.log(data.project.stages)
+         
           setProjectData(data.project);
           setStages(data.project.stages || []);
           setNews(data.project.histories || []);
@@ -114,8 +114,7 @@ const payload = {
     closingNotes,
     token: userAccount.token,
     };
-    // console.log(payload)
-    // console.log(projectData)
+   
     // On envoie au backend
     const response = await fetch(
       `http://localhost:3000/projects/update/${projectData._id}`,
@@ -219,6 +218,15 @@ const payload = {
   // ***********************
   return (
     <>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        
+        <div className={styles.pageContent}></div>
       <div className={styles.titleContainer}>
         <h2 className={styles.title}>{projectData.title}</h2>
       </div>
@@ -246,7 +254,7 @@ const payload = {
                         <p key={i} className={styles.favoriteText}>
                           {f.title}
                         </p>
-                        // console.log(f)
+                       
                       )
                     )) : (
                       <p>No favorites</p>
