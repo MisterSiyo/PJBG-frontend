@@ -389,27 +389,36 @@ const Account = () => {
             )}
 
             <br></br>
+            <br></br>
 
             {/* Champs pour modifier les informations de l'utilisateur pour les 2 roles */}
             {isEditing ? (
                 <>
-                    {/* Section spécifique aux patron */}
-                    {user.role !== "patron" && (
-                        <>
-                            <p>Email : <input type="email" name="email" value={displayData.email} onChange={handleChange} /></p>
-                            <p>Phone : <input type="text" name="phone" value={displayData.phone} onChange={handleChange} /></p>
-                            <p>Name : <input type="text" name="name" value={displayData.name} onChange={handleChange} /></p>
-                            <p>Surname : <input type="text" name="surname" value={displayData.surname} onChange={handleChange} /></p>
-                            <p>Description : <textarea name="description" value={displayData.description} onChange={handleChange} /></p>
+            {/* Champs modifiables pour patron */}    
+            {user.role !== "studio" && (
+                <>
+                    <p>Email : <input type="email" name="email" value={displayData.email} onChange={handleChange} /></p>
+                    <p>Phone : <input type="text" name="phone" value={displayData.phone} onChange={handleChange} /></p>
+                    <p>Name : <input type="text" name="name" value={displayData.name} onChange={handleChange} /></p>
+                    <p>Surname : <input type="text" name="surname" value={displayData.surname} onChange={handleChange} /></p>
+                    <p>Description : <textarea name="description" value={displayData.description} onChange={handleChange} /></p>
 
-                            <h4>Address :</h4>
-                            <p>Street Number : <input type="text" name="streetNumber" value={displayData.address.streetNumber} onChange={handleChange} /></p>
-                            <p>Street : <input type="text" name="street" value={displayData.address.street} onChange={handleChange} /></p>
-                            <p>Postal Code : <input type="text" name="postalCode" value={displayData.address.postalCode} onChange={handleChange} /></p>
-                            <p>City : <input type="text" name="city" value={displayData.address.city} onChange={handleChange} /></p>
-                            <p>Country : <input type="text" name="country" value={displayData.address.country} onChange={handleChange} /></p>
-                        </>
-                    )}
+                    <br></br>
+                    <h4>Address :</h4>
+                    <p>Street Number : <input type="text" name="streetNumber" value={displayData.address.streetNumber} onChange={handleChange} /></p>
+                    <p>Street : <input type="text" name="street" value={displayData.address.street} onChange={handleChange} /></p>
+                    <p>Postal Code : <input type="text" name="postalCode" value={displayData.address.postalCode} onChange={handleChange} /></p>
+                    <p>City : <input type="text" name="city" value={displayData.address.city} onChange={handleChange} /></p>
+                    <p>Country : <input type="text" name="country" value={displayData.address.country} onChange={handleChange} /></p>
+                </>
+            )}
+
+            {/* L'email est modifiable pour les 2 rôles */}
+            {user.role === "studio" && (
+                <>
+                    <p>Email : <input type="email" name="email" value={displayData.email} onChange={handleChange} /></p>
+                </>
+            )}
 
                     <br /><br />
                     <h4>Social Links :</h4>
@@ -441,8 +450,8 @@ const Account = () => {
                             <p>Address : {`${formData.studio.address.street}, ${formData.studio.address.postalCode} ${formData.studio.address.city}, ${formData.studio.address.country}`}</p>
                             <p>SIRET : {formData.studio.siret}</p>
                             <p>SIREN : {formData.studio.siren}</p>
-                            <p>Website : <input type="text" name="studio.webSite" value={formData.studio.webSite} onChange={handleChange} /></p>
-                            <p>Description : <textarea name="studio.description" value={formData.studio.description} onChange={handleChange} /></p>
+                            <p>Website : <input type="text" name="studio.webSite" value={displayData.studio.webSite} onChange={handleChange} /></p>
+                            <p>Description : <textarea name="studio.description" value={displayData.studio.description} onChange={handleChange} /></p>
                             
                             <br /><br />
                             <h4>Contact Person :</h4>
@@ -559,8 +568,18 @@ const Account = () => {
                             ) : (
                               <p>You did not fund any project yet</p>
                             )}
+
+            <br/><br/>
+        
+                   <h4>Created Projects :</h4>
+                    {user.createdProjects && user.createdProjects.length > 0 ? (
+                              user.createdProjects.map((proj, i) => <ProjectCard key={i} project={proj} />)
+                            ) : (
+                            <p>You have not created any project yet</p>
+                            )}
                 </>
-            )}
+)}
+
 
             {/* Section spécifique aux studios */}
             {user.role === "studio" && (
