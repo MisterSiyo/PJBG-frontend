@@ -141,13 +141,13 @@ function Project(props) {
         )
     })
 
-
+console.log('voici le truc putain : ', projectData.studiosPreVote)
 
     const intStudios = projectData.studiosPreVote.map((data, i) => {
         return (
             <div key={i} className={styles.studioBox}>
-                <h6>{data.studio.companyName}</h6> 
-                <p> {data.studio.description} </p>
+                <h6>{data.studio.studio.companyName}</h6> 
+                <p> {data.studio.studio.description} </p>
             </div>
         )
     })
