@@ -255,7 +255,7 @@ function Project(props) {
 
     const handleDev = () => {
 
-        fetch('/dev', {
+        fetch('http://localhost:3000/projects/dev', {
             method: 'PUT',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({token: user.token, projectId: projectData._id})
@@ -266,15 +266,8 @@ function Project(props) {
             if (data.result) {
                 setDevMessage('Project added to your chosen projects')
             }
-
-
         })
-
-
     }
-
-
-
 
     const totalCollected = (projectData.progressions?.reduce((acc, p) => acc + ((p.pledgeChosen.contributionLevel) || 0), 0) || 0).toLocaleString();
     const goal = projectData.goal?.toLocaleString();
@@ -456,7 +449,7 @@ function Project(props) {
                     
                     </>}
                 </div>
-                    {user.role == "studio" && <div className={styles.takeon} onClick={() => handleDev()}>Take on the adventure and Develop this project</div>}
+                    {user.role == "studio" && <div className={styles.takeon} onClick={handleDev}>Take on the adventure and Develop this project</div>}
                     <p>{devMessage}</p>
             </div>
 
