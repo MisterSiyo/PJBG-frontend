@@ -6,6 +6,7 @@ import Link from "next/link";
 import { loadMessages } from "../reducers/chatMessage";
 import styles from "../styles/project.module.css";
 import ProjectValidated from "./projectValidated";
+import { addUserToStore } from "../reducers/user";
 
 function Project(props) {
 
@@ -23,8 +24,24 @@ function Project(props) {
     const [devMessage, setDevMessage] = useState('');
     const [voteMessage, setVoteMessage] = useState('');
     const [votedStudioId, setVotedStudioId] = useState(null);
-    // const dispatch = useDispatch();
-    // const user = useSelector((state) => state.user.value);
+    const [pleaseLoginMessage, setPleaseLoginMessage] = useState('')
+    const dispatch = useDispatch();
+
+
+  // useEffect(() => {
+  //   if (user.token) {
+  //     fetch('http://localhost:3000/users/reduxrender', {
+  //       method: 'POST',
+  //       headers: {'Content-Type': 'application/json'},
+  //       body: JSON.stringify({token : user.token})
+  //     })
+  //     .then(response => response.json())
+  //     .then(data => {
+  //       dispatch(addUserToStore(data.user))
+  //     })
+  //   }
+  // }, [])
+
 
 
   useEffect(() => {
@@ -40,23 +57,17 @@ function Project(props) {
           setNews(data.project.histories);
           setIsLoading(false);
 
-              // Vérifier si l'utilisateur a déjà voté pour un studio
-          if (data.project.votes && data.project.votes[user._id]) {
-            setVotedStudioId(data.project.votes[user._id]);
-          }
 
-          const validatedByStaff = data.project.isValidatedByStaff;
-          const studioPreVote = data.project.studiosPreVote;
-          const hasFunded = data.project.user.fundedProjects.some(
-            (project) => project.projectId === data.project._id
-          );
 
-          if (
-            validatedByStaff &&
-            hasFunded &&
-            studioPreVote.some((studio) => studio.studioId === user.studioId)
-          ) {
+        const hasVoted = data.project.studiosPreVote.some(e => e.votes && e.votes.some(vote => vote.username === user.username))
+
+
+        const validatedByStaff = data.project.isValidatedByStaff;
+  
+          if (validatedByStaff && hasVoted) {
             setProjectData((prev) => ({ ...prev, layoutType: "validated" }));
+          } else if (validatedByStaff && !hasVoted) {
+            router.push('/')
           }
 
           data.project.user.fundedProjects.forEach((project, index) => {
@@ -85,6 +96,12 @@ function Project(props) {
   };
 
   const handleChat = () => {
+
+    if (!user.token) {
+      setPleaseLoginMessage('Please log in to gain access to the chat and more functionnalities !')
+      return;
+    }
+
     if (chatMessage.length < 1) {
       return;
     }
@@ -372,6 +389,16 @@ function Project(props) {
   });
 
   const handlePledge = (pid, pcl) => {
+    if (!user.token) {
+      setPleaseLoginMessage('Please log in to gain access to pledges and more functionnalities !')
+      return;
+    }
+
+    if (user.fundedProjects.some(e => e.project.title === projectData.title)) {
+      setPleaseLoginMessage('You have already contributed to this project')
+      return;
+    }
+
     router.push({
       pathname: "/checkoutPayment",
       query: { pid, pcl, gid: projectData._id, title: projectData.title },
@@ -416,6 +443,7 @@ function Project(props) {
       <div className={styles.titleContainer}>
         <h2 className={styles.title}>{projectData.title}</h2>
       </div>
+      <p style={{color: 'red'}}>{pleaseLoginMessage}</p>
       <div className={styles.pageContent}>
         {/* LEFT BAR */}
         <div className={styles.leftBar}>

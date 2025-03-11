@@ -1,16 +1,17 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import styles from "../styles/layout.module.css";
 import ProjectCard from "./ProjectCard"; // Composant pour afficher les projets
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { addUserToStore } from "../reducers/user";
 
 export default function Home() {
   const router = useRouter();
   const user = useSelector((state) => state.user.value);
-
+  const dispatch = useDispatch()
   // État pour les projets
   const [projects, setProjects] = useState([]);
   // État pour l'option de tri
@@ -134,6 +135,21 @@ export default function Home() {
         setLoading(false);
       });
   }, []);
+
+  // re render du redux 
+  // useEffect(() => {
+  //   if (user.token) {
+  //     fetch('http://localhost:3000/users/reduxrender', {
+  //       method: 'POST',
+  //       headers: {'Content-Type': 'application/json'},
+  //       body: JSON.stringify({token : user.token})
+  //     })
+  //     .then(response => response.json())
+  //     .then(data => {
+  //       dispatch(addUserToStore(data.user))
+  //     })
+  //   }
+  // }, [])
 
   // Affichage conditionnel si GMTypes en cours de chargement
   if (loading) {

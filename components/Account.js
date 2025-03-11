@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUser, updateUserProfile } from '../reducers/user';
 import ProjectCard from './ProjectCard';
+import { addUserToStore } from '../reducers/user';
 
 const Account = () => {
     const dispatch = useDispatch();
@@ -20,6 +21,14 @@ const Account = () => {
         confirmPassword: ''
     });
     const [passwordError, setPasswordError] = useState('');
+    const [modifErrorMessage, setModifErrorMessage] = useState('');
+    const [projectsDataList, setProjectsDataList] = useState([]);
+    const [pcardFa, setPcardFa] = useState([]);
+    const [pcardFu, setPcardFu] = useState([]);
+    const [pcardCr, setPcardCr] = useState([]);
+    const [pcardD, setPcardD] = useState([]);
+    const [pcardCh, setPcardCh] = useState([]);
+
     
     const [formData, setFormData] = useState({
         email: '',
@@ -78,6 +87,102 @@ const Account = () => {
     // Variable pour stocker temporairement les données en cours d'édition
     const [editingData, setEditingData] = useState(null);
 
+    // useEffect(() => {
+    //     if (user.token) {
+    //       fetch('http://localhost:3000/users/reduxrender', {
+    //         method: 'POST',
+    //         headers: {'Content-Type': 'application/json'},
+    //         body: JSON.stringify({token : user.token})
+    //       })
+    //       .then(response => response.json())
+    //       .then(data => {
+    //         console.log('Fetched user data:', data); // Add logging
+    //         if (data.user) {
+    //           dispatch(addUserToStore(data.user));
+    //         }
+    //       })
+    //       .catch(error => {
+    //         console.error('Error fetching user data:', error);
+    //       });
+    //     }
+    //   }, [user.token, dispatch])
+
+// useEffect(() => {
+
+//     fetch('http://localhost:3000/projects/get/all')
+//     .then(response => response.json())
+//     .then(data => {
+//         setProjectsDataList(data.projectsData);
+//     })
+    
+// }, [])
+
+// useEffect(() => {
+
+//     if (Array.isArray(projectsDataList) && user && Array.isArray(user.followedProjects)) {
+//         const favoriteProjects = projectsDataList.filter(project => 
+//           user.followedProjects.includes(project._id)
+//         );
+//         setPcardFa(favoriteProjects);
+//       } else {
+//         setPcardFa([]); // Reset if data is missing
+//       }
+
+//     },[projectsDataList, user])
+
+
+
+
+
+
+
+    // if (projectsDataList && user) {
+    //   // Handle favorite projects
+    //   if (user.followedProjects) {
+    //     const favoriteProjects = projectsDataList.filter(project => 
+    //       user.followedProjects.some(fid => fid === project._id)
+    //     );
+    //     setPcardFa(favoriteProjects);
+    //   }
+  
+      // Handle funded projects (for patron)
+//       if (user.fundedProjects) {
+//         const fundedProjects = projectsDataList.filter(project =>
+//           user.fundedProjects.some(funded => funded.project.title === project.title)
+//         );
+//         setPcardFu(fundedProjects);
+//       }
+  
+//       // Handle created projects (for patron)
+//       if (user.createdProjects) {
+//         const createdProjects = projectsDataList.filter(project =>
+//           user.createdProjects.some(created => created.title === project.title)
+//         );
+//         setPcardCr(createdProjects);
+//       }
+  
+//       // Handle chosen projects (for studio)
+//       if (user.studio?.chosenProjects) {
+//         const chosenProjects = projectsDataList.filter(project =>
+//           user.studio.chosenProjects.some(chosen => chosen.title === project.title)
+//         );
+//         setPcardCh(chosenProjects);
+//       }
+  
+//       // Handle developed projects (for studio)
+//       if (user.studio?.developedProjects) {
+//         const developedProjects = projectsDataList.filter(project =>
+//           user.studio.developedProjects.some(developed => developed.title === project.title)
+//         );
+//         setPcardD(developedProjects);
+//       }
+//     }
+//   }, [projectsDataList, user]);
+
+
+
+console.log('project data list', projectsDataList)
+console.log('pcardFA : ', pcardFa)
     useEffect(() => {
         if (user) {
             // Données communes à tous les utilisateurs
@@ -242,6 +347,11 @@ const Account = () => {
 
         console.log('données à envoyer à l\'API : ', dataToSave);
 
+        if (dataToSave.email.trim() === '') {
+            setModifErrorMessage('veuillez renseigner une adresse mail')
+            return;
+        }
+
         fetch(`http://localhost:3000/account/`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
@@ -265,6 +375,7 @@ const Account = () => {
             setFormData(editingData);
             dispatch(updateUser({...editingData, token: user.token}));
             setIsEditing(false);
+            setModifErrorMessage('')
         })
         .catch(error => {
             console.error("Erreur lors de la sauvegarde:", error);
@@ -390,7 +501,7 @@ const Account = () => {
 
             <br></br>
             <br></br>
-
+            <p>{modifErrorMessage}</p>
             {/* Champs pour modifier les informations de l'utilisateur pour les 2 roles */}
             {isEditing ? (
                 <>
