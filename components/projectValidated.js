@@ -236,7 +236,7 @@ const payload = {
                     {projectData.user.followedProjects?.length > 0 ? (
                       projectData.user.followedProjects.map((f, i) => (
                         <p key={i} className={styles.favoriteText}>
-                          {f.project.title}
+                          {f.title}
                         </p>
                       ))
                     ) : (
