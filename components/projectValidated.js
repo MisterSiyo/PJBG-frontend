@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import styles from '../styles/projectValidated.module.css';
-
 function ProjectValidated() {
   // État pour le chat
   const [chatMessage, setChatMessage] = useState('');

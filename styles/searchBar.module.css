@@ -1,0 +1,80 @@
+/* Conteneur principal */
+.searchBarContainer {
+  position: relative;
+  display: inline-block;
+  width: 300px;
+  margin-bottom: 1rem;
+}
+
+/* Champ de saisie */
+.searchInput {
+  width: 100%;
+  padding: 0.6rem 1rem;
+  font-size: 0.95rem;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  outline: none;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+.searchInput:focus {
+  border-color: #bbb;
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
+}
+
+/* Liste déroulante */
+.suggestionsList {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  background-color: rgba(50, 50, 50, 0.85); /* Fond gris foncé transparent */
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-top: none;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+
+  color: white; /* Texte blanc */
+  font-size: 0.9rem;
+  z-index: 999;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* Section titre (Projets / Mechanics) */
+.sectionTitle {
+  font-size: 0.9rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  padding: 0.5rem 1rem;
+  background-color: rgba(60, 66, 105, 0.519);
+  color: #ffffff;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Séparateur entre projets et mécaniques */
+/* .separator {
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.3);
+  margin: 0.3rem 0;
+} */
+
+/* Élément de suggestion */
+.suggestionItem {
+    color: #000000;
+    background-color: #cae7ffdd;
+    font-size: 0.rem;
+  padding: 0.8rem 3rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+/* Effet au survol */
+.suggestionItem:hover {
+  background-color: rgba(255, 255, 255, 0.782);
+}

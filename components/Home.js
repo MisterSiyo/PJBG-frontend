@@ -7,124 +7,105 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
+// Import du composant
+import SearchBar from "./SearchBar";
+
 export default function Home() {
   const router = useRouter();
   const user = useSelector((state) => state.user.value);
 
-  // État pour les projets
+  // État pour la liste brute de projets (récupérés depuis l'API)
   const [projects, setProjects] = useState([]);
-  // État pour l'option de tri
+  // État pour le tri (progress, mostFunded, etc.)
   const [sortOption, setSortOption] = useState("default");
-  // État pour la liste des GMTypes (carrousel)
+  // État pour stocker la liste de genres récupérés pour le carrousel
   const [gmTypes, setGmTypes] = useState([]);
-  // État de chargement du carrousel
+  // État de chargement pour le carrousel
   const [loading, setLoading] = useState(true);
+
+  // Filtrage par genres
+  const [selectedGenres, setSelectedGenres] = useState([]);    
+  const [filteredProjects, setFilteredProjects] = useState([]); 
+
+  // Barre de recherche
+  const [searchQuery, setSearchQuery] = useState("");
+  const [allSearchableTerms, setAllSearchableTerms] = useState([]); // Titre + mécaniques
 
   // Configuration du carrousel
   const sliderSettings = {
-    dots: true,
+    dots: false,
     infinite: false,
     speed: 500,
-    slidesToShow: 7,
-    slidesToScroll: 6,
+    slidesToShow: 6,
+    slidesToScroll: 5,
     responsive: [
-      { breakpoint: 1024, settings: { slidesToShow: 3, slidesToScroll: 2 } },
-      { breakpoint: 768, settings: { slidesToShow: 2, slidesToScroll: 1 } },
-      { breakpoint: 480, settings: { slidesToShow: 1, slidesToScroll: 1 } },
+      { breakpoint: 1024, settings: { slidesToShow: 5, slidesToScroll: 4 } },
+      { breakpoint: 768, settings: { slidesToShow: 4, slidesToScroll: 3 } },
+      { breakpoint: 480, settings: { slidesToShow: 3, slidesToScroll: 2 } },
     ],
   };
 
-  // 1) Charger et trier les projets
+  // 1) Récupération de tous les projets
   useEffect(() => {
     fetch("http://localhost:3000/projects/get/all")
       .then((response) => response.json())
       .then((data) => {
         if (data.result) {
-          // On clone pour éviter de modifier directement data.projectsData
-          let sortedProjects = [...data.projectsData];
+          setProjects(data.projectsData);
 
-          switch (sortOption) {
-            case "progress":
-              sortedProjects.sort((a, b) => {
-                const progressA =
-                  a.progressions?.reduce(
-                    (acc, p) => acc + (p.pledgeChosen.contributionLevel || 0),
-                    0
-                  ) || 0;
-                const progressB =
-                  b.progressions?.reduce(
-                    (acc, p) => acc + (p.pledgeChosen.contributionLevel || 0),
-                    0
-                  ) || 0;
-
-                const percentA = a.goal ? (progressA / a.goal) * 100 : 0;
-                const percentB = b.goal ? (progressB / b.goal) * 100 : 0;
-
-                return percentB - percentA; // Du plus financé au moins financé
+          // Construire la liste globale de termes pour la recherche
+          let tempArray = [];
+          data.projectsData.forEach((proj) => {
+            // Ajouter le titre comme "type: project"
+            if (proj.title) {
+              tempArray.push({
+                label: proj.title.trim(),
+                type: "project",
+                pageURL: proj.pageURL, // Pour la redirection
               });
-              break;
-
-            case "mostFunded":
-              sortedProjects.sort((a, b) => {
-                const totalA =
-                  a.progressions?.reduce(
-                    (acc, p) => acc + (p.pledgeChosen.contributionLevel || 0),
-                    0
-                  ) || 0;
-                const totalB =
-                  b.progressions?.reduce(
-                    (acc, p) => acc + (p.pledgeChosen.contributionLevel || 0),
-                    0
-                  ) || 0;
-                return totalB - totalA;
+            }
+            // Ajouter les mécaniques (si existantes)
+            if (proj.detail?.gameMechanics) {
+              proj.detail.gameMechanics.forEach((gm) => {
+                if (gm.name) {
+                  tempArray.push({
+                    label: gm.name.trim(),
+                    type: "mechanic",
+                  });
+                }
               });
-              break;
+            }
+          });
 
-            case "leastFunded":
-              sortedProjects.sort((a, b) => {
-                const totalA =
-                  a.progressions?.reduce(
-                    (acc, p) => acc + (p.pledgeChosen.contributionLevel || 0),
-                    0
-                  ) || 0;
-                const totalB =
-                  b.progressions?.reduce(
-                    (acc, p) => acc + (p.pledgeChosen.contributionLevel || 0),
-                    0
-                  ) || 0;
-                return totalA - totalB;
-              });
-              break;
-
-            case "alphabeticalAsc":
-              sortedProjects.sort((a, b) => a.title.localeCompare(b.title));
-              break;
-
-            case "alphabeticalDesc":
-              sortedProjects.sort((a, b) => b.title.localeCompare(a.title));
-              break;
-
-            default:
-              // Si "default", on ne touche pas l'ordre.
-              break;
+          // Retirer les doublons
+          const unique = [];
+          const seen = new Set();
+          for (let item of tempArray) {
+            const key =
+              item.label.toLowerCase() +
+              "_" +
+              item.type +
+              "_" +
+              (item.pageURL || "");
+            if (!seen.has(key) && item.label !== "") {
+              unique.push(item);
+              seen.add(key);
+            }
           }
-
-          setProjects(sortedProjects);
+          setAllSearchableTerms(unique);
         }
       })
       .catch((err) => {
         console.error("Erreur lors de la récupération des projets:", err);
       });
-  }, [sortOption]);
+  }, []);
 
-  // 2) Charger la liste de GMTypes pour le carrousel
+  // 2) Récupération de la liste de genres (pour le carrousel)
   useEffect(() => {
-    fetch("http://localhost:3000/genres") 
-  
+    fetch("http://localhost:3000/genres")
       .then((response) => response.json())
       .then((data) => {
         if (data.result) {
-          // data.types correspond à "mechanics" côté backend
           setGmTypes(data.genres);
         }
         setLoading(false);
@@ -135,30 +116,170 @@ export default function Home() {
       });
   }, []);
 
-  // Affichage conditionnel si GMTypes en cours de chargement
+  // 3) Filtrer ET trier les projets dès que 'projects', 'selectedGenres',
+  //    'searchQuery' ou 'sortOption' change
+  useEffect(() => {
+    let result = [...projects];
+
+    // (a) Filtrage par searchQuery
+    if (searchQuery.trim().length > 0) {
+      const lowerSearch = searchQuery.trim().toLowerCase();
+      result = result.filter((proj) => {
+        const inTitle = proj.title.toLowerCase().includes(lowerSearch);
+
+        let inMechanics = false;
+        if (proj.detail?.gameMechanics) {
+          const gmNames = proj.detail.gameMechanics.map((gm) =>
+            gm.name.toLowerCase()
+          );
+          inMechanics = gmNames.some((n) => n.includes(lowerSearch));
+        }
+
+        return inTitle || inMechanics;
+      });
+    }
+
+    // (b) Filtrage par genres, si l'utilisateur en a sélectionné
+    if (selectedGenres.length > 0) {
+      result = result.filter((proj) => {
+        if (!proj.detail || !proj.detail.gameMechanics) return false;
+        const projectGenres = proj.detail.gameMechanics
+          .filter((gm) => gm.GMType === "genre")
+          .map((gm) => gm.name);
+        return selectedGenres.every((g) => projectGenres.includes(g));
+      });
+    }
+
+    // (c) Appliquer le tri existant
+    switch (sortOption) {
+      case "progress":
+        result.sort((a, b) => {
+          const progressA =
+            a.progressions?.reduce(
+              (acc, p) => acc + (p.pledgeChosen?.contributionLevel || 0),
+              0
+            ) || 0;
+          const progressB =
+            b.progressions?.reduce(
+              (acc, p) => acc + (p.pledgeChosen?.contributionLevel || 0),
+              0
+            ) || 0;
+          const percentA = a.goal ? (progressA / a.goal) * 100 : 0;
+          const percentB = b.goal ? (progressB / b.goal) * 100 : 0;
+          return percentB - percentA; // tri décroissant
+        });
+        break;
+
+      case "mostFunded":
+        result.sort((a, b) => {
+          const totalA =
+            a.progressions?.reduce(
+              (acc, p) => acc + (p.pledgeChosen?.contributionLevel || 0),
+              0
+            ) || 0;
+          const totalB =
+            b.progressions?.reduce(
+              (acc, p) => acc + (p.pledgeChosen?.contributionLevel || 0),
+              0
+            ) || 0;
+          return totalB - totalA;
+        });
+        break;
+
+      case "leastFunded":
+        result.sort((a, b) => {
+          const totalA =
+            a.progressions?.reduce(
+              (acc, p) => acc + (p.pledgeChosen?.contributionLevel || 0),
+              0
+            ) || 0;
+          const totalB =
+            b.progressions?.reduce(
+              (acc, p) => acc + (p.pledgeChosen?.contributionLevel || 0),
+              0
+            ) || 0;
+          return totalA - totalB;
+        });
+        break;
+
+      case "alphabeticalAsc":
+        result.sort((a, b) => a.title.localeCompare(b.title));
+        break;
+
+      case "alphabeticalDesc":
+        result.sort((a, b) => b.title.localeCompare(a.title));
+        break;
+
+      default:
+        // default = ordre non modifié
+        break;
+    }
+
+    // Mettre à jour l'état 'filteredProjects' avec le résultat final
+    setFilteredProjects(result);
+  }, [projects, selectedGenres, searchQuery, sortOption]);
+
+  // Gérer le clic sur un genre
+  const handleGenreClick = (genreName) => {
+    setSelectedGenres((prev) => {
+      if (prev.includes(genreName)) {
+        return prev.filter((g) => g !== genreName);
+      }
+      return [...prev, genreName];
+    });
+  };
+
+  // Bouton Reset
+  const handleResetGenres = () => {
+    setSelectedGenres([]);
+  };
+
+
   if (loading) {
     return <div className={styles.mainContainer}>Loading GMTypes...</div>;
   }
 
   return (
     <div className={styles.mainContainer}>
-      {/* Carrousel de GMTypes */}
+      
+      {/* -------------------------------- SearchBar -------------------------------- */}
+      <SearchBar
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+        allSearchableTerms={allSearchableTerms}
+      />
+      {/* ------------------------ Carrousel de GMTypes------------------------ */}
+
       {gmTypes.length > 0 ? (
         <div className={styles.carouselContainer}>
           <Slider {...sliderSettings}>
             {gmTypes.map((genre, index) => (
               <div key={index} className={styles.carouselItem}>
-                <button className={styles.subCategory}>
+                <button
+                  className={styles.subCategory}
+                  onClick={() => handleGenreClick(genre.name)}
+                  style={{
+                    border: selectedGenres.includes(genre.name)
+                      ? "2px solid blue"
+                      : "none",
+                  }}
+                >
                   {genre.name}
                 </button>
               </div>
             ))}
           </Slider>
+          
+          {selectedGenres.length > 0 && (
+            <button onClick={handleResetGenres}>
+              Reset Genres
+            </button>
+          )}
         </div>
       ) : (
         <p>Aucun GMType trouvé.</p>
       )}
-      {/* Bouton "Create Project" visible uniquement si user.role === "patron" */}
+{/* -------------------------------- Bouton "Create Project" -------------------------------- */}
       {user?.role === "patron" && (
         <div className={styles.createProjectContainer}>
           <h2>Want to create your own?</h2>
@@ -167,12 +288,11 @@ export default function Home() {
           </button>
         </div>
       )}
+{/* -------------------------------- Titre section ---------------------------------------- */}
 
-      {/* Titre */}
       <h2 className={styles.sectionTitle}>Discover our top projects</h2>
 
-
-      {/* Options de tri (uniquement si l'utilisateur est connecté) */}
+      {/* Options de tri (uniquement si user est connecté) */}
       {user?.token && (
         <div className={styles.sortContainer}>
           <label htmlFor="sort">Sort projects by: </label>
@@ -190,13 +310,11 @@ export default function Home() {
           </select>
         </div>
       )}
+{/* -------------------------------- Liste des projets filtrés et triés -------------------------------- */}
 
-
-
-      {/* Grid des projets */}
       <div className={styles.projectGrid}>
-        {projects.length > 0 ? (
-          projects.map((project, index) => (
+        {filteredProjects.length > 0 ? (
+          filteredProjects.map((project, index) => (
             <ProjectCard key={index} project={project} />
           ))
         ) : (
