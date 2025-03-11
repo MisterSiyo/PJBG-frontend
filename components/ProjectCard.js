@@ -40,8 +40,8 @@ export default function ProjectCard({ project }) {
   const [showNews, setShowNews] = useState(false);
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.value);
-console.log('the project in the project card : ', project)
-  const isLoggedIn = !!user.token;
+  console.log('the project in the project card : ', project)
+  const isLoggedIn = !!user?.token;
   const isFollowed =
     isLoggedIn &&
     user.followedProjects?.length > 0 &&
@@ -53,7 +53,7 @@ console.log('the project in the project card : ', project)
   const handleFollowClick = async (e) => {
     e.stopPropagation();
     if (!isLoggedIn) {
-      router.push("/login");
+      router.push("/");
       return;
     }
 
@@ -95,7 +95,6 @@ console.log('the project in the project card : ', project)
 
   // Calcul du total des contributions reçues ( acc = accumateur, acc commence à 0, on met 0 au lieu du undefined/null pour éviter erreur )
   const totalCollected = (project.progressions?.reduce((acc, p) => acc + ((p.pledgeChosen.contributionLevel) || 0), 0) || 0).toLocaleString();
-
   const goal = project.goal?.toLocaleString();
   // calcul pour le pourcentage
   const fundingPercentage = project.goal

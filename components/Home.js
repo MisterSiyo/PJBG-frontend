@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import styles from "../styles/layout.module.css";
 import ProjectCard from "./ProjectCard"; // Composant pour afficher les projets
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { addUserToStore } from "../reducers/user";
 
 // Import du composant
 import SearchBar from "./SearchBar";
@@ -13,7 +14,7 @@ import SearchBar from "./SearchBar";
 export default function Home() {
   const router = useRouter();
   const user = useSelector((state) => state.user.value);
-
+  const dispatch = useDispatch()
   // État pour la liste brute de projets (récupérés depuis l'API)
   const [projects, setProjects] = useState([]);
   // État pour le tri (progress, mostFunded, etc.)
@@ -115,6 +116,36 @@ export default function Home() {
         setLoading(false);
       });
   }, []);
+
+  // re render du redux 
+  // useEffect(() => {
+  //   if (user.token) {
+  //     fetch('http://localhost:3000/users/reduxrender', {
+  //       method: 'POST',
+  //       headers: {'Content-Type': 'application/json'},
+  //       body: JSON.stringify({token : user.token})
+  //     })
+  //     .then(response => response.json())
+  //     .then(data => {
+  //       dispatch(addUserToStore(data.user))
+  //     })
+  //   }
+  // }, [])
+
+  // re render du redux 
+  // useEffect(() => {
+  //   if (user.token) {
+  //     fetch('http://localhost:3000/users/reduxrender', {
+  //       method: 'POST',
+  //       headers: {'Content-Type': 'application/json'},
+  //       body: JSON.stringify({token : user.token})
+  //     })
+  //     .then(response => response.json())
+  //     .then(data => {
+  //       dispatch(addUserToStore(data.user))
+  //     })
+  //   }
+  // }, [])
 
   // 3) Filtrer ET trier les projets dès que 'projects', 'selectedGenres',
   //    'searchQuery' ou 'sortOption' change
