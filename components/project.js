@@ -21,6 +21,7 @@ function Project(props) {
     const user = useSelector((state) => state.user.value)
     const [dlmessage, setDlmessage] = useState('');
     const [devMessage, setDevMessage] = useState('');
+    const [voteMessage, setVoteMessage] = useState('');
     // const dispatch = useDispatch();
     // const user = useSelector((state) => state.user.value);
 
@@ -141,13 +142,49 @@ function Project(props) {
         )
     })
 
-
+    const handleVote = (studioId) => {
+        fetch('http://localhost:3000/vote', { 
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                token: user.token,  // Token de l'utilisateur
+                projectId: projectData._id,  // ID du projet
+                studioId: studioId  // ID du studio pour lequel on veut voter
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Si la réponse est positive, on affiche le message de succès
+            if (data.result) {
+                setVoteMessage(data.message);  // Message de succès retourné par le backend
+            } else {
+                // Sinon on affiche le message d'erreur
+                setVoteMessage(data.message || 'An error occurred while voting.');
+            }
+        })
+        .catch(() => {
+            // En cas d'erreur de connexion, on affiche un message d'erreur générique
+            setVoteMessage('A connection error has occurred');
+        });
+    };
+    
+    
 
     const intStudios = projectData.studiosPreVote.map((data, i) => {
         return (
             <div key={i} className={styles.studioBox}>
                 <h6>{data.studio.companyName}</h6> 
                 <p> {data.studio.description} </p>
+                {user.role === 'patron' && (
+                    <button 
+                        className={styles.voteButton}
+                        onClick={() => handleVote(data.studio._id)}
+                    >
+                        Vote for this studio
+                    </button>
+                )}
             </div>
         )
     })
@@ -351,6 +388,7 @@ function Project(props) {
                         <div className={styles.studioBoxesContainer}>
                             {intStudios}
                         </div>
+                        {voteMessage && <p className={styles.voteMessage}>{voteMessage}</p>}
                     </div>
                 </div>
                 <div className={styles.characContainer}>
