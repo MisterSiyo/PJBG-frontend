@@ -44,7 +44,7 @@ console.log('the project in the project card : ', project)
   const isLoggedIn = !!user.token;
   const isFollowed =
     isLoggedIn &&
-    user.followedProjects.length > 0 &&
+    user.followedProjects?.length > 0 &&
     user.followedProjects.map(e=> e._id).includes(project._id);
 
   // Si le projet n'existe pas, on ne retourne rien

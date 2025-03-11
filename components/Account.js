@@ -554,7 +554,7 @@ const Account = () => {
             {user.role === "patron" && (
                 <>
                    <h4>Funded Projects :</h4>
-                    {user.fundedProjects.length > 0 ? (
+                    {user.fundedProjects?.length > 0 ? (
                               user.fundedProjects.map((proj, i) => <ProjectCard key={i} project={proj.project} />)
                             ) : (
                               <p>You did not fund any project yet</p>
