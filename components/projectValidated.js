@@ -34,22 +34,26 @@ function ProjectValidated() {
   const { project } = router.query;
   const userAccount = useSelector((state) => state.user.value);
 
+  const [toggleUpdate, setToggleUpdate] = useState(false)
+
   
   // Récupérer les données du projet
   useEffect(() => {
     if (!project) return;
+    
 
     fetch(`http://localhost:3000/projects/${project}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.result) {
+          // console.log(data.project.stages)
           setProjectData(data.project);
           setStages(data.project.stages || []);
           setNews(data.project.histories || []);
         }
         setIsLoading(false);
       });
-  }, [project]);
+  }, [project, toggleUpdate]);
 
   
 
@@ -73,7 +77,7 @@ function ProjectValidated() {
 
   // ajouté un nouveau bloc "catégorie update"
   const handleAddCategory = () => {
-    setExtraCategories((curr) => [...curr, { category: '', content: ''}]);
+    setExtraCategories((curr) => [...curr, { category: '', contentUpdate: ''}]);
   };
 
   const handleCategoryChange = (index, field, value) => {
@@ -81,6 +85,10 @@ function ProjectValidated() {
     updated[index][field] = value;
     setExtraCategories(updated);
   }
+  
+  const handleRemoveCategory = (index) => {
+    setExtraCategories((current) => current.filter((_, idx) => idx !== index));
+  };
 
   // Lorsque l’utilisateur soumet la nouvelle update
   const handleSubmitUpdate = async (e) => {
@@ -90,8 +98,7 @@ function ProjectValidated() {
     if (
       !title.trim() &&
       !generalProgress.trim() &&
-      !updateCategory &&
-      extraCategories.every((cat) => !cat.category && !cat.content.trim()) &&
+      extraCategories.every((cat) => !cat.category && !cat.contentUpdate.trim()) &&
       !roadmap.trim() &&
       !closingNotes.trim()
     ) {
@@ -101,13 +108,14 @@ function ProjectValidated() {
 
 const payload = {
     title,
-     monthUpdate: generalProgress,
-      update: extraCategories,
-       roadmapUpdate: roadmap,
-        closingNotes: closingNotes,
-         token: userAccount.token,
+    monthUpdate: generalProgress,
+    update: extraCategories,
+    roadmapUpdate: roadmap,
+    closingNotes,
+    token: userAccount.token,
     };
-
+    // console.log(payload)
+    // console.log(projectData)
     // On envoie au backend
     const response = await fetch(
       `http://localhost:3000/projects/update/${projectData._id}`,
@@ -119,31 +127,31 @@ const payload = {
     );
 
     if (response.ok) {
-      // On ajoute dans stages localement
-      const monthYear = new Date().toLocaleString('fr-FR', {
-        year: 'numeric',
-        month: 'long',
-      });
 
-      setStages((curr) => [
-        ...curr,
-        {
-          monthYear,
-          title,
-          generalProgress,
-          updateCategory,
-          updateCategoryContent,
-          extraCategories,
-          roadmap,
-          closingNotes,
-        },
-      ]);
+      setToggleUpdate(!toggleUpdate)
+      // On ajoute dans stages localement
+      // const monthYear = new Date().toLocaleString('fr-FR', {
+      //   year: 'numeric',
+      //   month: 'long',
+      // });
+
+      // setStages((curr) => [
+      //   ...curr,
+      //   {
+      //     monthYear,
+      //     title,
+      //     generalProgress,
+      //     updateCategory,
+      //     updateCategoryContent,
+      //     extraCategories,
+      //     roadmap,
+      //     closingNotes,
+      //   },
+      // ]);
 
       // Reset des champs
       setTitle('');
       setGeneralProgress('');
-      setUpdateCategory('');
-      setUpdateCategoryContent('');
       setExtraCategories([]);
       setRoadmap('');
       setClosingNotes('');
@@ -233,13 +241,14 @@ const payload = {
                 <div className={styles.favorites}>
                   <div className={styles.favBG}>
                     <h5>Favorites</h5>
-                    {projectData.user.followedProjects?.length > 0 ? (
+                    {projectData.user.followedProjects.length > 0 ? (
                       projectData.user.followedProjects.map((f, i) => (
                         <p key={i} className={styles.favoriteText}>
-                          {f.project.title}
+                          {/* {f.project.title} */}
                         </p>
-                      ))
-                    ) : (
+                        // console.log(f)
+                      )
+                    )) : (
                       <p>No favorites</p>
                     )}
                   </div>
@@ -547,9 +556,10 @@ const payload = {
                     rows={3}
                     className={styles.formTextarea}
                     placeholder="Details about this category..."
-                    value={cat.content}
-                    onChange={(e) => handleCategoryChange(idx, 'content', e.target.value)}
+                    value={cat.contentUpdate}
+                    onChange={(e) => handleCategoryChange(idx, 'contentUpdate', e.target.value)}
                   />
+                  <button className={styles.cancelButton} onClick={() => handleRemoveCategory(idx)}>Cancel</button>
                 </div>
               ))}
 
@@ -587,31 +597,31 @@ const payload = {
               <div key={idx} className={styles.updateBox}>
                 <div className={styles.updateBoxHeader}>
                   <span className={styles.updateMonthYear}>{stg.monthYear}</span>
-                  <img
+                  {/* <img
                     src="/images/twoCats.png"
                     alt="cats"
                     className={styles.catsIcon}
-                  />
+                  /> */}
                 </div>
                 <div className={styles.updateTitleBar}>
                   {stg.title || 'No Title'}
                 </div>
                 <div className={styles.updateInnerContent}>
                   <h5 className={styles.subSectionTitle}>General Progress Update</h5>
-                  <p>{stg.generalProgress || 'Nothing described'}</p>
+                  <p>{stg.monthUpdate || 'Nothing described'}</p>
 
                   {/* On affiche chaque bloc de cat */}
-                  {stg.extraCategories?.map((c, i2) => (
+                  {stg.update?.map((c, i2) => (
                     <div key={i2} className={styles.categoryDisplayBlock}>
                       <h5 className={styles.subSectionTitle}>{c.category || 'No category'}</h5>
-                      <p>{c.content || 'No details'}</p>
+                      <p>{c.contentUpdate || 'No details'}</p>
                     </div>
                   ))}
 
-                  {stg.roadmap && (
+                  {stg.roadmapUpdate && (
                     <>
                       <h5 className={styles.subSectionTitle}>Roadmap & Schedule Adjustments</h5>
-                      <p>{stg.roadmap}</p>
+                      <p>{stg.roadmapUpdate}</p>
                     </>
                   )}
                   {stg.closingNotes && (
