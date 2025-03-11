@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import styles from "../styles/layout.module.css";
 import ProjectCard from "./ProjectCard"; // Import du composant pour afficher les projets
@@ -6,6 +7,7 @@ import ProjectCard from "./ProjectCard"; // Import du composant pour afficher le
 export default function Home() {
   const [projects, setProjects] = useState([]);
   const router = useRouter();
+  const user = useSelector((state) => state.user.value);
 
   useEffect(() => {
     // Charger tous les projets quand la page Home s'affiche
@@ -22,12 +24,14 @@ export default function Home() {
   return (
     <div className={styles.mainContainer}>
       {/* Bouton pour créer un projet */}
-      <div className={styles.createProjectContainer}>
+      {user.role === "patron" && (   
+        <div className={styles.createProjectContainer}>
         <h2>Want to create your own?</h2>
         <button onClick={() => router.push("/gameCreation")}>
           Create Your Project
         </button>
       </div>
+      )}
 
       {/* Affichage des projets */}
       <h2 className={styles.sectionTitle}>Discover our top projects</h2>
