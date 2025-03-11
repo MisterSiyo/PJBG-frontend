@@ -293,4 +293,55 @@
   .send:hover {
     background: #d55a46;
   }
+  /* ============================= */
+/* SECTION CATEGORIES (SEE MORE) */
+/* ============================= */
+.categoriesSection {
+    margin-bottom: 20px;
+  }
   
+  .categoryBox {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 12px;
+  }
+  
+  .categoryHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+  
+  .categoryTitle {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    margin: 0;
+  }
+  
+  .categoryToggleBtn {
+    background: #ec6e5b;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .categoryToggleBtn:hover {
+    background: #d55a46;
+  }
+  
+  .categoryContent {
+    background: #f8f9fa; /* un gris clair */
+    border-radius: 5px;
+    padding: 8px 12px;
+  }
+  
+  .subCategory {
+    margin: 4px 0;
+    color: #555;
+    font-size: 14px;
+  }
