@@ -26,11 +26,15 @@ function ProjectValidated() {
   // Tableau qui stocke toutes les updates (stages)
   const [stages, setStages] = useState([]);
 
+  // pour étendre le contenu des categories
+  const [expandedSections, setExpandedSections] = useState({});
+
   // Router + user depuis Redux
   const router = useRouter();
   const { project } = router.query;
   const userAccount = useSelector((state) => state.user.value);
 
+  
   // Récupérer les données du projet
   useEffect(() => {
     if (!project) return;
@@ -46,6 +50,8 @@ function ProjectValidated() {
         setIsLoading(false);
       });
   }, [project]);
+
+  
 
   // Gestion de l’envoi d’un message (chat)
   const handleChat = () => {
@@ -67,10 +73,7 @@ function ProjectValidated() {
 
   // ajouté un nouveau bloc "catégorie update"
   const handleAddCategory = () => {
-    setExtraCategories([
-        ...extraCategories,
-        { category: '', content: ''},
-    ]);
+    setExtraCategories((curr) => [...curr, { category: '', content: ''}]);
   };
 
   const handleCategoryChange = (index, field, value) => {
@@ -96,28 +99,14 @@ function ProjectValidated() {
       return;
     }
 
-    // // On construit la "category" pour l'API
-    // let finalCategory = 'General'; // par défaut
-    // if (updateCategory) {
-    //   finalCategory = updateCategory; 
-    // }
-
-    // // On combine tout dans un payload
-    // const payload = {
-    //   title,
-    //   category: 'Multi-Category',
-    //   content: generalProgress,
-    //   roadmapUpdate: roadmap,
-    //   closingNotes,
-    //   token: userAccount.token,
-    // };
-
-//     const categoriesText = extraCategories.map((cat, i) => `## ${cat.category || 'Unknown Category'}\n${cat.content || ''}`).join('\n\n');
-//  payload.content += `\n\n${categoriesText}`;
-
-const payload = {title, monthUpdate: generalProgress, update: extraCategories, roadmapUpdate: roadmap, closingNotes: closingNotes}
-
-
+const payload = {
+    title,
+     monthUpdate: generalProgress,
+      update: extraCategories,
+       roadmapUpdate: roadmap,
+        closingNotes: closingNotes,
+         token: userAccount.token,
+    };
 
     // On envoie au backend
     const response = await fetch(
@@ -136,8 +125,8 @@ const payload = {title, monthUpdate: generalProgress, update: extraCategories, r
         month: 'long',
       });
 
-      setStages([
-        ...stages,
+      setStages((curr) => [
+        ...curr,
         {
           monthYear,
           title,
@@ -163,9 +152,59 @@ const payload = {title, monthUpdate: generalProgress, update: extraCategories, r
     }
   };
 
+  const handleToggleSection = (sectionKey) => {
+    setExpandedSections((prev) => ({
+        ...prev,
+        [sectionKey]: !prev[sectionKey],
+    }));
+  };
+  
   // Si loading
   if (isLoading) return <div>Loading...</div>;
   if (!projectData) return <div>Project not found</div>;
+
+ // =======================
+  //  MAP des gameMechanics
+  // =======================
+  // J'ai fais que copié ta logique... c'est chaud quand meme. 
+
+  const mechanics = projectData.detail?.gameMechanics || [];
+
+  const genres = mechanics
+    .filter((m) => m.GMType === 'genre')
+    .map((data, i) => <p className={styles.gmText} key={i}>{data.name}</p>);
+
+  const gameplays = mechanics
+    .filter((m) => m.GMType === 'gameplay')
+    .map((data, i) => <p className={styles.gmText} key={i}>{data.name}</p>);
+
+  const storytellings = mechanics
+    .filter((m) => m.GMType === 'storytelling')
+    .map((data, i) => <p className={styles.gmText} key={i}>{data.name}</p>);
+
+  const difficulties = mechanics
+    .filter((m) => m.GMType === 'difficulty')
+    .map((data, i) => <p className={styles.gmText} key={i}>{data.name}</p>);
+
+  const universes = mechanics
+    .filter((m) => m.GMType === 'universe')
+    .map((data, i) => <p className={styles.gmText} key={i}>{data.name}</p>);
+
+  const gamemodes = mechanics
+    .filter((m) => m.GMType === 'gamemode')
+    .map((data, i) => <p className={styles.gmText} key={i}>{data.name}</p>);
+
+  const npctypes = mechanics
+    .filter((m) => m.GMType === 'npctype')
+    .map((data, i) => <p className={styles.gmText} key={i}>{data.name}</p>);
+
+  const rewardsystem = mechanics
+    .filter((m) => m.GMType === 'rewardsystem')
+    .map((data, i) => <p className={styles.gmText} key={i}>{data.name}</p>);
+
+  const tropes = mechanics
+    .filter((m) => m.GMType === 'tropes')
+    .map((data, i) => <p className={styles.gmText} key={i}>{data.name}</p>);
 
   // ***********************
   // ** AFFICHAGE PRINCIPAL
@@ -260,8 +299,195 @@ const payload = {title, monthUpdate: generalProgress, update: extraCategories, r
           )}
         </div>
 
-        {/* Barre Centrale : Update form + affichage */}
+        {/* Barre Centrale : Characteristiques + Update form + affichage */}
         <div className={styles.centerBar}>
+
+{/* ============ SECTION CARACTERISTIQUES ============ */}
+<div className={styles.characContainer}>
+            <div className={styles.characTitleBox}>
+              <h3 className={styles.characTitle}>Characteristics</h3>
+            </div>
+
+            <div className={styles.characContentContainer}>
+              <div className={styles.descContainer}>
+                <p>{projectData.detail?.description}</p>
+              </div>
+
+              <div className={styles.otherCharac}>
+                {/* PARTIE GAUCHE */}
+                <div className={styles.characLeftBox}>
+
+                  {/* Game Genre */}
+                  <div className={styles.genreContainer}>
+                    <div className={styles.characTitleContainer}>
+                      <h6>Game Genre</h6>
+                      <button
+                        onClick={() => handleToggleSection('genre')}
+                        style={{ marginLeft: '10px' }}
+                      >
+                        {expandedSections.genre ? 'Hide' : 'See more'}
+                      </button>
+                    </div>
+                    {expandedSections.genre && (
+                      <div className={styles.characIterationContainer}>
+                        {genres}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Gameplay & Mechanics */}
+                  <div className={styles.genreContainer}>
+                    <div className={styles.characTitleContainer}>
+                      <h6>Gameplay & Mechanics</h6>
+                      <button
+                        onClick={() => handleToggleSection('gameplay')}
+                        style={{ marginLeft: '10px' }}
+                      >
+                        {expandedSections.gameplay ? 'Hide' : 'See more'}
+                      </button>
+                    </div>
+                    {expandedSections.gameplay && (
+                      <div className={styles.characIterationContainer}>
+                        {gameplays}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Story & Narrative */}
+                  <div className={styles.genreContainer}>
+                    <div className={styles.characTitleContainer}>
+                      <h6>Story & Narrative</h6>
+                      <button
+                        onClick={() => handleToggleSection('story')}
+                        style={{ marginLeft: '10px' }}
+                      >
+                        {expandedSections.story ? 'Hide' : 'See more'}
+                      </button>
+                    </div>
+                    {expandedSections.story && (
+                      <div className={styles.characIterationContainer}>
+                        {storytellings}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Difficulty */}
+                  <div className={styles.genreContainer}>
+                    <div className={styles.characTitleContainer}>
+                      <h6>Difficulty Modes</h6>
+                      <button
+                        onClick={() => handleToggleSection('difficulty')}
+                        style={{ marginLeft: '10px' }}
+                      >
+                        {expandedSections.difficulty ? 'Hide' : 'See more'}
+                      </button>
+                    </div>
+                    {expandedSections.difficulty && (
+                      <div className={styles.characIterationContainer}>
+                        {difficulties}
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* PARTIE DROITE */}
+                <div className={styles.characRightBox}>
+
+                  {/* Universe & Ambiance */}
+                  <div className={styles.genreContainer}>
+                    <div className={styles.characTitleContainer}>
+                      <h6>Universe & Ambiance</h6>
+                      <button
+                        onClick={() => handleToggleSection('universe')}
+                        style={{ marginLeft: '10px' }}
+                      >
+                        {expandedSections.universe ? 'Hide' : 'See more'}
+                      </button>
+                    </div>
+                    {expandedSections.universe && (
+                      <div className={styles.characIterationContainer}>
+                        {universes}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Game Modes */}
+                  <div className={styles.genreContainer}>
+                    <div className={styles.characTitleContainer}>
+                      <h6>Game Modes</h6>
+                      <button
+                        onClick={() => handleToggleSection('gamemodes')}
+                        style={{ marginLeft: '10px' }}
+                      >
+                        {expandedSections.gamemodes ? 'Hide' : 'See more'}
+                      </button>
+                    </div>
+                    {expandedSections.gamemodes && (
+                      <div className={styles.characIterationContainer}>
+                        {gamemodes}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* NPC Behavior */}
+                  <div className={styles.genreContainer}>
+                    <div className={styles.characTitleContainer}>
+                      <h6>NPC Behavior</h6>
+                      <button
+                        onClick={() => handleToggleSection('npctypes')}
+                        style={{ marginLeft: '10px' }}
+                      >
+                        {expandedSections.npctypes ? 'Hide' : 'See more'}
+                      </button>
+                    </div>
+                    {expandedSections.npctypes && (
+                      <div className={styles.characIterationContainer}>
+                        {npctypes}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Progressions & Reward System */}
+                  <div className={styles.genreContainer}>
+                    <div className={styles.characTitleContainer}>
+                      <h6>Progressions & Reward System</h6>
+                      <button
+                        onClick={() => handleToggleSection('rewardsystem')}
+                        style={{ marginLeft: '10px' }}
+                      >
+                        {expandedSections.rewardsystem ? 'Hide' : 'See more'}
+                      </button>
+                    </div>
+                    {expandedSections.rewardsystem && (
+                      <div className={styles.characIterationContainer}>
+                        {rewardsystem}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Tropes */}
+                  <div className={styles.genreContainer}>
+                    <div className={styles.characTitleContainer}>
+                      <h6>Tropes</h6>
+                      <button
+                        onClick={() => handleToggleSection('tropes')}
+                        style={{ marginLeft: '10px' }}
+                      >
+                        {expandedSections.tropes ? 'Hide' : 'See more'}
+                      </button>
+                    </div>
+                    {expandedSections.tropes && (
+                      <div className={styles.characIterationContainer}>
+                        {tropes}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+{/* ============ SECTION Updates ============ */}
           <h3 className={styles.updatesTitle}>Development Updates</h3>
 
           {/* Formulaire si user = studio */}
