@@ -22,6 +22,7 @@ function Project(props) {
     const [dlmessage, setDlmessage] = useState('');
     const [devMessage, setDevMessage] = useState('');
     const [voteMessage, setVoteMessage] = useState('');
+    const [votedStudioId, setVotedStudioId] = useState(null);
     // const dispatch = useDispatch();
     // const user = useSelector((state) => state.user.value);
 
@@ -38,6 +39,11 @@ function Project(props) {
               setProjectData(data.project);
               setNews(data.project.histories);
               setIsLoading(false);
+
+              // Vérifier si l'utilisateur a déjà voté pour un studio
+          if (data.project.votes && data.project.votes[user._id]) {
+            setVotedStudioId(data.project.votes[user._id]);
+          }
     
               const validatedByStaff = data.project.isValidatedByStaff;
               const studioPreVote = data.project.studiosPreVote || [];
@@ -149,52 +155,82 @@ function Project(props) {
         )
     })
 
+
     const handleVote = (studioId) => {
-        fetch('http://localhost:3000/vote', { 
+        // Vérifier si l'utilisateur est le créateur ou un financeur du projet
+        const isCreator = projectData.user._id === user._id;
+        const isFunder = projectData.progressions && 
+        projectData.progressions.some(p => p.userFunding && p.userFunding._id === user._id);
+        
+        if (!isCreator && !isFunder) {
+            setVoteMessage("You can only vote if you created or funded this project");
+            return;
+        }
+    
+        // Si l'utilisateur clique sur le même studio pour lequel il a déjà voté, changer le vote
+        const newStudioId = votedStudioId === studioId ? null : studioId;
+        
+        fetch('http://localhost:3000/projects/vote', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                token: user.token,  // Token de l'utilisateur
-                projectId: projectData._id,  // ID du projet
-                studioId: studioId  // ID du studio pour lequel on veut voter
+                token: user.token,
+                projectId: projectData._id,
+                studioId: newStudioId
             })
         })
         .then(response => response.json())
         .then(data => {
-            // Si la réponse est positive, on affiche le message de succès
             if (data.result) {
-                setVoteMessage(data.message);  // Message de succès retourné par le backend
+                setVoteMessage(data.message);
+                setVotedStudioId(newStudioId);
+                
+                // Recharger les données du projet pour refléter le vote
+                fetch(`http://localhost:3000/projects/${project}`)
+                    .then((response) => response.json())
+                    .then((data) => {
+                        if (data.result) {
+                            setProjectData(data.project);
+                            // Mettre à jour la liste des messages
+                            setNews(data.project.histories);
+                        }
+                    });
             } else {
-                // Sinon on affiche le message d'erreur
                 setVoteMessage(data.message || 'An error occurred while voting.');
             }
         })
-        .catch(() => {
-            // En cas d'erreur de connexion, on affiche un message d'erreur générique
+        .catch((error) => {
+            console.error('Error:', error);
             setVoteMessage('A connection error has occurred');
         });
     };
     
+    
     console.log('voici le truc putain : ', projectData.studiosPreVote)
 
     const intStudios = projectData.studiosPreVote.map((data, i) => {
+        const studioCompanyName = data.studio && data.studio.studio ? data.studio.studio.companyName : 'Unknown Studio';
+        const studioDescription = data.studio && data.studio.studio ? data.studio.studio.description : 'No description available';
+        const isVoted = votedStudioId === data.studio._id;
+        
         return (
-            <div key={i} className={styles.studioBox}>
-                <h6>{data.studio.studio.companyName}</h6> 
-                <p> {data.studio.studio.description} </p>
+            <div key={i} className={`${styles.studioBox} ${isVoted ? styles.votedStudio : ''}`}>
+                <h6>{studioCompanyName}</h6> 
+                <p>{studioDescription}</p>
                 {user.role === 'patron' && (
                     <button 
-                        className={styles.voteButton}
+                        className={`${styles.voteButton} ${isVoted ? styles.votedButton : ''}`}
                         onClick={() => handleVote(data.studio._id)}
                     >
-                        Vote for this studio
+                        {isVoted ? 'Voted' : 'Vote for this studio'}
                     </button>
                 )}
             </div>
         )
-    })
+    });
+    
 
     const genres = projectData.detail.gameMechanics.map((data, i) => {
         if (data.GMType !== "genre") {
@@ -392,10 +428,21 @@ function Project(props) {
                     <image/>
                     <div className={styles.InterestedStudios}>
                         <h4>Interested Studios</h4>
-                        <div className={styles.studioBoxesContainer}>
-                            {intStudios}
-                        </div>
-                        {voteMessage && <p className={styles.voteMessage}>{voteMessage}</p>}
+                        {user.role === 'patron' && (
+                         <>
+                            {votedStudioId ? (
+                                 <p className={styles.voteStatus}>  You have voted for: {
+                                    projectData.studiosPreVote.find(s => s.studio._id === votedStudioId)?.studio?.studio?.companyName || 'Unknown Studio'
+                                }</p>
+                            ) : projectData.studiosPreVote.length > 1 ? (
+                                <p className={styles.voteInstruction}>Vote for one Studio</p>
+                            ) : null}
+                        </>
+                    )}
+                    <div className={styles.studioBoxesContainer}>
+                        {intStudios}
+                    </div>
+                    {voteMessage && <p className={styles.voteMessage}>{voteMessage}</p>}
                     </div>
                 </div>
                 <div className={styles.characContainer}>
