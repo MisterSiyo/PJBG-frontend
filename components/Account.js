@@ -394,7 +394,7 @@ const Account = () => {
             {isEditing ? (
                 <>
                     {/* Section spécifique aux patron */}
-                    {user.role !== "studio" && (
+                    {user.role !== "patron" && (
                         <>
                             <p>Email : <input type="email" name="email" value={displayData.email} onChange={handleChange} /></p>
                             <p>Phone : <input type="text" name="phone" value={displayData.phone} onChange={handleChange} /></p>
@@ -543,7 +543,7 @@ const Account = () => {
             <br/><br/>
             <h4>Favorite Projects :</h4>
             {user.followedProjects?.length > 0 ? (
-                user.followedProjects.map((proj, i) => <ProjectCard key={i} project={proj.project} />)
+                user.followedProjects.map((proj, i) => <ProjectCard key={i} project={proj} />)
             ) : (
                 <p>You don't have any favorite project yet</p>
             )}

@@ -51,7 +51,10 @@ export const userSlice = createSlice({
     },
 
     setFollowedProjects: (state, action) => {
-      state.value.followedProjects = action.payload;
+      state.value = {
+        ...state.value,
+        followedProjects: JSON.parse(JSON.stringify(action.payload))
+      };
     },
 
     addGoogleUserToStore: (state, action) => {
@@ -120,5 +123,6 @@ export const {
   updateUserAddress,
   updateUserSocialLinks,
   toggleFollowedProject,
+  setFollowedProjects
 } = userSlice.actions;
 export default userSlice.reducer;

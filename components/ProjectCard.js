@@ -2,7 +2,7 @@ import styles from "../styles/projectCard.module.css";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleFollowedProject } from "../reducers/user";
+import { toggleFollowedProject, setFollowedProjects } from "../reducers/user";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart as RegularHeart } from "@fortawesome/free-regular-svg-icons";
 import { faHeart as SolidHeart } from "@fortawesome/free-solid-svg-icons";
@@ -40,12 +40,12 @@ export default function ProjectCard({ project }) {
   const [showNews, setShowNews] = useState(false);
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.value);
-
+console.log('the project in the project card : ', project)
   const isLoggedIn = !!user.token;
   const isFollowed =
     isLoggedIn &&
-    user.followedProjects &&
-    user.followedProjects.includes(project._id);
+    user.followedProjects.length > 0 &&
+    user.followedProjects.map(e=> e._id).includes(project._id);
 
   // Si le projet n'existe pas, on ne retourne rien
   if (!project) return null;
@@ -57,7 +57,7 @@ export default function ProjectCard({ project }) {
       return;
     }
 
-    dispatch(toggleFollowedProject({ projectId: project._id }));
+    // dispatch(toggleFollowedProject({ projectId: project._id }));
 
     try {
       const response = await fetch("/api/users/toggleFollow", {
@@ -77,17 +77,19 @@ export default function ProjectCard({ project }) {
           data.message
         );
         // Optionnel : annuler le changement dans Redux si l'API échoue
-        dispatch(toggleFollowedProject({ projectId: project._id }));
+        // dispatch(toggleFollowedProject({ projectId: project._id }));
       } else {
         console.log(data.message);
         // Mettre à jour les projets suivis dans Redux avec les données du serveur
         // si vous avez un action setFollowedProjects
-        // dispatch(setFollowedProjects(data.followedProjects));
+        console.log('followed projects to reducer : ', data.followedProjects)
+        const followedProjectsCopy = JSON.parse(JSON.stringify(data.followedProjects));
+        dispatch(setFollowedProjects(followedProjectsCopy));
       }
     } catch (error) {
       console.error("Erreur réseau:", error);
       // Annuler le changement dans Redux en cas d'erreur réseau
-      dispatch(toggleFollowedProject({ projectId: project._id }));
+      // dispatch(toggleFollowedProject({ projectId: project._id }));
     }
   };
 
@@ -103,7 +105,7 @@ export default function ProjectCard({ project }) {
   // Récupération de la dernière news publiée (tri par date décroissante) peut être qu'on en veut plus qu'un ? faudrait aussi mettre une limite sur la date
   const latestNews =
     project.histories?.length > 1
-      ? project.histories.sort((a, b) => new Date(b.date) - new Date(a.date))[0]
+      ? [...project.histories].sort((a, b) => new Date(b.date) - new Date(a.date))[0]
           .message
       : "New Project, check it out !";
 
