@@ -8,21 +8,24 @@ import styles from "../styles/project.module.css";
 import ProjectValidated from "./projectValidated";
 
 function Project(props) {
-  const [chatMessage, setChatMessage] = useState("");
-  const router = useRouter();
-  const { project } = router.query;
-  // const [query, setQuery] = useState('');
-  const [projectData, setProjectData] = useState({});
-  const [isLoading, setIsLoading] = useState(true);
-  const [key, setKey] = useState("");
-  const userAccount = useSelector((state) => state.user.value);
-  const [news, setNews] = useState([]);
-  const user = useSelector((state) => state.user.value);
-  const [dlmessage, setDlmessage] = useState("");
-  const [devMessage, setDevMessage] = useState("");
-  const [voteMessage, setVoteMessage] = useState("");
-  // const dispatch = useDispatch();
-  // const user = useSelector((state) => state.user.value);
+
+    const [chatMessage, setChatMessage] = useState('');
+    const router = useRouter();
+    const {project} = router.query;
+    // const [query, setQuery] = useState('');
+    const [projectData, setProjectData] = useState({});
+    const [isLoading, setIsLoading] = useState(true);
+    const [key, setKey] = useState('');
+    const userAccount = useSelector((state) => state.user.value);
+    const [news, setNews] = useState([]);
+    const user = useSelector((state) => state.user.value)
+    const [dlmessage, setDlmessage] = useState('');
+    const [devMessage, setDevMessage] = useState('');
+    const [voteMessage, setVoteMessage] = useState('');
+    const [votedStudioId, setVotedStudioId] = useState(null);
+    // const dispatch = useDispatch();
+    // const user = useSelector((state) => state.user.value);
+
 
   useEffect(() => {
     if (!project) {
@@ -36,6 +39,11 @@ function Project(props) {
           setProjectData(data.project);
           setNews(data.project.histories);
           setIsLoading(false);
+
+              // Vérifier si l'utilisateur a déjà voté pour un studio
+          if (data.project.votes && data.project.votes[user._id]) {
+            setVotedStudioId(data.project.votes[user._id]);
+          }
 
           const validatedByStaff = data.project.isValidatedByStaff;
           const studioPreVote = data.project.studiosPreVote;
@@ -153,68 +161,94 @@ function Project(props) {
         );
       });
 
-      return (
-        <div
-          key={i}
-          className={styles.pledgeBox}
-          onClick={() => handlePledge(data.pledgeId, data.contributionLevel)}
-        >
-          <div className={styles.pledgeTitle}>
-            <p className={styles.contributionLevelText}>
-              ${data.contributionLevel} - {tier}
-            </p>
-          </div>
-          <div className={styles.pledgeDescContainer}>{rewardsToShow}</div>
-        </div>
-      );
-    });
-
-  const handleVote = (studioId) => {
-    fetch("http://localhost:3000/vote", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        token: user.token, // Token de l'utilisateur
-        projectId: projectData._id, // ID du projet
-        studioId: studioId, // ID du studio pour lequel on veut voter
-      }),
+        return (
+            <div key={i} className={styles.pledgeBox} onClick={() => handlePledge(data.pledgeId, data.contributionLevel)}>
+                <div className={styles.pledgeTitle}>
+                    <p className={styles.contributionLevelText} >${data.contributionLevel} - {tier}</p>
+                </div>
+                <div className={styles.pledgeDescContainer}>
+                    {rewardsToShow}
+                </div>
+            </div>     
+        )
     })
-      .then((response) => response.json())
-      .then((data) => {
-        // Si la réponse est positive, on affiche le message de succès
-        if (data.result) {
-          setVoteMessage(data.message); // Message de succès retourné par le backend
-        } else {
-          // Sinon on affiche le message d'erreur
-          setVoteMessage(data.message || "An error occurred while voting.");
+
+
+    const handleVote = (studioId) => {
+        // Vérifier si l'utilisateur est le créateur ou un financeur du projet
+        const isCreator = projectData.user._id === user._id;
+        const isFunder = projectData.progressions && 
+        projectData.progressions.some(p => p.userFunding && p.userFunding._id === user._id);
+        
+        if (!isCreator && !isFunder) {
+            setVoteMessage("You can only vote if you created or funded this project");
+            return;
         }
-      })
-      .catch(() => {
-        // En cas d'erreur de connexion, on affiche un message d'erreur générique
-        setVoteMessage("A connection error has occurred");
-      });
-  };
+    
+        // Si l'utilisateur clique sur le même studio pour lequel il a déjà voté, changer le vote
+        const newStudioId = votedStudioId === studioId ? null : studioId;
+        
+        fetch('http://localhost:3000/projects/vote', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                token: user.token,
+                projectId: projectData._id,
+                studioId: newStudioId
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.result) {
+                setVoteMessage(data.message);
+                setVotedStudioId(newStudioId);
+                
+                // Recharger les données du projet pour refléter le vote
+                fetch(`http://localhost:3000/projects/${project}`)
+                    .then((response) => response.json())
+                    .then((data) => {
+                        if (data.result) {
+                            setProjectData(data.project);
+                            // Mettre à jour la liste des messages
+                            setNews(data.project.histories);
+                        }
+                    });
+            } else {
+                setVoteMessage(data.message || 'An error occurred while voting.');
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            setVoteMessage('A connection error has occurred');
+        });
+    };
+    
+    
+    console.log('voici le truc putain : ', projectData.studiosPreVote)
 
-  console.log("voici le truc putain : ", projectData.studiosPreVote);
-
-  const intStudios = projectData.studiosPreVote.map((data, i) => {
-    return (
-      <div key={i} className={styles.studioBox}>
-        <h6>{data.studio.studio.companyName}</h6>
-        <p> {data.studio.studio.description} </p>
-        {user.role === "patron" && (
-          <button
-            className={styles.voteButton}
-            onClick={() => handleVote(data.studio._id)}
-          >
-            Vote for this studio
-          </button>
-        )}
-      </div>
-    );
-  });
+    const intStudios = projectData.studiosPreVote.map((data, i) => {
+        const studioCompanyName = data.studio && data.studio.studio ? data.studio.studio.companyName : 'Unknown Studio';
+        const studioDescription = data.studio && data.studio.studio ? data.studio.studio.description : 'No description available';
+        const isVoted = votedStudioId === data.studio._id;
+        
+        return (
+            <div key={i} className={`${styles.studioBox} ${isVoted ? styles.votedStudio : ''}`}>
+                <h6>{studioCompanyName}</h6> 
+                <p>{studioDescription}</p>
+                {user.role === 'patron' && (
+                    <button 
+                        className={`${styles.voteButton} ${isVoted ? styles.votedButton : ''}`}
+                        onClick={() => handleVote(data.studio._id)}
+                    >
+                        {isVoted ? 'Voted' : 'Vote for this studio'}
+                    </button>
+                )}
+            </div>
+        )
+    });
+    
 
   const genres = projectData.detail.gameMechanics.map((data, i) => {
     if (data.GMType !== "genre") {
@@ -425,137 +459,138 @@ function Project(props) {
           </div>
         </div>
 
-        {/* CENTRAL BAR */}
-        <div className={styles.centralBar}>
-          <div className={styles.pitchContainer}>
-            <h3>{projectData.pitch}</h3>
-          </div>
-          <div className={styles.progressContainer}>
-            <span className={styles.progressText}>
-              {fundingPercentage}% | {totalCollected}€ / {goal}€
-            </span>
-            <div
-              className={styles.progressBar}
-              style={{ width: `${fundingPercentage}%` }}
-            ></div>
-          </div>
-          <div className={styles.studiosContainer}>
-            <image />
-            <div className={styles.InterestedStudios}>
-              <h4>Interested Studios</h4>
-              <div className={styles.studioBoxesContainer}>{intStudios}</div>
-              {voteMessage && (
-                <p className={styles.voteMessage}>{voteMessage}</p>
-              )}
-            </div>
-          </div>
-          <div className={styles.characContainer}>
-            <div className={styles.characTitleBox}>
-              <h3 className={styles.characTitle}>Characteristics</h3>
-            </div>
-            <div className={styles.characContentContainer}>
-              <div className={styles.descContainer}>
-                <p>{projectData.detail.description}</p>
-              </div>
-              <div className={styles.otherCharac}>
-                <div className={styles.characLeftBox}>
-                  <div className={styles.genreContainer}>
-                    <div className={styles.characTitleContainer}>
-                      <h6>Game Genre</h6>
-                    </div>
-                    <div className={styles.characIterationContainer}>
-                      {genres}
-                    </div>
-                  </div>
-                  <div className={styles.genreContainer}>
-                    <div className={styles.characTitleContainer}>
-                      <h6>Gameplay & Mechanics</h6>
-                    </div>
-                    <div className={styles.characIterationContainer}>
-                      {gameplays}
-                    </div>
-                  </div>
-                  <div className={styles.genreContainer}>
-                    <div className={styles.characTitleContainer}>
-                      <h6>Story & Narrative</h6>
-                    </div>
-                    <div className={styles.characIterationContainer}>
-                      {storytellings}
-                    </div>
-                  </div>
-                  <div className={styles.genreContainer}>
-                    <div className={styles.characTitleContainer}>
-                      <h6>Difficulty Modes</h6>
-                    </div>
-                    <div className={styles.characIterationContainer}>
-                      {difficulties}
-                    </div>
-                  </div>
+{/* CENTRAL BAR */}
+            <div className={styles.centralBar}>
+                <div className={styles.pitchContainer}>
+                    <h3>{projectData.pitch}</h3>
                 </div>
-
-                <div className={styles.characRightBox}>
-                  <div className={styles.genreContainer}>
-                    <div className={styles.characTitleContainer}>
-                      <h6>Universe & Ambiance</h6>
+                <div className={styles.progressContainer}>
+                    <span className={styles.progressText}>
+                        {fundingPercentage}% | {totalCollected}€ / {goal}€
+                    </span>
+                    <div className={styles.progressBar} style={{ width: `${fundingPercentage}%` }}> 
                     </div>
-                    <div className={styles.characIterationContainer}>
-                      {universes}
-                    </div>
-                  </div>
-                  <div className={styles.genreContainer}>
-                    <div className={styles.characTitleContainer}>
-                      <h6>Game Modes</h6>
-                    </div>
-                    <div className={styles.characIterationContainer}>
-                      {gamemodes}
-                    </div>
-                  </div>
-                  <div className={styles.genreContainer}>
-                    <div className={styles.characTitleContainer}>
-                      <h6>NPC Behavior</h6>
-                    </div>
-                    <div className={styles.characIterationContainer}>
-                      {npctypes}
-                    </div>
-                  </div>
-                  <div className={styles.genreContainer}>
-                    <div className={styles.characTitleContainer}>
-                      <h6>Progressions & Reward System</h6>
-                    </div>
-                    <div className={styles.characIterationContainer}>
-                      {rewardsystem}
-                    </div>
-                  </div>
-                  <div className={styles.genreContainer}>
-                    <div className={styles.characTitleContainer}>
-                      <h6>Tropes</h6>
-                    </div>
-                    <div className={styles.characIterationContainer}>
-                      {tropes}
-                    </div>
-                  </div>
                 </div>
-              </div>
-            </div>
-            {user.role === "studio" && (
-              <>
-                <div
-                  className={styles.downloadButton}
-                  onClick={() => setDlmessage("Project Downloaded!")}
-                >
-                  Download all information on this project
+                <div className={styles.studiosContainer}>
+                    <image/>
+                    <div className={styles.InterestedStudios}>
+                        <h4>Interested Studios</h4>
+                        {user.role === 'patron' && (
+                         <>
+                            {votedStudioId ? (
+                                 <p className={styles.voteStatus}>  You have voted for: {
+                                    projectData.studiosPreVote.find(s => s.studio._id === votedStudioId)?.studio?.studio?.companyName || 'Unknown Studio'
+                                }</p>
+                            ) : projectData.studiosPreVote.length > 1 ? (
+                                <p className={styles.voteInstruction}>Vote for one Studio</p>
+                            ) : null}
+                        </>
+                    )}
+                    <div className={styles.studioBoxesContainer}>
+                        {intStudios}
+                    </div>
+                    {voteMessage && <p className={styles.voteMessage}>{voteMessage}</p>}
+                    </div>
                 </div>
-                <p>{dlmessage}</p>
-              </>
-            )}
-          </div>
-          {user.role == "studio" && (
-            <div className={styles.takeon} onClick={handleDev}>
-              Take on the adventure and Develop this project
+                <div className={styles.characContainer}>
+                    <div className={styles.characTitleBox}>
+                        <h3 className={styles.characTitle}>Characteristics</h3>
+                    </div>
+                    <div className={styles.characContentContainer}>
+                        <div className={styles.descContainer}>
+                            <p>{projectData.detail.description}</p>
+                        </div>
+                        <div className={styles.otherCharac}>
+                            <div className={styles.characLeftBox}>
+                                <div className={styles.genreContainer}>
+                                    <div className={styles.characTitleContainer}>
+                                        <h6>Game Genre</h6>
+                                    </div>
+                                    <div className={styles.characIterationContainer}>
+                                        {genres}
+                                    </div>
+                                </div>
+                                <div className={styles.genreContainer}>
+                                    <div className={styles.characTitleContainer}>
+                                        <h6>Gameplay & Mechanics</h6>
+                                    </div>
+                                    <div className={styles.characIterationContainer}>
+                                        {gameplays}
+                                    </div>
+                                </div>
+                                <div className={styles.genreContainer}>
+                                    <div className={styles.characTitleContainer}>
+                                        <h6>Story & Narrative</h6>
+                                    </div>
+                                    <div className={styles.characIterationContainer}>
+                                        {storytellings}
+                                    </div>
+                                </div>
+                                <div className={styles.genreContainer}>
+                                    <div className={styles.characTitleContainer}>
+                                        <h6>Difficulty Modes</h6>
+                                    </div>
+                                    <div className={styles.characIterationContainer}>
+                                        {difficulties}
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div className={styles.characRightBox}>
+                                <div className={styles.genreContainer}>
+                                    <div className={styles.characTitleContainer}>
+                                        <h6>Universe & Ambiance</h6>
+                                    </div>
+                                    <div className={styles.characIterationContainer}>
+                                        {universes}
+                                    </div>
+                                </div>
+                                <div className={styles.genreContainer}>
+                                    <div className={styles.characTitleContainer}>
+                                        <h6>Game Modes</h6>
+                                    </div>
+                                    <div className={styles.characIterationContainer}>
+                                        {gamemodes}
+                                    </div>
+                                </div>
+                                <div className={styles.genreContainer}>
+                                    <div className={styles.characTitleContainer}>
+                                        <h6>NPC Behavior</h6>
+                                    </div>
+                                    <div className={styles.characIterationContainer}>
+                                        {npctypes}
+                                    </div>
+                                </div>
+                                <div className={styles.genreContainer}>
+                                    <div className={styles.characTitleContainer}>
+                                        <h6>Progressions & Reward System</h6>
+                                    </div>
+                                    <div className={styles.characIterationContainer}>
+                                        {rewardsystem}
+                                    </div>
+                                </div>
+                                <div className={styles.genreContainer}>
+                                    <div className={styles.characTitleContainer}>
+                                        <h6>Tropes</h6>
+                                    </div>
+                                    <div className={styles.characIterationContainer}>
+                                        {tropes}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {user.role === 'studio' && <>
+                            <div className={styles.downloadButton} onClick={() => setDlmessage('Project Downloaded!')}>
+                                    Download all information on this project
+                            </div>
+                            <p>{dlmessage}</p>
+                    
+                    </>}
+                </div>
+                    {user.role == "studio" && <div className={styles.takeon} onClick={handleDev}>Take on the adventure and Develop this project</div>}
+                    <p>{devMessage}</p>
             </div>
-          )}
-          <p>{devMessage}</p>
-        </div>
 
         {/* RIGHT BAR */}
         <div className={styles.rightBar}>
