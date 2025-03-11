@@ -84,7 +84,7 @@ function Project(props) {
 
     const favorited = projectData.user.followedProjects.map((data, i) => {
             return (
-                <p className={styles.favoriteText} key={i}>{data.project.title}</p>
+                <p className={styles.favoriteText} key={i}>{data.title}</p>
             )
         })
 
