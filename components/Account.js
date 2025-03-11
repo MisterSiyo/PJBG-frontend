@@ -522,6 +522,8 @@ const Account = () => {
                                 <p>Email : {displayData.studio.contactManager.email}</p>
                                 <p>Phone : {displayData.studio.contactManager.phone}</p>
                             </div>
+                </>
+            )}
 
                             {/* Pour les 2 roles */}
                             <br /><br />
@@ -533,10 +535,7 @@ const Account = () => {
                             <p>YouTube : {formData.socialLinks[4] ? formData.socialLinks[4].url : ''}</p>
                             <p>GitHub : {formData.socialLinks[5] ? formData.socialLinks[5].url : ''}</p>
                         </>
-                    )}
-                </>
-            )}
-
+                         )}
 
             <br></br>
             {/* Boutons pour activer l'édition ou enregistrer et annuler les modifications */}
