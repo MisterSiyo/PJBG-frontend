@@ -410,6 +410,12 @@ function Project(props) {
   };
 
   const handleDev = () => {
+
+    if (user.studio && !user.studio.description) {
+      setDevMessage('Please add a description in your studio profile before add this to your chosen projects')
+      return;
+    }
+
     fetch("http://localhost:3000/projects/dev", {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
