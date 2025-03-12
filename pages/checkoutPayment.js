@@ -6,7 +6,7 @@ export default function checkoutPaymentPage() {
     const router = useRouter();
     return (
         <div className={styles.mainContainer}>
-            <CheckoutPayment pid={router.query.pid} gid={router.query.gid} pcl={router.query.pcl} title={router.query.title} />
+            <CheckoutPayment pid={router.query.pid} gid={router.query.gid} pcl={router.query.pcl} title={router.query.title} gurl={router.query.gurl} />
         </div>
     );
 }

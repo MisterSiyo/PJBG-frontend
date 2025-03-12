@@ -56,11 +56,12 @@ function Project(props) {
           setNews(data.project.histories);
           setIsLoading(false);
         const hasVoted = data.project.studiosPreVote.some(e => e.votes && e.votes.some(vote => vote.username === user.username))
+        const hasCreated = data.project.user.username === user.username;
+        const isStudioDev = data.project.studioValidated?.studio.companyName === user.studio?.companyName;
         const validatedByStaff = data.project.isValidatedByStaff;
-  
-          if (validatedByStaff && hasVoted) {
+          if (validatedByStaff && hasVoted || validatedByStaff && hasCreated || validatedByStaff && isStudioDev ) {
             setProjectData((prev) => ({ ...prev, layoutType: "validated" }));
-          } else if (validatedByStaff && !hasVoted) {
+          } else if (validatedByStaff) {
             router.push('/')
           }
           data.project.user.fundedProjects.forEach((project, index) => {
@@ -68,6 +69,9 @@ function Project(props) {
             console.log("Project ID:", project.projectId);
             console.log("Type:", typeof project.projectId);
             console.log("Match:", project.projectId === data.project._id);
+            if (user.fundedProjects?.some(e => e.project === projectData._id)) {
+              setPleaseLoginMessage('Thanks for supporting this project ! Please vote for the studio you want to make this dream come true !')
+            }
           });
         }
       });
@@ -214,6 +218,7 @@ function Project(props) {
             if (data.result) {
                 setVoteMessage(data.message);
                 setVotedStudioId(newStudioId);
+                setPleaseLoginMessage('');
                 
                 // Recharger les données du projet pour refléter le vote
                 fetch(`http://localhost:3000/projects/${project}`)
@@ -392,14 +397,14 @@ function Project(props) {
       return;
     }
 
-    if (user.fundedProjects.some(e => e.project.title === projectData.title)) {
+    if (user.fundedProjects?.some(e => e.project === projectData._id)) {
       setPleaseLoginMessage('You have already contributed to this project')
       return;
     }
 
     router.push({
       pathname: "/checkoutPayment",
-      query: { pid, pcl, gid: projectData._id, title: projectData.title },
+      query: { pid, pcl, gid: projectData._id, title: projectData.title, gurl: projectData.pageURL },
     });
     // router.push('/checkoutPayment')
   };

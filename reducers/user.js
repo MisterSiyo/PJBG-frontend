@@ -112,6 +112,9 @@ export const userSlice = createSlice({
       console.log("Redux: updateUserSocialLinks", action.payload);
       state.value.socialLinks = action.payload; // Mise à jour des réseaux sociaux
     },
+    updateBacking: (state, action) => {
+      state.value.fundedProjects = action.payload;
+    }
   },
 });
 
@@ -123,6 +126,7 @@ export const {
   updateUserAddress,
   updateUserSocialLinks,
   toggleFollowedProject,
-  setFollowedProjects
+  setFollowedProjects,
+  updateBacking,
 } = userSlice.actions;
 export default userSlice.reducer;

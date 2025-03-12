@@ -23,9 +23,9 @@ export default function ProjectCard({ project }) {
 
   // Si le projet n'existe pas, on ne retourne rien
   if (!project) return null;
-
-
-  useEffect(() => {
+  console.log('LE SANDWICH ! : ', project)
+  project.pageURL ? 
+  (useEffect(() => {
     fetch(`http://localhost:3000/projects/${project.pageURL}`)
       .then(response => response.json())
       .then(data => {
@@ -35,6 +35,20 @@ export default function ProjectCard({ project }) {
       })
   }, [])
 
+) : (
+
+    useEffect(() => {
+    fetch(`http://localhost:3000/projects/byId/${project}`)
+      .then(response => response.json())
+      .then(data => {
+        if (data.result) {
+            setProjectData(data.project)
+        }
+      })
+  }, [])
+
+)
+console.log('project Data blablabla : ', projectData)
   const handleFollowClick = async (e) => {
     e.stopPropagation();
     if (!isLoggedIn) {

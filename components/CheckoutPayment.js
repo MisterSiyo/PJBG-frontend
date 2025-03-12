@@ -1,18 +1,23 @@
 import { useState, useEffect } from "react"
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { updateBacking } from "../reducers/user";
+import { useRouter } from "next/router";
 
 export default function CheckoutPayment(props) {
 
     const [payment, setPayment] = useState('');
-
+    const dispatch = useDispatch();
+    const router = useRouter();
 
     const user = useSelector((state) => state.user.value);
 
-    const {pid, pcl, gid, title} = props;
+    const {pid, pcl, gid, gurl, title} = props;
 
 
 const handlePayment = () => {
     if (payment) {
+      setPayment('You already paid ! Thanks but no !')
         return;
     }
     console.log('data to send to put/backin : gid:  ', gid, 'user.token', user.token, 'pid:', pid)
@@ -26,7 +31,12 @@ const handlePayment = () => {
         .then(data => {
                 
             if (data.result) {
+              console.log('le retour du checkout : ', data.newChecks)
+                dispatch(updateBacking(data.newChecks))
                 setPayment("Congratulations and thank you for your support")
+                setTimeout(() => {
+                  router.push(`/project/${gurl}`)
+                }, 3000)
             } else {
                 return;
             }
