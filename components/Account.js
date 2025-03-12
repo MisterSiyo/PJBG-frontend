@@ -87,104 +87,10 @@ const Account = () => {
     // Variable pour stocker temporairement les données en cours d'édition
     const [editingData, setEditingData] = useState(null);
 
-    // useEffect(() => {
-    //     if (user.token) {
-    //       fetch('http://localhost:3000/users/reduxrender', {
-    //         method: 'POST',
-    //         headers: {'Content-Type': 'application/json'},
-    //         body: JSON.stringify({token : user.token})
-    //       })
-    //       .then(response => response.json())
-    //       .then(data => {
-    //         console.log('Fetched user data:', data); // Add logging
-    //         if (data.user) {
-    //           dispatch(addUserToStore(data.user));
-    //         }
-    //       })
-    //       .catch(error => {
-    //         console.error('Error fetching user data:', error);
-    //       });
-    //     }
-    //   }, [user.token, dispatch])
-
-// useEffect(() => {
-
-//     fetch('http://localhost:3000/projects/get/all')
-//     .then(response => response.json())
-//     .then(data => {
-//         setProjectsDataList(data.projectsData);
-//     })
-    
-// }, [])
-
-// useEffect(() => {
-
-//     if (Array.isArray(projectsDataList) && user && Array.isArray(user.followedProjects)) {
-//         const favoriteProjects = projectsDataList.filter(project => 
-//           user.followedProjects.includes(project._id)
-//         );
-//         setPcardFa(favoriteProjects);
-//       } else {
-//         setPcardFa([]); // Reset if data is missing
-//       }
-
-//     },[projectsDataList, user])
-
-
-
-
-
-
-
-    // if (projectsDataList && user) {
-    //   // Handle favorite projects
-    //   if (user.followedProjects) {
-    //     const favoriteProjects = projectsDataList.filter(project => 
-    //       user.followedProjects.some(fid => fid === project._id)
-    //     );
-    //     setPcardFa(favoriteProjects);
-    //   }
-  
-      // Handle funded projects (for patron)
-//       if (user.fundedProjects) {
-//         const fundedProjects = projectsDataList.filter(project =>
-//           user.fundedProjects.some(funded => funded.project.title === project.title)
-//         );
-//         setPcardFu(fundedProjects);
-//       }
-  
-//       // Handle created projects (for patron)
-//       if (user.createdProjects) {
-//         const createdProjects = projectsDataList.filter(project =>
-//           user.createdProjects.some(created => created.title === project.title)
-//         );
-//         setPcardCr(createdProjects);
-//       }
-  
-//       // Handle chosen projects (for studio)
-//       if (user.studio?.chosenProjects) {
-//         const chosenProjects = projectsDataList.filter(project =>
-//           user.studio.chosenProjects.some(chosen => chosen.title === project.title)
-//         );
-//         setPcardCh(chosenProjects);
-//       }
-  
-//       // Handle developed projects (for studio)
-//       if (user.studio?.developedProjects) {
-//         const developedProjects = projectsDataList.filter(project =>
-//           user.studio.developedProjects.some(developed => developed.title === project.title)
-//         );
-//         setPcardD(developedProjects);
-//       }
-//     }
-//   }, [projectsDataList, user]);
-
 if (!user.token) {
     router.push('/')
 }
 
-console.log('project data list', projectsDataList)
-console.log('pcardFA : ', pcardFa)
     useEffect(() => {
         if (user) {
             // Données communes à tous les utilisateurs
@@ -328,7 +234,6 @@ console.log('pcardFA : ', pcardFa)
 
     const handleSave = () => {
         // Préparation des données pour le format attendu par l'API
-        console.log('voici ma data avant transformation: ', editingData)
         const dataToSave = {  // Créer un nouvel objet avec exactement le format attendu par l'API
             token: user.token,
             email: editingData.email,
@@ -347,8 +252,6 @@ console.log('pcardFA : ', pcardFa)
             } : undefined
         };
 
-        console.log('données à envoyer à l\'API : ', dataToSave);
-
         if (dataToSave.email.trim() === '') {
             setModifErrorMessage('veuillez renseigner une adresse mail')
             return;
@@ -360,7 +263,7 @@ console.log('pcardFA : ', pcardFa)
             body: JSON.stringify(dataToSave),
         })
         .then(response => {
-            console.log('Response status:', response.status);
+
             if (!response.ok) {
                 // Récupérer le texte complet de l'erreur
                 return response.text().then(text => {
@@ -371,7 +274,7 @@ console.log('pcardFA : ', pcardFa)
             return response.json();
         })
         .then(data => {
-            console.log('Réponse réussie de l\'API:', data);
+
             
             // Mettre à jour le state local et Redux avec les nouvelles données
             setFormData(editingData);
@@ -435,7 +338,7 @@ console.log('pcardFA : ', pcardFa)
             } else {
         // Récupérer le texte de la réponse pour déboguer
         return response.text().then(text => {
-            console.log("Réponse non-JSON du serveur:", text);
+
             return { ok: false, error: "Réponse non-JSON du serveur" };
             });
             }       

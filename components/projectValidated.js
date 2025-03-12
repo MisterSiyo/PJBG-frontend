@@ -127,25 +127,6 @@ const payload = {
     if (response.ok) {
 
       setToggleUpdate(!toggleUpdate)
-      // On ajoute dans stages localement
-      // const monthYear = new Date().toLocaleString('fr-FR', {
-      //   year: 'numeric',
-      //   month: 'long',
-      // });
-
-      // setStages((curr) => [
-      //   ...curr,
-      //   {
-      //     monthYear,
-      //     title,
-      //     generalProgress,
-      //     updateCategory,
-      //     updateCategoryContent,
-      //     extraCategories,
-      //     roadmap,
-      //     closingNotes,
-      //   },
-      // ]);
 
       // Reset des champs
       setTitle('');

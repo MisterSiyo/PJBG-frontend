@@ -21,7 +21,6 @@ const handlePayment = () => {
       setPayment('You already paid ! Thanks but no !')
         return;
     }
-    console.log('data to send to put/backin : gid:  ', gid, 'user.token', user.token, 'pid:', pid)
 
     fetch(`http://localhost:3000/projects/backing`, {
         method: 'PUT',
@@ -32,7 +31,6 @@ const handlePayment = () => {
         .then(data => {
                 
             if (data.result) {
-              console.log('le retour du checkout : ', data.newChecks)
                 dispatch(updateBacking(data.newChecks))
                 setPayment("Congratulations and thank you for your support")
                 setTimeout(() => {

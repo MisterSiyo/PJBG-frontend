@@ -117,37 +117,6 @@ export default function Home() {
       });
   }, []);
 
-  // re render du redux 
-  // useEffect(() => {
-  //   if (user.token) {
-  //     fetch('http://localhost:3000/users/reduxrender', {
-  //       method: 'POST',
-  //       headers: {'Content-Type': 'application/json'},
-  //       body: JSON.stringify({token : user.token})
-  //     })
-  //     .then(response => response.json())
-  //     .then(data => {
-  //       dispatch(addUserToStore(data.user))
-  //     })
-  //   }
-  // }, [])
-
-  // re render du redux 
-  // useEffect(() => {
-    
-  //   if (user.token) {
-  //     fetch('http://localhost:3000/users/reduxrender', {
-  //       method: 'POST',
-  //       headers: {'Content-Type': 'application/json'},
-  //       body: JSON.stringify({token : user.token})
-  //     })
-  //     .then(response => response.json())
-  //     .then(data => {
-  //       dispatch(addUserToStore(data.user))
-  //     })
-  //   }
-  // }, [])
-
   // 3) Filtrer ET trier les projets dès que 'projects', 'selectedGenres',
   //    'searchQuery' ou 'sortOption' change
   useEffect(() => {
@@ -353,6 +322,8 @@ export default function Home() {
           <p>No project to show... Try other filters ?</p>
         )}
       </div>
+      
     </div>
+    
   );
 }

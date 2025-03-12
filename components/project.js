@@ -1,19 +1,14 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../reducers/user";
+import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
-import Link from "next/link";
-import { loadMessages } from "../reducers/chatMessage";
 import styles from "../styles/project.module.css";
 import ProjectValidated from "./projectValidated";
-import { addUserToStore } from "../reducers/user";
 
 function Project(props) {
 
     const [chatMessage, setChatMessage] = useState('');
     const router = useRouter();
     const {project} = router.query;
-    // const [query, setQuery] = useState('');
     const [projectData, setProjectData] = useState({});
     const [isLoading, setIsLoading] = useState(true);
     const [key, setKey] = useState('');
@@ -25,23 +20,6 @@ function Project(props) {
     const [voteMessage, setVoteMessage] = useState('');
     const [votedStudioId, setVotedStudioId] = useState(null);
     const [pleaseLoginMessage, setPleaseLoginMessage] = useState('')
-    const dispatch = useDispatch();
-
-
-  // useEffect(() => {
-  //   if (user.token) {
-  //     fetch('http://localhost:3000/users/reduxrender', {
-  //       method: 'POST',
-  //       headers: {'Content-Type': 'application/json'},
-  //       body: JSON.stringify({token : user.token})
-  //     })
-  //     .then(response => response.json())
-  //     .then(data => {
-  //       dispatch(addUserToStore(data.user))
-  //     })
-  //   }
-  // }, [])
-
 
   useEffect(() => {
     if (!project) {
@@ -114,8 +92,6 @@ function Project(props) {
         setChatMessage("");
       });
   };
-
-  // const handleNav = 0;
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -239,9 +215,6 @@ function Project(props) {
             setVoteMessage('A connection error has occurred');
         });
     };
-    
-    
-    console.log('voici le truc putain : ', projectData.studiosPreVote)
 
     const intStudios = projectData.studiosPreVote.map((data, i) => {
         const studioCompanyName = data.studio && data.studio.studio ? data.studio.studio.companyName : 'Unknown Studio';
@@ -406,7 +379,6 @@ function Project(props) {
       pathname: "/checkoutPayment",
       query: { pid, pcl, gid: projectData._id, title: projectData.title, gurl: projectData.pageURL },
     });
-    // router.push('/checkoutPayment')
   };
 
   const handleDev = () => {
