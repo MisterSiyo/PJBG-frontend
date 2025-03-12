@@ -4,19 +4,6 @@
   padding: 0;
 }
 
-/* body {
-  font-family: "Poppins", sans-serif;
-  background-image: url('../public/images/photo-1612287230202-1ff1d85d1bdf.jpg');
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  min-height: 100vh;
-  min-width: 100vw;
-  background-color: #f4f7f9;
-  color: #333;
-  line-height: 1.6;
-} */
-
 body {
   font-family: "Poppins", sans-serif;
   position: relative;
@@ -41,9 +28,6 @@ body::before {
   opacity: 0.15;
   z-index: -1;
 }
-
-
-
 
 h1,
 h2,
