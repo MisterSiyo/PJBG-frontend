@@ -350,7 +350,7 @@ export default function Home() {
             <ProjectCard key={index} project={project} />
           ))
         ) : (
-          <p>Loading projects...</p>
+          <p>No project to show... Try other filters ?</p>
         )}
       </div>
     </div>
