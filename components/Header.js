@@ -1,5 +1,5 @@
 "use client";
-import styles from "../styles/layout.module.css";
+import styles from "../styles/header.module.css";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
@@ -193,60 +193,74 @@ export default function Header() {
       </header>
 
       {showPopover && (
-        <div
-          className={styles.popoverContainer}
-          onClick={() => setShowPopover(false)}
-        >
-          <div className={styles.popover} onClick={(e) => e.stopPropagation()}>
-            <button
-              className={styles.closeButton}
-              onClick={() => setShowPopover(false)}
-            >
-              ×
-            </button>
+  <div
+    className={styles.popoverContainer}
+    onClick={() => setShowPopover(false)}
+  >
+    <div className={styles.popover} onClick={(e) => e.stopPropagation()}>
+      <button
+        className={styles.closeButton}
+        onClick={() => setShowPopover(false)}
+      >
+        ×
+      </button>
+      
+      <h1 className={styles.titleSection}>Log In</h1>
 
-            <h1 className={styles.loginTitle}>Log In</h1>
-            <RedditAuthButton onLoginSuccess={handleOAuthSuccess} />
-            <GoogleAuthButton onLoginSuccess={handleOAuthSuccess} />
-            <h5>
-              - - -
-            </h5>
-            <input
-              type="text"
-              placeholder="Email or Username"
-              value={identifier}
-              onChange={(e) => setIdentifier(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && handleLogin()}
-              className={styles.input}
-            />
-            <input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && handleLogin()}
-              className={styles.input}
-            />
-            <button onClick={handleLogin}>Enter</button>
-            <p className={styles.insMessage}>
-            Don't have an account?
-            </p>
-            <p className={styles.insMessage}>
-              Create one:
-            </p>
-            <button className={styles.insButton}
-              onClick={() => handleRoleSelection("patron", "/signup-user")}
-            >
-              I am a Patron
-            </button>
-            <button className={styles.insButton}
-              onClick={() => handleRoleSelection("studio", "/signup-dev")}
-            >
-              I'm a Game Studio
-            </button>
-          </div>
-        </div>
-      )}
+      <br></br>
+      
+      <RedditAuthButton onLoginSuccess={handleOAuthSuccess} />
+      <GoogleAuthButton onLoginSuccess={handleOAuthSuccess} />
+      <div className={styles.separator}>or</div>
+      
+      <input
+        type="text"
+        placeholder="Email or Username"
+        value={identifier}
+        onChange={(e) => setIdentifier(e.target.value)}
+        onKeyDown={(e) => e.key === "Enter" && handleLogin()}
+        className={styles.input}
+      />
+      <input
+        type="password"
+        placeholder="Password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        onKeyDown={(e) => e.key === "Enter" && handleLogin()}
+        className={styles.input}
+      />
+      
+      <button onClick={handleLogin}>Enter</button>
+      <br></br>
+
+      <div className={styles.separatorContinue}></div>
+
+      <br></br>
+
+      <h1 className={styles.titleSection}>Don't have an account ?</h1>
+
+
+      <br></br>
+      
+      {/* Container pour espacer les boutons */}
+      <div className={styles.signupButtonContainer}>
+        <button
+          onClick={() => handleRoleSelection("patron", "/signup-user")}
+        >
+          I am a Patron
+        </button>
+        
+        <button
+          onClick={() => handleRoleSelection("studio", "/signup-dev")}
+        >
+          I'm a Game Studio
+        </button>
+        <br></br>
+        <div style={{ height: "30px" }}></div>  {/* Espace sans agrandir la popover */}
+      </div>
+    </div>
+  </div>
+)}
     </>
   );
 }

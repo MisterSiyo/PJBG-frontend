@@ -128,7 +128,7 @@ const GoogleAuthButton = ({ onLoginSuccess }) => {
   };
 
   return (
-    <div className={styles.google_auth_container}>
+    <div >                                                                  {/* cette class me gêne className={styles.google_auth_container}*/}
       {isLoading && <p className={styles.loading_message}>Chargement...</p>}
 
       {user ? (
@@ -151,9 +151,8 @@ const GoogleAuthButton = ({ onLoginSuccess }) => {
             onSuccess={handleSuccess}
             onError={handleError}
             useOneTap
-            text="continue_with"
+            text="continue_with" //je supp text="continue_with" - locale="fr"//
             shape="rectangular"
-            locale="fr"
           />
         </div>
       )}
