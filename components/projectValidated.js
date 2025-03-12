@@ -503,7 +503,31 @@ const payload = {
             </div>
           </div>
 
+ {/* ============ Latest News Section ============ */}
+
+ {news.length > 0 && (
+            <div className={styles.newsBox}>
+              <h3 className={styles.newsTitle}>Latest News</h3>
+              <ul className={styles.newsList}>
+              {news.filter((newsItem) => newsItem.historyType === "news")
+                .map((newsItem, index) => (
+                  <li key={index} className={styles.newsItem}>
+                    <span className={styles.newsDate}>
+                      {new Date(newsItem.date).toLocaleDateString()}
+                    </span>
+                    <br></br>
+                    <span className={styles.newsMessage}>
+                       {newsItem.message}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+
 {/* ============ SECTION Updates ============ */}
+
           <h3 className={styles.updatesTitle}>Development Updates</h3>
 
           {/* Formulaire si user = studio */}
