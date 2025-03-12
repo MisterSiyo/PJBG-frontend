@@ -1,5 +1,6 @@
 import styles from "../styles/auth.module.css";
 import { useState } from "react";
+import styles from "../styles/login.module.css"
 
 // Définition du composant SignIn qui prend une fonction onSubmit comme prop
 export default function SignIn({ onSubmit }) {

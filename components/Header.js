@@ -155,16 +155,14 @@ export default function Header() {
           </button>
         )}
 
-        <h1 className={styles.title} onClick={() => router.push("/")}>
-          PJBG
-        </h1>
+          <h1 className={styles.title} onClick={() => router.push("/")}>
+            <img src="..\images\logo_controller.png" alt="Logo" className={styles.logoIcon} />
+          </h1>
 
         {!hideLoginButton &&
           (isLoggedIn ? (
             <div className={styles.userMenu}>
-              <span>Welcome, {user.username} !</span>
-              <br />
-              <br />
+              <span className={styles.welcomeLogin}>Welcome, {user.username} !</span>
               <button
                 className={styles.navButton}
                 onClick={() => setShowNavMenu(!showNavMenu)}
@@ -207,15 +205,11 @@ export default function Header() {
               ×
             </button>
 
-            <h1>Log In</h1>
+            <h1 className={styles.loginTitle}>Log In</h1>
             <RedditAuthButton onLoginSuccess={handleOAuthSuccess} />
-            <br />
-            <br />
             <GoogleAuthButton onLoginSuccess={handleOAuthSuccess} />
-            <br />
-            <br />
             <h5>
-              Or log in with your email or your username and your password :
+              - - -
             </h5>
             <input
               type="text"
@@ -233,20 +227,19 @@ export default function Header() {
               onKeyDown={(e) => e.key === "Enter" && handleLogin()}
               className={styles.input}
             />
-            <br />
-            <br />
             <button onClick={handleLogin}>Enter</button>
-
-            <h1>Don't have an account?</h1>
-            <h4>Create one:</h4>
-            <button
+            <p className={styles.insMessage}>
+            Don't have an account?
+            </p>
+            <p className={styles.insMessage}>
+              Create one:
+            </p>
+            <button className={styles.insButton}
               onClick={() => handleRoleSelection("patron", "/signup-user")}
             >
               I am a Patron
             </button>
-            <br />
-            <br />
-            <button
+            <button className={styles.insButton}
               onClick={() => handleRoleSelection("studio", "/signup-dev")}
             >
               I'm a Game Studio

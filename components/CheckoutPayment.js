@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
 import { useSelector } from "react-redux";
+import Styles from "../styles/CheckoutPayment"
 
 export default function CheckoutPayment(props) {
 

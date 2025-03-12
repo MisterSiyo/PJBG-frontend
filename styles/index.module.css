@@ -1,0 +1,87 @@
+/* =========================
+   CONTENEUR PRINCIPAL
+========================= */
+.mainContainer {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 80px; /* laisse la place au header fixé */
+    text-align: center;
+  }
+  
+  /* =========================
+     TITRES, GRILLES, ETC.
+     (inchangé, adapté à la charte)
+  ========================= */
+  /* ==================================
+     TITRE "Discover our top projects"
+     Avec petite ligne stylisée
+  ================================== */
+  .discoverTitle {
+    top:5rem;
+    right: 25rem;
+    position: relative;
+    font-size: 1.6rem;
+    margin: 20px auto 30px;
+    text-align: center;
+    display: inline-block;
+    color: #3c3c3c;
+    font-weight: bold;
+  }
+  .discoverTitle::before {
+    content: "";
+    position: absolute;
+    left: -30px;
+    top: 100%;
+    transform: translateY(-50%);
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #5c1c1c; /* point rouge ou marron */
+  }
+  .discoverTitle::after {
+    content: "";
+    position: absolute;
+    right: -9rem;
+    top: 100%;
+    transform: translateY(-50%);
+    width: 30rem;
+    height: 2px;
+    background: #5c1c1c; /* trait horizontal */
+  }
+  
+  .sectionTitle {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin: 30px 0;
+    text-align: center;
+    border-bottom: 2px solid #6e8efb;
+    display: inline-block;
+    
+  }
+  
+  .projectGrid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(250px, 1fr));
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    max-width: 1200px;
+    margin: 5rem auto;
+    padding: 2rem;
+  }
+  
+  @media (max-width: 1024px) {
+    .projectGrid {
+      grid-template-columns: repeat(2, minmax(250px, 1fr));
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .projectGrid {
+      grid-template-columns: repeat(1, minmax(250px, 1fr));
+    }
+    .sortContainer {
+      flex-direction: column;
+      gap: 5px;
+    }
+  }

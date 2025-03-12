@@ -1,0 +1,220 @@
+/* =========================
+   HEADER
+========================= */
+.header {
+    width: 100vw;
+    height: 70px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+  
+    /* Astuce : on peut utiliser un léger dégradé de bleu rappelant ton screenshot */
+    background: linear-gradient(to bottom, #9ec9f7 0%, #bedff9 100%);
+    border-top: 5px solid #1484c4; /* petite bordure en haut pour rappeler la barre plus foncée */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px; /* Espacement horizontal à gauche et à droite */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* = Bouton "Back" à gauche (ou tout autre bouton à gauche)
+     On crée un effet "bulle" arrondi pour coller à ton screenshot */
+  .backButton {
+    background: #c3daf2;      /* bleu très clair */
+    color: #214e7b;           /* texte bleu plus soutenu */
+    padding: 8px 15px;
+    border-radius: 20px;      /* forme pill arrondie */
+    font-size: 14px;
+    border: 1px solid #1484c4; /* contour léger */
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-right: 10px;       /* écarte un peu du titre au milieu */
+  }
+  .backButton:hover {
+    background-color: #acc3e8;
+  }
+  
+  /* = Logo + Titre centré
+     On utilise un conteneur flex pour séparer la zone gauche/droite,
+     mais on centre le logo dans la zone médiane */
+  .title {
+    flex-grow: 1;             /* occupe l’espace central */
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #214e7b;           /* si jamais on affiche du texte */
+    cursor: pointer;
+    margin: 0;
+    user-select: none;
+    /* Pour masquer un éventuel texte et ne garder que l’icône,
+       tu peux mettre un display: inline-flex ou block selon le besoin */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* = Logo éventuel au centre (icône coeur/manette)
+     Ajuste la taille de l’image si besoin */
+  .logoIcon {
+    height: 40px;
+    width: auto;
+    display: block;
+  }
+  
+  /* = Bouton "Login / Register" en haut à droite 
+     Style en "bulle" similaire à la backButton */
+  .loginButton {
+    background: #c3daf2;
+    color: #214e7b;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 14px;
+    border: 1px solid #1484c4;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-right: 2rem;
+  }
+  .loginButton:hover {
+    background-color: #acc3e8;
+  }
+  
+  /* = Menu déroulant user (si connecté) */
+  .userMenu {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  
+  /* Texte "Welcome, user!" */
+  .welcomeLogin {
+    margin-right: 10px;   /* écarte du bouton menu */
+    color: #214e7b;
+    font-weight: bold;
+  }
+  
+  /* Bouton "Menu ▼" */
+  .navButton {
+    background: #c3daf2;
+    color: #214e7b;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 14px;
+    border: 1px solid #1484c4;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  .navButton:hover {
+    background-color: #acc3e8;
+  }
+  
+  /* Sous-menu qui apparaît */
+  .navMenu {
+    position: absolute;
+    top: calc(100% + 5px);
+    right: 0;
+    background: #fefefe;
+    border-radius: 6px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    z-index: 1001;
+    display: flex;
+    flex-direction: column;
+    min-width: 180px;
+  }
+  
+  /* Items du sous-menu */
+  .navMenu button {
+    background: none;
+    border: none;
+    text-align: left;
+    padding: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    color: #333;
+    border-radius: 4px;
+  }
+  .navMenu button:hover {
+    background-color: #eceff1;
+  }
+  
+  /* =========================
+     POPOVER POUR LOG IN
+  ========================= */
+  .popoverContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  
+  .popover {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    width: 320px;
+    position: relative;
+    animation: scaleUp 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .closeButton {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  .loginTitle {
+    margin-bottom: 10px;
+    color: #214e7b;
+  }
+  .insMessage {
+    color: #666;
+    margin: 8px 0 4px 0;
+  }
+  .insButton {
+    background: #c3daf2;
+    color: #214e7b;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 14px;
+    border: 1px solid #1484c4;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin: 6px 0;
+  }
+  .insButton:hover {
+    background-color: #acc3e8;
+  }
+  
+  /* Inputs du popover */
+  .input {
+    width: 80%;
+    padding: 8px;
+    margin: 5px 0;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+  }
+  
+  /* Animations */
+  @keyframes fadeIn {
+    0% { background: rgba(0,0,0,0); }
+    100% { background: rgba(0,0,0,0.5); }
+  }
+  @keyframes scaleUp {
+    0% { transform: scale(0.8); opacity: 0.5; }
+    100% { transform: scale(1); opacity: 1; }
+  }
