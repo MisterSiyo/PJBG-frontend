@@ -94,7 +94,7 @@ export default function SignupForm({ onSubmit, companyInfo }) {
 
     return (
         <div className={styles.authContainer}>
-            <h2>Créer un compte</h2>
+            <h2>Create an account</h2>
             
             <div className={styles.divider}></div>
 

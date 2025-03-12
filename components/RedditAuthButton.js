@@ -211,7 +211,7 @@ const RedditAuthButton = ({ onLoginSuccess }) => {
   };
 
   return (
-    <div className={styles.reddit_auth_container}>
+    <div>                                                    {/* cette class me gêne className={styles.reddit_auth_container*/}
       {user ? (
         <div className={styles.user_info}>
           <img
@@ -232,7 +232,7 @@ const RedditAuthButton = ({ onLoginSuccess }) => {
             className={styles.reddit_login_button}
             disabled={isLoading}
           >
-            {isLoading ? "Chargement..." : "Se connecter avec Reddit"}
+            {isLoading ? "Loading..." : "With Reddit"}
           </button>
         </div>
       )}
