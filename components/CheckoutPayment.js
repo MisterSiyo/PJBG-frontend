@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { updateBacking } from "../reducers/user";
 import { useRouter } from "next/router";
+import Styles from "../styles/CheckoutPayment"
 
 export default function CheckoutPayment(props) {
 

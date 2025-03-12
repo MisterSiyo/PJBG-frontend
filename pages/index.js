@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import styles from "../styles/layout.module.css";
+import styles from "../styles/index.module.css";
 import ProjectCard from "../components/ProjectCard";
 import Home from "../components/Home";
 import useAuth from "../hooks/useAuth"; 
@@ -44,9 +44,18 @@ export default function Index() {
   return (
     <div className={styles.mainContainer}>
       <h1 className={styles.sectionTitle}>Welcome To PJBG</h1>
-      <p>PJBG is a crowdfunding website centered on the player’s needs.</p>
+      <section className={styles.heroSection}>
+        <div className={styles.heroBubble}>
+          <h1 className={styles.heroTitle}>
+            PJBG is a crowdfunding website centered on the player’s needs.
+          </h1>
+          <p className={styles.heroSubtitle}>
+            Imagine the ideal game and tell the Game Developers what you want!
+          </p>
+        </div>
+      </section>
 
-      <h2 className={styles.sectionTitle}>Discover our top projects</h2>
+      <h2 className={styles.discoverTitle}>Discover our top projects</h2>
       <div className={styles.projectGrid}>
         {projects.map((project, index) => (
           <ProjectCard key={index} project={project} />
