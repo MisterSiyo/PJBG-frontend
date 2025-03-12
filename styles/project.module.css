@@ -130,6 +130,7 @@
     padding: 2px;
     border: 2px solid black;
     margin-bottom: 10px;
+    min-height: 40px;
 }
 
 .favBG::before {
@@ -153,6 +154,7 @@
     padding: 2px;
     border: 2px solid black;
     margin-bottom: 10px;
+    min-height: 40px;
 }
 
 .fundedBG::before {
@@ -176,6 +178,7 @@
     padding: 2px;
     border: 2px solid black;
     margin-bottom: 10px;
+    min-height: 40px;
 }
 
 .creatorDescriptionContainer::before {

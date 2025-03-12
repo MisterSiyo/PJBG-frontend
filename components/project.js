@@ -43,7 +43,6 @@ function Project(props) {
   // }, [])
 
 
-
   useEffect(() => {
     if (!project) {
       return;
@@ -56,12 +55,7 @@ function Project(props) {
           setProjectData(data.project);
           setNews(data.project.histories);
           setIsLoading(false);
-
-
-
         const hasVoted = data.project.studiosPreVote.some(e => e.votes && e.votes.some(vote => vote.username === user.username))
-
-
         const validatedByStaff = data.project.isValidatedByStaff;
   
           if (validatedByStaff && hasVoted) {
@@ -69,7 +63,6 @@ function Project(props) {
           } else if (validatedByStaff && !hasVoted) {
             router.push('/')
           }
-
           data.project.user.fundedProjects.forEach((project, index) => {
             console.log(`Project ${index}:`, project);
             console.log("Project ID:", project.projectId);
@@ -394,6 +387,11 @@ function Project(props) {
       return;
     }
 
+    if (user.role === 'studio') {
+      setPleaseLoginMessage('You are a studio, you cannot pledge on projects')
+      return;
+    }
+
     if (user.fundedProjects.some(e => e.project.title === projectData.title)) {
       setPleaseLoginMessage('You have already contributed to this project')
       return;
@@ -460,10 +458,6 @@ function Project(props) {
                 </div>
                 <div className={styles.favorites}>
                   <div className={styles.favBG}>
-                    <p>testFav1</p>
-                    <p>testFav2</p>
-                    <p>testFav3</p>
-                    <p>testFav4</p>
                     {favorited}
                   </div>
                 </div>

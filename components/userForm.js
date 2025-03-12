@@ -2,10 +2,12 @@ import styles from '../styles/auth.module.css';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addUserToStore } from '../reducers/user';
+import { useRouter } from 'next/router';
 
 export default function SignupForm({ onSubmit, companyInfo }) {
     const dispatch = useDispatch();
     const role = useSelector((state) => state.user.value.role); // Récupère le rôle depuis Redux
+    const router = useRouter();
 
     const [formData, setFormData] = useState({
         email: '',
@@ -53,6 +55,11 @@ export default function SignupForm({ onSubmit, companyInfo }) {
             alert('Please complete all fields.');
             return;
         }
+
+        if (formData.password.length < 6) {
+            alert('Please enter a password with 6 characters minimum')
+            return;
+        }
         console.log("début")
         fetch('http://localhost:3000/users/register', {
             method: 'POST',
@@ -72,6 +79,7 @@ export default function SignupForm({ onSubmit, companyInfo }) {
                 dispatch(addUserToStore(data)); // Ajoute l'utilisateur au store Redux
                 if (onSubmit) onSubmit();
                 alert('Registration successful!');
+                router.push('/favorites')
             } else if (data.message === "Email already registered") {
                 alert("This email is already linked to an existing account.");
             } else {

@@ -179,7 +179,9 @@ const Account = () => {
 //     }
 //   }, [projectsDataList, user]);
 
-
+if (!user.token) {
+    router.push('/')
+}
 
 console.log('project data list', projectsDataList)
 console.log('pcardFA : ', pcardFa)
