@@ -13,7 +13,7 @@
    margin-top: 5%;
  }
 
- .button{
+ .button{ /*sauf save nex password*/
    background-color: #5c6bc0; 
    color: white;
    border: rgb(255, 255, 255) solid 2px;
@@ -27,6 +27,28 @@
    font-family: 'Anta', sans-serif;
    display: block; /* Nécessaire pour que margin auto fonctionne */
    margin: 0 auto; /*Centrer les boutons*/
+   white-space: nowrap; /* Pour garder le texte sur une seule ligne */
+   overflow: hidden; /* Pour garder le texte sur une seule ligne */
+   text-overflow: ellipsis; /* Pour garder le texte sur une seule ligne */
+ }
+
+ .buttonNewPass{
+  background-color: #5c6bc0; 
+  color: white;
+  border: rgb(255, 255, 255) solid 2px;
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s; /* Transition douce pour le changement de couleur */
+  width: 48%; 
+  max-width: 280px; 
+  font-family: 'Anta', sans-serif;
+  display: block; /* Nécessaire pour que margin auto fonctionne */
+  margin: 0 auto; /*Centrer les boutons*/
+  white-space: nowrap; /* Pour garder le texte sur une seule ligne */
+  overflow: hidden; /* Pour garder le texte sur une seule ligne */
+  text-overflow: ellipsis; /* Pour garder le texte sur une seule ligne */
  }
 
  .input {
@@ -122,6 +144,7 @@
    overflow: auto; /* pour activer le défilement en cas de contenu trop large */
  }
 
+
 .titleSectionDroite{
    color: #da46a1 ;
    font-weight: bold;
@@ -170,6 +193,16 @@
  }
 
 
-/* =========================
+/* =============================================
    Add Category Ici pour retrouver correctement 
-========================= */
+========================================== */
+
+.noProjectsYet {
+  font-family: 'Anta', sans-serif;
+  text-align: center;
+  margin: 2rem auto;  /* Centre horizontalement avec auto et ajoute 2rem de marge en haut et en bas */
+  display: block;
+  width: 100%;        /* Prend toute la largeur disponible */
+  padding-top: 1rem;  /* Ajoute un peu d'espace supplémentaire en haut */
+  padding-bottom: 4rem;  /* Ajoute un peu d'espace supplémentaire en bas */
+}
