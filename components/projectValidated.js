@@ -197,7 +197,7 @@ const payload = {
   // ** AFFICHAGE PRINCIPAL
   // ***********************
   return (
-    <>
+    <div classname={styles.pageContent}>
         <br></br>
         <br></br>
         <br></br>
@@ -228,7 +228,6 @@ const payload = {
                 {/* Favorites */}
                 <div className={styles.favorites}>
                   <div className={styles.favBG}>
-                    <h5>Favorites</h5>
                     {projectData.user.followedProjects.length > 0 ? (
                       projectData.user.followedProjects.map((f, i) => (
                         <p key={i} className={styles.favoriteText}>
@@ -244,7 +243,6 @@ const payload = {
                 {/* Funded */}
                 <div className={styles.funded}>
                   <div className={styles.fundedBG}>
-                    <h5>Funded Projects</h5>
                     {projectData.user.fundedProjects?.length > 0 ? (
                       projectData.user.fundedProjects.map((fd, i) => (
                         <p key={i} className={styles.fundedText}>
@@ -260,7 +258,6 @@ const payload = {
             </div>
             <div className={styles.creatorBottom}>
               <div className={styles.creatorDescriptionContainer}>
-                <h5>Project Creator</h5>
                 <p>
                   {projectData.user.description || 'No description available'}
                 </p>
@@ -270,12 +267,12 @@ const payload = {
 
           {/* Studio en charge ? */}
           {projectData.studioValidated && (
-            <div className={styles.creatorContainer}>
-              <div className={styles.creatorUp}>
-                <div className={styles.creatorInfo}>
-                  <div className={styles.usernameContainer}>
-                    <div className={styles.usernameBG}>
-                      <p className={styles.username}>
+            <div className={styles.studioContainer}>
+              <div className={styles.studioUp}>
+                <div className={styles.studioInfo}>
+                  <div className={styles.studioNameContainer}>
+                    <div className={styles.studioNameBG}>
+                      <p className={styles.studioName}>
                         {projectData.studioValidated.studio.companyName ||
                           'Unknown Studio'}
                       </p>
@@ -283,9 +280,8 @@ const payload = {
                   </div>
                 </div>
               </div>
-              <div className={styles.creatorBottom}>
-                <div className={styles.creatorDescriptionContainer}>
-                  <h5>Studio in Charge</h5>
+              <div className={styles.studioBottom}>
+                <div className={styles.studioDescriptionContainer}>
                   <p>
                     {projectData.studioValidated.studio.description ||
                       'No description'}
@@ -318,7 +314,7 @@ const payload = {
                   <div className={styles.genreContainer}>
                     <div className={styles.characTitleContainer}>
                       <h6>Game Genre</h6>
-                      <button
+                      <button classname={styles.seemoreBtn}
                         onClick={() => handleToggleSection('genre')}
                         style={{ marginLeft: '10px' }}
                       >
@@ -676,7 +672,7 @@ const payload = {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

@@ -1,352 +1,106 @@
-/******************************************/
-/* Global Layout */
-/******************************************/
-.pageContent {
-    display: flex;
-    justify-content: space-between;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 10px;
-  }
-  
-  .titleContainer {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  .title {
-    font-size: 28px;
-    font-weight: bold;
-    color: #333;
-  }
-  
-  /******************************************/
-  /* Left Bar: Creator & Studio Profiles */
-  /******************************************/
-  .leftBar {
-    width: 25%;
-    padding: 15px;
-  }
-  .creatorContainer {
-    background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    overflow: hidden;
-  }
-  .creatorUp {
-    padding: 10px;
-  }
-  .creatorInfo {
-    background: #f8f9fa;
-    padding: 10px;
-    border-radius: 5px;
-  }
-  .usernameContainer {
-    text-align: center;
-    margin-bottom: 10px;
-  }
-  .usernameBG {
-    background-color: #ec6e5b;
-    padding: 8px 12px;
-    border-radius: 20px;
-    display: inline-block;
-  }
-  .username {
-    font-weight: bold;
-    color: white;
-  }
-  /* Favorites & Funded */
-  .favorites, .funded {
-    margin: 10px 0;
-  }
-  .favBG, .fundedBG {
-    background: #eef;
-    padding: 8px;
-    border-radius: 5px;
-  }
-  .favoriteText, .fundedText {
-    font-size: 14px;
-    color: #555;
-  }
-  .creatorBottom {
-    background: #fafafa;
-    padding: 10px;
-  }
-  .creatorDescriptionContainer {
-    background: #f1f1f1;
-    padding: 12px;
-    border-radius: 5px;
-  }
-  .creatorDescriptionContainer h5 {
-    margin-top: 0;
-    font-weight: bold;
-    color: #333;
-  }
-  
-  /******************************************/
-  /* Center Bar: Updates Form & Display */
-  /******************************************/
-  .centerBar {
-    width: 50%;
-    padding: 15px;
-  }
-  
-  .updatesTitle {
-    font-size: 20px;
-    margin-bottom: 10px;
-    color: #333;
-  }
-  
-  /* Formulaire de création d'update */
-  .newUpdateForm {
-    background: #f0f8ff;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    padding: 15px;
-    margin-bottom: 20px;
-  }
-  
-  /* Titre de chaque section dans le formulaire (centré) */
-  .formSectionTitle {
-    text-align: center; /* On centre le label */
-    font-weight: bold;
-    margin: 20px 0 10px; /* Espace au-dessus et au-dessous */
-    font-size: 1.1rem;
-    color: #333;
-  }
-  
-  /* Inputs et textareas dans le formulaire */
-  .formInput,
-  .formTextarea {
-    display: block;        /* Forcer l'affichage en bloc */
-    width: 100%;
-    margin: 0 auto 15px;   /* 15px en bas, centré horizontalement */
-    padding: 8px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-  }
-  
-  /* Le header au-dessus du dropdown: "Select your update category" + bouton "Add Another Category" */
-  .categoryHeader {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 20px;
-  }
-  
-  /* Le bouton "Add Another Category" */
-  .addCategoryBtn {
-    background: #ec6e5b;
-    color: white;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  .addCategoryBtn:hover {
-    background: #d55a46;
-  }
-  
-  /* Les blocs de catégorie (dropdown + textarea) */
-  .categoryBlock {
-    background: #fefefe;
-    border: 1px solid #ccc;
-    padding: 10px;
-    border-radius: 6px;
-    margin: 15px 0;
-  }
-  .formSelect {
-    width: 100%;
-    margin-bottom: 10px;
-    padding: 6px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-  }
-  
-  /* Bouton de submit du formulaire */
-  .submitBtn {
-    background: #2b5fab;
-    color: #fff;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  .submitBtn:hover {
-    background: #1f4a87;
-  }
-  
-  /* Affichage des updates existantes */
-  .updateHistory {
-    margin-top: 20px;
-  }
-  .updateHistory h4 {
-    font-size: 18px;
-    margin-bottom: 8px;
-    color: #333;
-  }
-  .updateBox {
-    background: #b2d4f5; /* bleu clair */
-    border-radius: 10px;
-    margin-bottom: 15px;
-    padding: 15px;
-    box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
-    position: relative;
-  }
-  .updateBoxHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .updateMonthYear {
-    font-size: 1rem;
-    font-weight: bold;
-    color: #333;
-  }
-  .catsIcon {
-    width: 50px;
-    height: auto;
-  }
-  .updateTitleBar {
-    background: #4a689c; /* un bleu foncé */
-    color: #fff;
-    margin-top: 10px;
-    padding: 8px 12px;
-    border-radius: 8px;
-    font-size: 1.1rem;
-    font-weight: bold;
-    text-align: center;
-  }
-  .updateInnerContent {
-    background: #fdfdfd;
-    padding: 10px;
-    margin-top: 10px;
-    border-radius: 5px;
-  }
-  .subSectionTitle {
-    background: #6e8ee7;
-    color: #fff;
-    padding: 4px 8px;
-    border-radius: 5px;
-    margin: 12px 0 4px 0;
-    font-size: 0.95rem;
-    font-weight: bold;
-  }
-  .categoryDisplayBlock {
-    margin-top: 10px;
-  }
-  
-  /******************************************/
-  /* Right Bar: Chat */
-  /******************************************/
-  .rightBar {
-    width: 25%;
-    padding: 15px;
-  }
-  .NewschatContainer {
-    background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 10px;
-  }
-  .NewsChatBox {
-    max-height: 300px;
-    overflow-y: auto;
-    background: #f1f1f1;
-    border-radius: 5px;
-    padding: 10px;
-    margin-bottom: 10px;
-  }
-  .messageContainer {
-    margin-bottom: 8px;
-    background: #fff;
-    border-radius: 4px;
-    padding: 8px;
-  }
-  .userPosting {
-    font-size: 14px;
-    font-weight: bold;
-    color: #555;
-    margin-bottom: 4px;
-  }
-  .message {
-    font-size: 14px;
-    color: #333;
-  }
-  .chattingBox {
-    display: flex;
-    gap: 6px;
-  }
-  .messageInput {
-    flex: 1;
-    padding: 8px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-  }
-  .send {
-    background: #ec6e5b;
-    color: white;
-    padding: 8px 12px;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  .send:hover {
-    background: #d55a46;
-  }
-  /* ============================= */
-/* SECTION CATEGORIES (SEE MORE) */
-/* ============================= */
-.categoriesSection {
-    margin-bottom: 20px;
-  }
-  
-  .categoryBox {
-    background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 10px;
-    margin-bottom: 12px;
-  }
-  
-  .categoryHeader {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 8px;
-  }
-  
-  .categoryTitle {
-    font-size: 16px;
-    font-weight: bold;
-    color: #333;
-    margin: 0;
-  }
-  
-  .categoryToggleBtn {
-    background: #ec6e5b;
-    color: white;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  .categoryToggleBtn:hover {
-    background: #d55a46;
-  }
-  
-  .categoryContent {
-    background: #f8f9fa; /* un gris clair */
-    border-radius: 5px;
-    padding: 8px 12px;
-  }
-  
-  .subCategory {
-    margin: 4px 0;
-    color: #555;
-    font-size: 14px;
-  }
+@import url('https://fonts.googleapis.com/css2?family=Anta&display=swap');
 
-  /* Latest News Box */
+
+.pageContent {
+  font-family: 'Anta';
+}
+
+.studioInfo {
+  height: 100%;
+  width: 100%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+}
+
+.studioContainer {
+  margin-bottom: 20px;
+  font-family: "Anta";
+  background-color: #A0C7E3;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+}
+
+.studioUp {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  text-align: right;
+}
+
+.studioDescriptionContainer {
+  background-color: #BEE4FF;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  position: relative;
+  margin-left: 10px;
+  padding: 10px;
+  border: 2px solid black;
+  margin-bottom: 10px;
+  min-height: 40px;
+}
+
+.studioDescriptionContainer::before {
+  content: 'Description';
+  position: absolute;
+  top: -10px; 
+  left: 10px; 
+  background-color: #A0C7E3; 
+  border-radius: 10px;
+  padding: 0 5px;
+  font-size: 14px; 
+  color: #333; 
+}
+
+.studioInfoTitle {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+
+.studioNameContainer {
+  margin-left: 10px;
+}
+
+.studioNameBG {
+  background-color: #BEE4FF;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  position: relative;
+  margin-left: 10px;
+  padding: 10px;
+  border: 2px solid black;
+  margin-bottom: 10px;
+}
+
+.studioNameBG::before {
+  content: 'Studio in charge';
+  position: absolute;
+  top: -10px; 
+  left: 10px; 
+  background-color: #A0C7E3; 
+  border-radius: 10px;
+  padding: 0 5px;
+  font-size: 14px; 
+  color: #333; 
+}
+
+
+
+
+.categoryContent {
+  background: #f8f9fa; /* un gris clair */
+  border-radius: 5px;
+  padding: 8px 12px;
+}
+
+.subCategory {
+  margin: 4px 0;
+  color: #555;
+  font-size: 14px;
+}
+
+/* Latest News Box */
 .newsBox {
   background: rgba(50, 50, 50, 0.85);
   padding: 20px;
@@ -385,6 +139,658 @@
 
 .newsMessage {
   margin: 4px 0;
-    color: #fff0f0;
+  color: #fff0f0;
+  font-size: 14px;
+}
+
+/* UP PAGE */
+.titleContainer {
+    text-align: center;
+    padding: 20px 0;
+}
+
+.title {
+    font-size: 2.5em;
+    margin: 0;
+    color: #333;
+    font-family: "Anta";
+}
+
+.pageContent {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* LEFT BAR */
+.leftBar {
+    flex-grow: 1;
+    padding: 20px;
+    background-color: #f0f8ff;
+    border-radius: 10px;
+    font-family: 'Anta';
+}
+
+.creatorInfo {
+    height: 100%;
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+}
+
+.creatorContainer {
+    margin-bottom: 20px;
+    font-family: "Anta";
+    background-color: #A0C7E3;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
+
+.creatorUp {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    text-align: right;
+}
+
+.usernameContainer {
+    margin-left: 10px;
+}
+
+.usernameBG {
+    background-color: #BEE4FF;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    position: relative;
+    margin-left: 10px;
+    padding: 2px;
+    border: 2px solid black;
+    margin-bottom: 10px;
+}
+
+.usernameBG::before {
+    content: 'Creator';
+    position: absolute;
+    top: -10px; 
+    left: 10px; 
+    background-color: #A0C7E3; 
+    border-radius: 10px;
+    padding: 0 5px;
+    font-size: 14px; 
+    color: #333; 
+}
+
+.favBG {
+    background-color: #BEE4FF;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    position: relative;
+    margin-left: 10px;
+    padding: 2px;
+    border: 2px solid black;
+    margin-bottom: 10px;
+    min-height: 40px;
+}
+
+.favBG::before {
+    content: 'Favorited Games';
+    position: absolute;
+    top: -10px; 
+    left: 10px; 
+    background-color: #A0C7E3; 
+    border-radius: 10px;
+    padding: 0 5px;
+    font-size: 14px; 
+    color: #333; 
+}
+
+.fundedBG {
+    background-color: #BEE4FF;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    position: relative;
+    margin-left: 10px;
+    padding: 2px;
+    border: 2px solid black;
+    margin-bottom: 10px;
+    min-height: 40px;
+}
+
+.fundedBG::before {
+    content: 'Funded Games';
+    position: absolute;
+    top: -10px; 
+    left: 10px; 
+    background-color: #A0C7E3; 
+    border-radius: 10px;
+    padding: 0 5px;
+    font-size: 14px; 
+    color: #333; 
+}
+
+.creatorDescriptionContainer {
+    background-color: #BEE4FF;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    position: relative;
+    margin-left: 10px;
+    padding: 10px;
+    border: 2px solid black;
+    margin-bottom: 10px;
+    min-height: 40px;
+}
+
+.creatorDescriptionContainer::before {
+    content: 'Description';
+    position: absolute;
+    top: -10px; 
+    left: 10px; 
+    background-color: #A0C7E3; 
+    border-radius: 10px;
+    padding: 0 5px;
+    font-size: 14px; 
+    color: #333; 
+}
+
+.favorites, .funded {
+    margin-bottom: 10px;
+}
+
+.creatorInfoTitle {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.pledgeContainer {
+    margin-bottom: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+.pledgeUpContainer {
+    margin-bottom: 10px;
+    font-family: "Anta";
+    font-size: x-large;
+    background-color: rgb(28, 58, 102);
+    color: white;
+    text-align: center;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
+
+.pledgesContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: white;
+    text-align: center;
+    justify-content: center;
+}
+
+.pledgeTitle {
+    font-family: 'Anta';
+}
+
+/* CENTER BAR */
+.centralBar {
+    flex-grow: 4;
+    padding: 20px;
+    background-color: #f0f8ff;
+    border-radius: 10px;
+}
+
+.pitchContainer {
+    margin-bottom: 20px;
+    font-family: 'Anta';
+}
+
+.progressContainer {
+    background: #000000;
+    border-radius: 10px;
+    overflow: hidden;
+    height: 2rem;
+    margin: 0px;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.progressBar {
+    height: 100%;
+    background: #1abc9c;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* PROGRESS TEXT */
+.progressText {
+    position: absolute;
+    width: 100%;
     font-size: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-weight: bold;
+    text-align: center;
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+    font-family: 'Anta';
+    z-index: 999;
+}
+
+.studiosContainer {
+    margin-bottom: 20px;
+    font-family: 'Anta';
+}
+
+.studioBoxesContainer {
+    display: flex;
+    justify-content: space-around;
+    gap: 10px;
+}
+
+.characContainer {
+    margin-bottom: 20px;
+    font-family: 'Anta';
+}
+
+.characTitleBox {
+    margin-bottom: 10px;
+}
+
+.characTitle {
+    font-size: 1.5em;
+    margin: 0;
+}
+
+.characContentContainer {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.descContainer, .otherCharac, .characLeftBox, .genreContainer, .characTitleContainer, .characIterationContainer {
+    flex: 1 1 45%;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.downloadButton {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: grey;
+    color: #fff;
+    text-align: center;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.takeon {
+    margin-top: 20px;
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #cc0000;
+    color: #fff;
+    text-align: center;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* RIGHT BAR */
+.rightBar {
+    flex-grow: 1;
+    padding: 20px;
+    background-color: #f0f8ff;
+    border-radius: 10px;
+}
+
+.newsTitle {
+    font-size: larger;
+    text-decoration: underline;
+    text-decoration-thickness: 3px;
+}
+
+.NewschatContainer {
+    margin-bottom: 20px;
+    font-family: 'Anta';
+}
+
+.NewsChatBox {
+    margin-bottom: 10px;
+}
+
+.chattingBox {
+    margin-bottom: 10px;
+}
+
+.messageInput {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.send {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #1abc9c;
+    color: #fff;
+    text-align: center;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* VARIABLES */
+.favoriteText {
+    color: rgb(107, 54, 100);
+}
+
+.voteButton {
+    font-family: 'Anta';
+    font-weight: bold;
+    font-variant: small-caps;
+    font-size: medium;
+}
+
+.fundedText {
+    color: rgb(28, 58, 102);
+}
+
+.rewardText {
+    color: black;
+    font-weight: 20;
+}
+
+.pledgeBox {
+    padding: 10px;
+    background-color: #A0C7E3;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    width: 80%;
+    margin: 0 auto;
+    margin-bottom: 20px;
+}
+
+.pledgesText {
+    color: white;
+    font-weight: 40;
+}
+
+.pledgeTitle {
+    font-weight: bold;
+    margin-bottom: 10px;
+    background-color: #1abc9c;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    text-align: center;
+}
+
+.contributionLevelText {
+    color: white;
+    font-size: x-large;
+    font-weight: 40;
+}
+
+.pledgeDescContainer {
+    margin-bottom: 10px;
+}
+
+.studioBox {
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.studioName {
+    font-size: large;
+    text-decoration: underline;
+    text-underline-offset: 5px;
+    text-decoration-style: solid;
+    text-decoration-thickness: 3px;
+}
+
+.studioDesc {
+    font-weight: normal;
+}
+
+.gmText {
+    color: darkblue;
+}
+
+.messageContainer {
+  margin-bottom: 10px;
+}
+
+.userposting {
+  color: black;
+  font-size: small;
+  font-style: italic;
+}
+
+.message {
+  color: darkblue;
+  font-size: large;
+}
+
+.messageDate {
+  color: #1abc9c;
+  font-size:x-small
+}
+
+.categoryTag {
+    color: white;
+    border-radius: 1rem;
+    padding: 5px 15px;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    display: inline-block;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* BOUTON CHECK ET IMPUT SIRET DE LA PAGE DE REGISTER QUE JE SUIS OBLIGEE DE METTRE ICI DU COUP */
+.ButtonCheck {
+    font-family: 'Anta', sans-serif;
+    width: 42%;
+    max-width: 280px; 
+    background: #5c6bc0;
+    color: white;
+    padding: 12px;
+    font-size: 14px;
+    border-radius: 6px;
+    margin-top: 10px;
+    border: rgb(255, 255, 255) solid 2px;
+    cursor: pointer;
+    display: block;
+    margin: 0 auto; /* Centrer les boutons */
+    transition: background-color 0.2s; /* Transition douce pour le changement de couleur */
+    padding: 8px 16px;
+}
+
+.authInput {
+    font-family: 'Anta', sans-serif;
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+    transition: border 0.3s ease;
+}
+
+
+
+.updatesTitle {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+/* Formulaire de création d'update */
+.newUpdateForm {
+  background: #f0f8ff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 20px;
+}
+
+/* Titre de chaque section dans le formulaire (centré) */
+.formSectionTitle {
+  text-align: center; /* On centre le label */
+  font-weight: bold;
+  margin: 20px 0 10px; /* Espace au-dessus et au-dessous */
+  font-size: 1.1rem;
+  color: #333;
+}
+
+/* Inputs et textareas dans le formulaire */
+.formInput,
+.formTextarea {
+  display: block;        /* Forcer l'affichage en bloc */
+  width: 100%;
+  margin: 0 auto 15px;   /* 15px en bas, centré horizontalement */
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+/* Le header au-dessus du dropdown: "Select your update category" + bouton "Add Another Category" */
+.categoryHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+/* Le bouton "Add Another Category" */
+.addCategoryBtn {
+  background: #2b5fab;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.addCategoryBtn:hover {
+  background: #1f4a87;
+}
+
+.seemoreBtn {
+  background: #2b5fab;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.seemoreBtn:hover {
+  background: #1f4a87;
+}
+
+/* Les blocs de catégorie (dropdown + textarea) */
+.categoryBlock {
+  background: #fefefe;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 6px;
+  margin: 15px 0;
+}
+.formSelect {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 6px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+/* Bouton de submit du formulaire */
+.submitBtn {
+  background: #2b5fab;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.submitBtn:hover {
+  background: #1f4a87;
+}
+
+/* Affichage des updates existantes */
+.updateHistory {
+  margin-top: 20px;
+}
+.updateHistory h4 {
+  font-size: 18px;
+  margin-bottom: 8px;
+  color: #333;
+}
+.updateBox {
+  background: #b2d4f5; /* bleu clair */
+  border-radius: 10px;
+  margin-bottom: 15px;
+  padding: 15px;
+  box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+  position: relative;
+}
+.updateBoxHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.updateMonthYear {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #333;
+}
+.catsIcon {
+  width: 50px;
+  height: auto;
+}
+.updateTitleBar {
+  background: #4a689c; /* un bleu foncé */
+  color: #fff;
+  margin-top: 10px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  text-align: center;
+}
+.updateInnerContent {
+  background: #fdfdfd;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 5px;
+}
+.subSectionTitle {
+  background: #6e8ee7;
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 5px;
+  margin: 12px 0 4px 0;
+  font-size: 0.95rem;
+  font-weight: bold;
+}
+.categoryDisplayBlock {
+  margin-top: 10px;
 }

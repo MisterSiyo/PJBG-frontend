@@ -223,14 +223,14 @@ function Project(props) {
         
         return (
             <div key={i} className={`${styles.studioBox} ${isVoted ? styles.votedStudio : ''}`}>
-                <h6>{studioCompanyName}</h6> 
-                <p>{studioDescription}</p>
+                <h6 className={styles.studioName}>{studioCompanyName}</h6> 
+                <p className={styles.studioDesc}>{studioDescription}</p>
                 {user.role === 'patron' && (
                     <button 
                         className={`${styles.voteButton} ${isVoted ? styles.votedButton : ''}`}
                         onClick={() => handleVote(data.studio._id)}
                     >
-                        {isVoted ? 'Voted' : 'Vote for this studio'}
+                        {isVoted ? 'Voted' : 'vote for this studio'}
                     </button>
                 )}
             </div>
@@ -458,7 +458,7 @@ function Project(props) {
           <div className={styles.pledgeContainer}>
             <image />
             <div className={styles.pledgeUpContainer}>
-              <h3>PLEDGES</h3>
+              <h3 className={styles.pledgesText}>PLEDGES</h3>
             </div>
             <div className={styles.pledgesContainer}>{pledgesToShow}</div>
           </div>
@@ -600,7 +600,7 @@ function Project(props) {
         {/* RIGHT BAR */}
         <div className={styles.rightBar}>
           <div className={styles.NewschatContainer}>
-            <h5>News & Chat</h5>
+            <h5 className={styles.newsTitle}>News & Chat</h5>
             <div className={styles.NewsChatBox}>{messages}</div>
             <div className={styles.chattingBox}>
               <input

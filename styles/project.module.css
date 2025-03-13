@@ -214,7 +214,7 @@
     margin-bottom: 10px;
     font-family: "Anta";
     font-size: x-large;
-    background-color: darkblue;
+    background-color: rgb(28, 58, 102);
     color: white;
     text-align: center;
     border-bottom-right-radius: 20px;
@@ -245,6 +245,7 @@
 
 .pitchContainer {
     margin-bottom: 20px;
+    font-family: 'Anta';
 }
 
 .progressContainer {
@@ -284,6 +285,7 @@
 
 .studiosContainer {
     margin-bottom: 20px;
+    font-family: 'Anta';
 }
 
 .studioBoxesContainer {
@@ -294,6 +296,7 @@
 
 .characContainer {
     margin-bottom: 20px;
+    font-family: 'Anta';
 }
 
 .characTitleBox {
@@ -355,8 +358,15 @@
     border-radius: 10px;
 }
 
+.newsTitle {
+    font-size: larger;
+    text-decoration: underline;
+    text-decoration-thickness: 3px;
+}
+
 .NewschatContainer {
     margin-bottom: 20px;
+    font-family: 'Anta';
 }
 
 .NewsChatBox {
@@ -391,11 +401,18 @@
 /* VARIABLES */
 
 .favoriteText {
-    color: orange;
+    color: rgb(107, 54, 100);
+}
+
+.voteButton {
+    font-family: 'Anta';
+    font-weight: bold;
+    font-variant: small-caps;
+    font-size:medium;
 }
 
 .fundedText {
-    color: green;
+    color: rgb(28, 58, 102);
 }
 
 .rewardText {
@@ -415,10 +432,15 @@
     
 }
 
+.pledgesText {
+    color: white;
+    font-weight: 40;
+}
+
 .pledgeTitle {
     font-weight: bold;
     margin-bottom: 10px;
-    background-color: #7A2048;
+    background-color: #1abc9c;
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
     text-align: center;
@@ -441,24 +463,40 @@
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
 
+.studioName {
+    font-size: large;
+    text-decoration: underline;
+    text-underline-offset: 5px;
+    text-decoration-style: solid;
+    text-decoration-thickness: 3px;
+}
+
+.studioDesc {
+    font-weight: normal;
+}
+
 .gmText {
-    color: peru;
+    color: darkblue;
 }
 
 .messageContainer {
     margin-bottom: 10px;
 }
 
-.userPosting {
-    color: blueviolet;
+.userposting {
+    color: black;
+    font-size: small;
+    font-style: italic;
 }
 
 .message {
-    color: red;
+    color: darkblue;
+    font-size: large;
 }
 
 .messageDate {
-    color: yellowgreen;
+    color: #1abc9c;
+    font-size:x-small
 }
 
 .categoryTag {
