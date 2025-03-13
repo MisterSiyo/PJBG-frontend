@@ -1,55 +1,151 @@
-/* PROJECT CARDS */
+/* =========================
+   PROJECT CARDS (Cartes des projets)
+========================= */
 .projectCard {
-  background: #408ec6;
-  color: white;
-  border-radius: 15px;
-  margin: auto;
+  background: #408ec6; /* Définit la couleur de fond de la carte en bleu */
+  color: white; /* Définit la couleur du texte en blanc */
+  border-radius: 15px; /* Arrondit les coins de la carte */
+  height: 400px; /* Définit une hauteur fixe pour toutes les cartes */
+  width: 300px; /* Définit une largeur fixe pour chaque carte */
+  text-align: center; /* Centre le texte à l’intérieur de la carte */
+  position: relative; /* Permet d’utiliser des éléments en position absolue */
+  display: flex; /* Active le mode flexbox pour organiser le contenu */
+  flex-direction: column; /* Dispose les enfants en colonne */
+  justify-content: space-between; /* Répartit l’espace entre les éléments */
+  align-items: center; /* Centre les éléments horizontalement */
+  margin: auto; /* Centre la carte horizontalement */
   margin-bottom: 4rem;
-  width: 20rem;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: normal;
+  padding: 1.5rem; /* Ajoute un espace intérieur */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Ajoute une ombre légère */
+  transition: transform 0.2s ease, box-shadow 0.2s ease; /* Anime la transformation et l’ombre */
 }
 
 .projectCard:hover {
-  transform: translateY(-2px);
+  transform: translateY(-5px);
   box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
 }
 
-.projectCard:hover .newsPopover {
-  display: block;
-  opacity: 1;
-}
-
-/* DESCRIPTION CONTAINER */
-.descriptionContainer {
-  background-color: #1e2761;
-  border-radius: 2rem;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-  margin: auto;
-  padding: 1vw;
-  width: 80%;
-  text-align: center;
-  color: white;
-  font-weight: bold;
-  font-size: 14px;
-}
-
-/* CARD BOTTOM */
+/* =========================
+   PROJECT CARD BOTTOM (Bas de la carte)
+========================= */
 .cardBottom {
   position: absolute;
-  transform: translateX(-50%);
-  left: 50%;
-  bottom: -0.5rem;
-  width: 70%;
+  width: 100%;
+  bottom: 0; /* Assure que la barre de progression reste en bas */
+  left: 0;
+  padding: 1rem;
 }
 
-/* NEWS BUTTON */
+/* =========================
+   PROJECT Title and pîtch
+========================= */
+.nameContainer {
+  position: relative;
+  width: 100%;
+  text-align: center;
+  color: white;
+} 
+.projectName {
+  font-size: clamp(14px, 2vw, 18px); /* Adjust to fit title */
+  max-width: 90%; /* Prevent overflow */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+  margin-bottom: 5px; /* Small spacing below */
+}
+
+/* =========================
+   DESCRIPTION CONTAINER
+========================= */
+.descriptionContainer {
+  background-color: #1e2761;
+  border-radius: 20px;
+  margin-top: 10px;
+  
+}
+
+.projectDescription {
+ width: 15rem;
+  height: 10rem;
+  color: white;
+  font-size: 100%;
+  padding: 2rem;
+
+  /* Multi-line ellipsis */
+  display: -webkit-box;
+  -webkit-line-clamp: 4; 
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+/* =========================
+   PROGRESS BAR (Barre de progression toujours en bas)
+========================= */
+.progressContainer {
+  background: #000000;
+  border-radius: 10px;
+  overflow: hidden;
+  height: 2rem;
+  width: 70%;
+  position: relative;
+  bottom: -2rem;
+  display: flex;
+  align-items: center;
+  margin: auto;
+}
+
+.progressBar {
+  height: 100%;
+  background: #1abc9c;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: width 0.3s ease-in-out;
+}
+
+.progressText {
+  position: absolute;
+  width: 100%;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  color: white;
+  font-family: 'Anta', sans-serif;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+  z-index: 999;
+}
+
+/* =========================
+   CATEGORIES CONTAINER
+========================= */
+.categoriesContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin: 1rem auto 4rem;
+  padding: 1rem;
+}
+
+/* CATEGORY TAGS */
+.categoryTag {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 1rem;
+  padding: 5px 15px;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+  display: inline-block;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* =========================
+   NEWS BUTTON & POPOVER
+========================= */
 .newsButton {
   position: absolute;
   top: -12px;
@@ -64,13 +160,13 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  transition: background 0.2s ease;
 }
 
 .newsButton:hover {
   background-color: #00c261;
 }
 
-/* NEWS POPOVER */
 .newsPopover {
   position: absolute;
   top: -50px;
@@ -84,115 +180,65 @@
   text-align: center;
   font-size: 12px;
   display: none;
+  opacity: 0;
   transition: opacity 0.3s;
 }
 
-/* PROGRESS BAR */
-.progressContainer {
-  background: #000000;
-  border-radius: 10px;
-  overflow: hidden;
-  height: 2rem;
-  margin: 0px;
-  position: relative;
-  display: flex;
-  align-items: center;
+.projectCard:hover .newsPopover {
+  display: block;
+  opacity: 1;
 }
 
-.progressBar {
-  height: 100%;
-  background: #1abc9c;
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* PROGRESS TEXT */
-.progressText {
-    position: absolute;
-    width: 100%;
-    font-size: 14px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-weight: bold;
-    text-align: center;
-    color: white;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
-    font-family: 'Anta';
-    z-index: 999;
-}
-
-/* CATEGORIES CONTAINER */
-.categoriesContainer {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1rem;
-  margin: auto;
-  margin-top: 1rem;
-  margin-bottom: 4rem;
-  padding: 1rem;
-}
-
-/* CATEGORY TAGS */
-.categoryTag {
-  color: white;
-  border-radius: 1rem;
-  padding: 5px 15px;
-  font-size: 12px;
-  font-weight: bold;
-  text-transform: uppercase;
-  display: inline-block;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
-}
-
-/* RESPONSIVE DESIGN */
-@media (max-width: 1024px) {
-  .projectCard {
-    width: 40vw;
-    height: 40vh;
-  }
-}
-
-@media (max-width: 768px) {
-  .projectCard {
-    width: 60vw;
-    height: 45vh;
-  }
-}
-
-@media (max-width: 480px) {
-  .projectCard {
-    width: 80vw;
-    height: 50vh;
-  }
-
-  .newsPopover {
-    width: 90%;
-  }
-}
-
+/* =========================
+   FAVORITE BUTTON
+========================= */
 .favoriteButton {
   position: absolute;
   top: -12px;
   left: -12px;
   background: none;
   border: none;
-  padding: 0;
-  cursor: pointer;
   font-size: 2rem;
+  cursor: pointer;
   z-index: 2;
-  transition: all 0.2s ease;
-  text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s ease, text-shadow 0.2s ease;
   width: 32px;
   height: 32px;
   display: flex;
   justify-content: center;
   align-items: center;
+  text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.3);
 }
 
 .favoriteButton:hover {
   transform: scale(1.15);
   text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.4);
+}
+
+/* =========================
+   RESPONSIVE DESIGN (Adaptabilité)
+========================= */
+@media (max-width: 1024px) {
+  .projectCard {
+    width: 40vw;
+    height: 400px; /* Assurer une taille identique */
+  }
+}
+
+@media (max-width: 768px) {
+  .projectCard {
+    width: 60vw;
+    height: 400px;
+  }
+}
+
+@media (max-width: 480px) {
+  .projectCard {
+    width: 80vw;
+    height: 400px;
+  }
+}
+
+.newsPopover {
+  width: 90%;
 }

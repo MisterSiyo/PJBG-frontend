@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
-import styles from "../styles/layout.module.css";
+import styles from "../styles/home.module.css";
 import ProjectCard from "./ProjectCard"; // Composant pour afficher les projets
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -319,7 +319,7 @@ export default function Home() {
             <ProjectCard key={index} project={project} />
           ))
         ) : (
-          <p>No project to show... Try other filters ?</p>
+          <p>Loading projects...</p>
         )}
       </div>
       

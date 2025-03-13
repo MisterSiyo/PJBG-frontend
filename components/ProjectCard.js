@@ -130,12 +130,13 @@ export default function ProjectCard({ project }) {
           color={isFollowed ? "#ff4d4d" : "#888"}
         />
       </button>
-
-      <h3>{projectData.title}</h3>
+      <div className={styles.nameContainer}>
+      <h3 className={styles.projectName}>{projectData.title}</h3>
+      </div>
 
       {/* Le pitch se trouve là */}
       <div className={styles.descriptionContainer}>
-        <p>{projectData.pitch}</p>
+        <p className={styles.projectDescription}>{projectData.pitch}</p>
       </div>
 
       {/* J'vais chercher les catégories ici et j'applique une couleur */}

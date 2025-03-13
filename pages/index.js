@@ -45,22 +45,61 @@ export default function Index() {
     <div className={styles.mainContainer}>
       <h1 className={styles.sectionTitle}>Welcome To PJBG</h1>
       <section className={styles.heroSection}>
-        <div className={styles.heroBubble}>
-          <h1 className={styles.heroTitle}>
-            PJBG is a crowdfunding website centered on the player’s needs.
-          </h1>
-          <p className={styles.heroSubtitle}>
-            Imagine the ideal game and tell the Game Developers what you want!
-          </p>
-        </div>
-      </section>
+    <div className={styles.heroBubble}>
 
+      {/* Titre principal */}
+      <h1 className={styles.heroTitle}>
+        Fund, Create, and Develop Together!
+      </h1>
+
+      {/* Conteneurs des paragraphes côte à côte */}
+      <div className={styles.heroParagraphs}>
+      <div className={`${styles.heroContainer} ${styles.firstTwo}`}>
+          <p className={styles.heroSubtitle}>
+          From a "Patron's" perspective, the platform offers two main possibilities:
+           you can either launch your own game idea and invite other players to help
+            bring it to life, or you can support an existing project that excites you. 
+            Whether you want to contribute financially to a concept that inspires you 
+            or create your own game from scratch, you set a funding goal and offer 
+            different reward tiers. This way, everyone can support a project at their
+             own level and receive exclusive perks in return, making the experience 
+             even more engaging.          </p>
+        </div>
+
+        <div className={`${styles.heroContainer} ${styles.firstTwo}`}>
+          <p className={styles.heroSubtitle}>
+          For a "Studio," the platform provides a unique opportunity to find game
+            projects that already have a dedicated community and secured funding.
+            Instead of spending time searching for new ideas or worrying about whether
+            a concept will attract players, you can focus on developing a game that has
+            already generated interest. By stepping in as a developer, you gain access
+            to a ready-made audience, valuable player feedback, and financial support,
+            making the entire process more efficient and rewarding.          </p>
+        </div>
+
+        <div className={`${styles.heroContainer} ${styles.fullWidth}`}>
+          <p className={styles.heroSubtitle}>
+          Ultimately, the platform creates a dynamic ecosystem where "Patrons" and
+            "Studios" come together to bring innovative game ideas to life. Players can
+            track every stage of development, provide feedback, and see how their
+            contributions shape the final product. At the same time, development teams
+            have a direct line to their future audience, allowing for better communication
+            and adaptation throughout the process. This seamless connection between idea
+            creators, funders, and developers is what makes the platform a powerful space
+            for game creation.          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+    <div className={styles.containerProjects}>
       <h2 className={styles.discoverTitle}>Discover our top projects</h2>
       <div className={styles.projectGrid}>
         {projects.map((project, index) => (
           <ProjectCard key={index} project={project} />
         ))}
       </div>
+    </div>
 
       <div className={styles.usefulLinks}>
         <h2 className={styles.usefulTitle}>Liens utiles</h2>
