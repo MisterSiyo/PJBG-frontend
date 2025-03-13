@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateUser, updateUserProfile } from '../reducers/user';
 import ProjectCard from './ProjectCard';
 import { addUserToStore } from '../reducers/user';
+import Image from 'next/image';
+import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin, FaYoutube, FaGithub } from 'react-icons/fa';
 
 const Account = () => {
     const dispatch = useDispatch();
@@ -477,29 +479,34 @@ console.log('pcardFA : ', pcardFa)
     const displayData = isEditing ? editingData : formData;
 
     return (
-        <div className={styles.accountPage}>
-            <h1>My Account</h1> {/* Titre de la page */}
+        <div>
+            <h1 className={styles.titlePage}>My Account</h1> {/* Titre de la page */}
             <br />
-            <div>  {/* Affichage du nom d'utilisateur et du rôle, avec valeur par défaut si non spécifiée pour les 2 roles */}
-                <p>Username : {user.username || 'Not specified'}</p>
-                <p>Role : {user.role || 'Not specified'}</p>
+          <div className={styles.conteneurSections}>
+            <div className={styles.sectionGauche}>  {/* Affichage du nom d'utilisateur et du rôle, avec valeur par défaut si non spécifiée pour les 2 roles */}
+            <div className="photoContainer">
+                 <img src="/images/photoProfile.jpg"  alt="Photo de profil gamer futuriste" className={styles.photoProfile}  />
             </div>
+            <div className={styles.userInfoGauche1}><p className={styles.titleSection}>Username :</p> <p>{user.username || 'Not specified'}</p></div>    
+            <div className={styles.userInfoGauche2}><p className={styles.titleSection}>Role :</p> <p>{user.role || 'Not specified'}</p></div>
             <br />
 
             {/* Section de modification de mot de passe pour les 2 roles */}
             {isChangingPassword ? (
                 <div className={styles.passwordSection}>
-                    <h3>Change Password</h3>
                     {passwordError && <p className={styles.errorMessage}>{passwordError}</p>}
-                    <p>Current Password : <input type="password" name="currentPassword" value={passwordData.currentPassword} onChange={handlePasswordChange} /></p>
-                    <p>New Password : <input type="password" name="newPassword" value={passwordData.newPassword} onChange={handlePasswordChange} /></p>
-                    <p>Confirm New Password : <input type="password" name="confirmPassword" value={passwordData.confirmPassword} onChange={handlePasswordChange} /></p>
+                    <p className={styles.titleSection}> Current Password : <input className={styles.input} type="password" name="currentPassword" value={passwordData.currentPassword} onChange={handlePasswordChange} /></p>
+                    <p className={styles.titleSection}>New Password : <input className={styles.input} type="password" name="newPassword" value={passwordData.newPassword} onChange={handlePasswordChange} /></p>
+                    <p className={styles.titleSection}>Confirm New Password : <input className={styles.input} type="password" name="confirmPassword" value={passwordData.confirmPassword} onChange={handlePasswordChange} /></p>
                     <button onClick={saveNewPassword}>Save New Password</button>
                     <button onClick={cancelPasswordChange}>Cancel</button>
                 </div>
             ) : (
-                <button onClick={startPasswordChange}>Change Password</button>
+                <button className={styles.button} onClick={startPasswordChange}>Change my Password</button>
+                
             )}
+            <br/><br/>
+            </div>
 
             <br></br>
             <br></br>
@@ -509,100 +516,102 @@ console.log('pcardFA : ', pcardFa)
                 <>
             {/* Champs modifiables pour patron */}    
             {user.role !== "studio" && (
-                <>
-                    <p>Email : <input type="email" name="email" value={displayData.email} onChange={handleChange} /></p>
-                    <p>Phone : <input type="text" name="phone" value={displayData.phone} onChange={handleChange} /></p>
-                    <p>Name : <input type="text" name="name" value={displayData.name} onChange={handleChange} /></p>
-                    <p>Surname : <input type="text" name="surname" value={displayData.surname} onChange={handleChange} /></p>
-                    <p>Description : <textarea name="description" value={displayData.description} onChange={handleChange} /></p>
+                <div>
+                    <p>Email : <input className={styles.input} type="email" name="email" value={displayData.email} onChange={handleChange} /></p>
+                    <p>Phone : <input className={styles.input} type="text" name="phone" value={displayData.phone} onChange={handleChange} /></p>
+                    <p>Name : <input className={styles.input} type="text" name="name" value={displayData.name} onChange={handleChange} /></p>
+                    <p>Surname : <input className={styles.input} type="text" name="surname" value={displayData.surname} onChange={handleChange} /></p>
+                    <p>Description : <textarea className={styles.input} name="description" value={displayData.description} onChange={handleChange} /></p>
 
                     <br></br>
-                    <h4>Address :</h4>
-                    <p>Street Number : <input type="text" name="streetNumber" value={displayData.address.streetNumber} onChange={handleChange} /></p>
-                    <p>Street : <input type="text" name="street" value={displayData.address.street} onChange={handleChange} /></p>
-                    <p>Postal Code : <input type="text" name="postalCode" value={displayData.address.postalCode} onChange={handleChange} /></p>
-                    <p>City : <input type="text" name="city" value={displayData.address.city} onChange={handleChange} /></p>
-                    <p>Country : <input type="text" name="country" value={displayData.address.country} onChange={handleChange} /></p>
-                </>
+                    <h4 className={styles.titleSectionDroite}>Address :</h4>
+                    <p>Street Number : <input className={styles.input} type="text" name="streetNumber" value={displayData.address.streetNumber} onChange={handleChange} /></p>
+                    <p>Street : <input className={styles.input} type="text" name="street" value={displayData.address.street} onChange={handleChange} /></p>
+                    <p>Postal Code : <input className={styles.input} type="text" name="postalCode" value={displayData.address.postalCode} onChange={handleChange} /></p>
+                    <p>City : <input className={styles.input} type="text" name="city" value={displayData.address.city} onChange={handleChange} /></p>
+                    <p>Country : <input className={styles.input} type="text" name="country" value={displayData.address.country} onChange={handleChange} /></p>
+                </div>
             )}
 
             {/* L'email est modifiable pour les 2 rôles */}
             {user.role === "studio" && (
                 <>
-                    <p>Email : <input type="email" name="email" value={displayData.email} onChange={handleChange} /></p>
+                    <p>Email : <input className={styles.input} type="email" name="email" value={displayData.email} onChange={handleChange} /></p>
                 </>
             )}
 
                     <br /><br />
-                    <h4>Social Links :</h4>
+                    <h4 className={styles.titleSectionDroite}>Social Links :</h4>
                     <p>Facebook : 
-                        <input type="text" name="socialLinks[0]" value={displayData.socialLinks[0] ? displayData.socialLinks[0].url : ''} onChange={handleChange}/>
+                        <input className={styles.input} type="text" name="socialLinks[0]" value={displayData.socialLinks[0] ? displayData.socialLinks[0].url : ''} onChange={handleChange}/>
                     </p>
                     <p>Twitter : 
-                        <input type="text" name="socialLinks[1]" value={displayData.socialLinks[1] ? displayData.socialLinks[1].url : ''} onChange={handleChange}/>
+                        <input className={styles.input} type="text" name="socialLinks[1]" value={displayData.socialLinks[1] ? displayData.socialLinks[1].url : ''} onChange={handleChange}/>
                     </p>
                     <p>Instagram : 
-                        <input type="text" name="socialLinks[2]" value={displayData.socialLinks[2] ? displayData.socialLinks[2].url : ''} onChange={handleChange}/>
+                        <input className={styles.input} type="text" name="socialLinks[2]" value={displayData.socialLinks[2] ? displayData.socialLinks[2].url : ''} onChange={handleChange}/>
                     </p>
                     <p>LinkedIn : 
-                        <input type="text" name="socialLinks[3]" value={displayData.socialLinks[3] ? displayData.socialLinks[3].url : ''} onChange={handleChange}/>
+                        <input className={styles.input} type="text" name="socialLinks[3]" value={displayData.socialLinks[3] ? displayData.socialLinks[3].url : ''} onChange={handleChange}/>
                     </p>
                     <p>YouTube : 
-                        <input type="text" name="socialLinks[4]" value={displayData.socialLinks[4] ? displayData.socialLinks[4].url : ''} onChange={handleChange}/>
+                        <input className={styles.input} type="text" name="socialLinks[4]" value={displayData.socialLinks[4] ? displayData.socialLinks[4].url : ''} onChange={handleChange}/>
                     </p>
                     <p>GitHub : 
-                        <input type="text" name="socialLinks[5]" value={displayData.socialLinks[5] ? displayData.socialLinks[5].url : ''} onChange={handleChange}/>
+                        <input className={styles.input} type="text" name="socialLinks[5]" value={displayData.socialLinks[5] ? displayData.socialLinks[5].url : ''} onChange={handleChange}/>
                     </p>
 
                     {/* Section spécifique aux studios */}
                     {user.role === "studio" && (
                         <>
                             <br /><br />
-                            <h3>Studio Information</h3>
-                            <p>Company Name : {formData.studio.companyName}</p>
-                            <p>Address : {`${formData.studio.address.street}, ${formData.studio.address.postalCode} ${formData.studio.address.city}, ${formData.studio.address.country}`}</p>
-                            <p>SIRET : {formData.studio.siret}</p>
-                            <p>SIREN : {formData.studio.siren}</p>
-                            <p>Website : <input type="text" name="studio.webSite" value={displayData.studio.webSite} onChange={handleChange} /></p>
-                            <p>Description : <textarea name="studio.description" value={displayData.studio.description} onChange={handleChange} /></p>
+                            <h3 className={styles.titleSectionDroite}>Studio Information</h3>
+                            <p className={styles.subtitleSectionDroite} >Company Name : <span className={styles.span}>{formData.studio.companyName}</span></p>
+                            <p className={styles.subtitleSectionDroite} >Address : <span className={styles.span}>{`${formData.studio.address.street}, ${formData.studio.address.postalCode} ${formData.studio.address.city}, ${formData.studio.address.country}`}</span></p>
+                            <p className={styles.subtitleSectionDroite} >SIRET : <span className={styles.span}>{formData.studio.siret}</span></p>
+                            <p className={styles.subtitleSectionDroite} >SIREN : <span className={styles.span}>{formData.studio.siren}</span></p>
+                            <p className={styles.subtitleSectionDroite} >Website : <input className={styles.input} type="text" name="studio.webSite" value={displayData.studio.webSite} onChange={handleChange} /></p>
+                            <p className={styles.subtitleSectionDroite} >Description : <textarea className={styles.input} name="studio.description" value={displayData.studio.description} onChange={handleChange} /></p>
                             
                             <br /><br />
-                            <h4>Contact Person :</h4>
-                            <p>Name : <input type="text" name="studio.contactPerson.name" value={displayData.studio.contactPerson.name} onChange={handleChange} /></p>
-                            <p>Surname : <input type="text" name="studio.contactPerson.surname" value={displayData.studio.contactPerson.surname} onChange={handleChange} /></p>
-                            <p>Email : <input type="email" name="studio.contactPerson.email" value={displayData.studio.contactPerson.email} onChange={handleChange} /></p>
-                            <p>Phone : <input type="text" name="studio.contactPerson.phone" value={displayData.studio.contactPerson.phone} onChange={handleChange} /></p>
+                            <h4 className={styles.titleSectionDroite}>Contact Person :</h4>
+                            <p>Name : <input className={styles.input} type="text" name="studio.contactPerson.name" value={displayData.studio.contactPerson.name} onChange={handleChange} /></p>
+                            <p>Surname : <input className={styles.input} type="text" name="studio.contactPerson.surname" value={displayData.studio.contactPerson.surname} onChange={handleChange} /></p>
+                            <p>Email : <input className={styles.input} type="email" name="studio.contactPerson.email" value={displayData.studio.contactPerson.email} onChange={handleChange} /></p>
+                            <p>Phone : <input className={styles.input} type="text" name="studio.contactPerson.phone" value={displayData.studio.contactPerson.phone} onChange={handleChange} /></p>
 
                             <br /><br />
-                            <h4>Contact Manager :</h4>
-                            <p>Name : <input type="text" name="studio.contactManager.name" value={displayData.studio.contactManager.name} onChange={handleChange} /></p>
-                            <p>Surname : <input type="text" name="studio.contactManager.surname" value={displayData.studio.contactManager.surname} onChange={handleChange} /></p>
-                            <p>Email : <input type="email" name="studio.contactManager.email" value={displayData.studio.contactManager.email} onChange={handleChange} /></p>
-                            <p>Phone : <input type="text" name="studio.contactManager.phone" value={displayData.studio.contactManager.phone} onChange={handleChange} /></p>
+                            <h4 className={styles.titleSectionDroite}>Contact Manager :</h4>
+                            <p>Name : <input className={styles.input} type="text" name="studio.contactManager.name" value={displayData.studio.contactManager.name} onChange={handleChange} /></p>
+                            <p>Surname : <input className={styles.input} type="text" name="studio.contactManager.surname" value={displayData.studio.contactManager.surname} onChange={handleChange} /></p>
+                            <p>Email : <input className={styles.input} type="email" name="studio.contactManager.email" value={displayData.studio.contactManager.email} onChange={handleChange} /></p>
+                            <p>Phone : <input className={styles.input} type="text" name="studio.contactManager.phone" value={displayData.studio.contactManager.phone} onChange={handleChange} /></p>
                         </>
                     )}
                 </>
             ) : (
-                <> {/* Affichage des informations lorsque l'édition n'est pas activée */}
+                <div className={styles.sectionDroite}> {/* Affichage des informations lorsque l'édition n'est pas activée */}
                    {/* Pour les 2 roles */}
                    <br /><br />
-                    <p>Email : {formData.email}</p>
+
+                   <h4 className={styles.titleSectionDroite}>Contact and description</h4>
+                    <p className={styles.subtitleSectionDroite}>Email : <span className={styles.span}>{formData.email}</span></p> 
 
                     {/* Juste pour le patron */}
                     {user.role === "patron" && (
                         <>
-                            <p>Phone : {formData.phone}</p>
-                            <p>Name : {formData.name}</p>
-                            <p>Surname : {formData.surname}</p>
-                            <p>Description : {formData.description}</p>
+                            <p className={styles.subtitleSectionDroite}>Phone : <span className={styles.span}>{formData.phone}</span></p>
+                            <p className={styles.subtitleSectionDroite}>Name : <span className={styles.span}>{formData.name}</span></p>
+                            <p className={styles.subtitleSectionDroite}>Surname : <span className={styles.span}>{formData.surname}</span></p>
+                            <p className={styles.subtitleSectionDroite}>Description : <span className={styles.span}>{formData.description}</span></p>
 
                             <br /><br />
-                            <h4>Address :</h4>
-                            <p>Street Number : {formData.address.streetNumber}</p>
-                            <p>Street : {formData.address.street}</p>
-                            <p>Postal Code : {formData.address.postalCode}</p>
-                            <p>City : {formData.address.city}</p>
-                            <p>Country : {formData.address.country}</p>
+                            <h4 className={styles.titleSectionDroite}>Address :</h4>
+                            <p className={styles.subtitleSectionDroite}>Street Number : <span className={styles.span}>{formData.address.streetNumber}</span></p>
+                            <p className={styles.subtitleSectionDroite}>Street : <span className={styles.span}>{formData.address.street}</span></p>
+                            <p className={styles.subtitleSectionDroite}>Postal Code : <span className={styles.span}>{formData.address.postalCode}</span></p>
+                            <p className={styles.subtitleSectionDroite}>City : <span className={styles.span}>{formData.address.city}</span></p>
+                            <p className={styles.subtitleSectionDroite}>Country : <span className={styles.span}>{formData.address.country}</span></p>
                         </>
                     )} 
                     
@@ -610,59 +619,81 @@ console.log('pcardFA : ', pcardFa)
                     {user.role === "studio" && (
                         <>
                             <br /><br />
-                            <h3>Studio Informations : </h3>
-                            <p>Company Name : {formData.studio.companyName}</p>
-                            <p>Address : {`${formData.studio.address.street}, ${formData.studio.address.postalCode} ${formData.studio.address.city}, ${formData.studio.address.country}`}</p> 
-                            <p>SIRET : {formData.studio.siret}</p>
-                            <p>SIREN : {formData.studio.siren}</p>
-                            <p>Website : {formData.studio.webSite}</p>
-                            <p>Description : {formData.studio.description}</p>
+                            <h4 className={styles.titleSectionDroite}>Studio Informations : </h4>
+                            <p className={styles.subtitleSectionDroite} >Company Name : <span className={styles.span}>{formData.studio.companyName}</span></p>
+                            <p className={styles.subtitleSectionDroite} >Address : <span className={styles.span}>{`${formData.studio.address.street}, ${formData.studio.address.postalCode} ${formData.studio.address.city}, ${formData.studio.address.country}`}</span></p> 
+                            <p className={styles.subtitleSectionDroite} >SIRET : <span className={styles.span}>{formData.studio.siret}</span></p>
+                            <p className={styles.subtitleSectionDroite} >SIREN : <span className={styles.span}>{formData.studio.siren}</span></p>
+                            <p className={styles.subtitleSectionDroite} >Website : <span className={styles.span}>{formData.studio.webSite}</span></p>
+                            <p className={styles.subtitleSectionDroite} >Description : <span className={styles.span}>{formData.studio.description}</span></p>
                             
                             <br /><br />
-                            <h4>Contact Person :</h4>
+                            <h4 className={styles.titleSectionDroite}>Contact Person :</h4>
                             <div>
-                                <p>Name : {displayData.studio.contactPerson.name}</p>
-                                <p>Surname : {displayData.studio.contactPerson.surname}</p>
-                                <p>Email : {displayData.studio.contactPerson.email}</p>
-                                <p>Phone : {displayData.studio.contactPerson.phone}</p>
+                                <p className={styles.subtitleSectionDroite}>Name : <span className={styles.span}>{displayData.studio.contactPerson.name}</span></p>
+                                <p className={styles.subtitleSectionDroite}>Surname : <span className={styles.span}>{displayData.studio.contactPerson.surname}</span></p>
+                                <p className={styles.subtitleSectionDroite}>Email : <span className={styles.span}>{displayData.studio.contactPerson.email}</span></p>
+                                <p className={styles.subtitleSectionDroite}>Phone : <span className={styles.span}>{displayData.studio.contactPerson.phone}</span></p>
                             </div>
 
                             <br /><br />
-                            <h4>Contact Manager :</h4>
+                            <h4 className={styles.titleSectionDroite}>Contact Manager :</h4>
                             <div>
-                                <p>Name : {displayData.studio.contactManager.name}</p>
-                                <p>Surname : {displayData.studio.contactManager.surname}</p>
-                                <p>Email : {displayData.studio.contactManager.email}</p>
-                                <p>Phone : {displayData.studio.contactManager.phone}</p>
-                            </div>
+                                <p className={styles.subtitleSectionDroite}>Name : <span className={styles.span}>{displayData.studio.contactManager.name}</span></p>
+                                <p className={styles.subtitleSectionDroite}>Surname : <span className={styles.span}>{displayData.studio.contactManager.surname}</span></p>
+                                <p className={styles.subtitleSectionDroite}>Email : <span className={styles.span}>{displayData.studio.contactManager.email}</span></p>
+                                <p className={styles.subtitleSectionDroite}>Phone : <span className={styles.span}>{displayData.studio.contactManager.phone}</span></p>
+                            </div>        
                 </>
             )}
-
+             
                             {/* Pour les 2 roles */}
-                            <br /><br />
-                            <h4>Social Links :</h4>
-                            <p>Facebook : {formData.socialLinks[0] ? formData.socialLinks[0].url : ''}</p>
-                            <p>Twitter : {formData.socialLinks[1] ? formData.socialLinks[1].url : ''}</p>
-                            <p>Instagram : {formData.socialLinks[2] ? formData.socialLinks[2].url : ''}</p>
-                            <p>LinkedIn : {formData.socialLinks[3] ? formData.socialLinks[3].url : ''}</p>
-                            <p>YouTube : {formData.socialLinks[4] ? formData.socialLinks[4].url : ''}</p>
-                            <p>GitHub : {formData.socialLinks[5] ? formData.socialLinks[5].url : ''}</p>
-                        </>
-                         )}
+                            <br /><br /> 
+                            <h4 className={styles.titleSectionDroite}>Social Links :</h4>
+                            <div className={styles.socialItem}>
+                            <a href="#" className={styles.socialIconFacebook}><FaFacebook /></a>
+                            <p className={styles.subtitleSectionDroite}>Facebook : <span className={styles.span}>{formData.socialLinks[0] ? formData.socialLinks[0].url : ''}</span></p>
+                            </div>
+                            <div className={styles.socialItem}>
+                            <a href="#" className={styles.socialIconTwitter}><FaTwitter /></a>
+                            <p className={styles.subtitleSectionDroite}>Twitter : <span className={styles.span}>{formData.socialLinks[1] ? formData.socialLinks[1].url : ''}</span></p>
+                            </div>
+                            <div className={styles.socialItem}>
+                            <a href="#" className={styles.socialIconInstagram}><FaInstagram /></a>
+                            <p className={styles.subtitleSectionDroite}>Instagram : <span className={styles.span}>{formData.socialLinks[2] ? formData.socialLinks[2].url : ''}</span></p>
+                            </div>
+                            <div className={styles.socialItem}>
+                            <a href="#" className={styles.socialIconLinkedin}><FaLinkedin /></a>
+                            <p className={styles.subtitleSectionDroite}>LinkedIn : <span className={styles.span}>{formData.socialLinks[3] ? formData.socialLinks[3].url : ''}</span></p>
+                            </div>
+                            <div className={styles.socialItem}>
+                            <a href="#" className={styles.socialIconYoutube}><FaYoutube /></a>
+                            <p className={styles.subtitleSectionDroite}>YouTube : <span className={styles.span}>{formData.socialLinks[4] ? formData.socialLinks[4].url : ''}</span></p>
+                            </div>
+                            <div className={styles.socialItem}>
+                            <a href="#" className={styles.socialIconGithub}><FaGithub /></a>
+                            <p className={styles.subtitleSectionDroite}> GitHub : <span className={styles.span}>{formData.socialLinks[5] ? formData.socialLinks[5].url : ''}</span></p>
+                            </div>
+                            <br/><br/>
 
-            <br></br>
-            {/* Boutons pour activer l'édition ou enregistrer et annuler les modifications */}
-            {!isEditing ? (
-                <button onClick={startEditing}>Modify my informations</button>
-            ) : (
-                <>
-                    <button onClick={handleSave}>Save</button>
-                    <button onClick={handleCancel}>Cancel</button>
-                </>
-            )}
+                            {/* Boutons pour activer l'édition ou enregistrer et annuler les modifications */}
+                            {!isEditing ? (
+                                <button className={styles.button} onClick={startEditing}>Modify my informations</button>
+                            ) : (
+                                <>
+                                    <button onClick={handleSave}>Save</button>
+                                    <button onClick={handleCancel}>Cancel</button>
+                                </>
+                            )}
+                            <br/><br/>
+
+                        </div>
+                         )}
+                  </div> {/* Fin div conteneurSectiosns*/}       
+
 
             <br/><br/>
-            <h4>Favorite Projects :</h4>
+            <h4 className={styles.titleProjects}>Favorite Projects :</h4>
             {user.followedProjects?.length > 0 ? (
                 user.followedProjects.map((proj, i) => <ProjectCard key={i} project={proj} />)
             ) : (
@@ -674,7 +705,7 @@ console.log('pcardFA : ', pcardFa)
             {/* Section spécifique aux patrons */}
             {user.role === "patron" && (
                 <>
-                   <h4>Funded Projects :</h4>
+                   <h4 className={styles.titleProjects}>Funded Projects :</h4>
                     {user.fundedProjects?.length > 0 ? (
                               user.fundedProjects.map((proj, i) => <ProjectCard key={i} project={proj.project} />)
                             ) : (
@@ -683,7 +714,7 @@ console.log('pcardFA : ', pcardFa)
 
             <br/><br/>
         
-                   <h4>Created Projects :</h4>
+                   <h4 className={styles.titleProjects}>Created Projects :</h4>
                     {user.createdProjects && user.createdProjects.length > 0 ? (
                               user.createdProjects.map((proj, i) => <ProjectCard key={i} project={proj} />)
                             ) : (
@@ -696,7 +727,7 @@ console.log('pcardFA : ', pcardFa)
             {/* Section spécifique aux studios */}
             {user.role === "studio" && (
                 <>
-                    <h4>Chosen Projects :</h4>
+                    <h4 className={styles.titleProjects}>Chosen Projects :</h4>
                     {user.studio?.chosenProjects?.length > 0 ? (
                             user.studio.chosenProjects.map((proj, i) => <ProjectCard key={i} project={proj} />)
                     ) : (
@@ -704,7 +735,7 @@ console.log('pcardFA : ', pcardFa)
                     )}
 
                     <br/><br/>
-                    <h4>Developed Projects :</h4>
+                    <h4 className={styles.titleProjects}>Developed Projects :</h4>
                     {user.studio?.developedProjects?.length > 0 ? (
                             user.studio.developedProjects.map((proj, i) => <ProjectCard key={i} project={proj} />
                             )

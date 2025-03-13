@@ -94,25 +94,26 @@ export default function SignupForm({ onSubmit, companyInfo }) {
 
     return (
         <div className={styles.authContainer}>
-            <h2>Create an account</h2>
+
+            <h3 className={styles.titleSection}>Create an account</h3>
             
             <div className={styles.divider}></div>
 
             <label>Email :</label>
-            <input className={styles.authInput} type="email" name="email" value={formData.email} onChange={handleChange} onKeyDown={(e) => e.key === 'Enter' && handleSubmit()} required/>
+            <input className={styles.authInput} type="email" name="email" value={formData.email} placeholder="Email" onChange={handleChange} onKeyDown={(e) => e.key === 'Enter' && handleSubmit()} required/>
 
             <label>Username :</label>
-            <input className={styles.authInput} type="text" name="username" value={formData.username} onChange={handleChange} onKeyDown={(e) => e.key === 'Enter' && handleSubmit()} required/>
+            <input className={styles.authInput} type="text" name="username" value={formData.username} placeholder="Username"onChange={handleChange} onKeyDown={(e) => e.key === 'Enter' && handleSubmit()} required/>
 
             <div className={styles.divider}></div>
 
             <label>Password :</label>
-            <input className={styles.authInput} type="password" name="password" value={formData.password} onChange={handleChange} onKeyDown={(e) => e.key === 'Enter' && handleSubmit()} required />
+            <input className={styles.authInput} type="password" name="password" value={formData.password} placeholder="Password" onChange={handleChange} onKeyDown={(e) => e.key === 'Enter' && handleSubmit()} required />
 
             <label>Verify Password :</label>
-            <input className={styles.authInput} type="password" name="verifyPassword" value={formData.verifyPassword} onChange={handleChange} onKeyDown={(e) => e.key === 'Enter' && handleSubmit()} required />
+            <input className={styles.authInput} type="password" name="verifyPassword" value={formData.verifyPassword} placeholder="Verify Password" onChange={handleChange} onKeyDown={(e) => e.key === 'Enter' && handleSubmit()} required />
 
-            <button className={styles.authButton} onClick={handleSubmit}>Confirm</button>
+            <button className={styles.button} onClick={handleSubmit}>Confirm</button>
         </div>
     );
 }

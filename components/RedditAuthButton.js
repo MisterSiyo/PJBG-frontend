@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import styles from "../styles/RedditAuthButton.module.css";
+import styles from "../styles/auth.module.css";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
@@ -226,11 +226,8 @@ const RedditAuthButton = ({ onLoginSuccess }) => {
           </div>
         </div>
       ) : (
-        <div className={styles.login_button_container}>
-          <button
-            onClick={handleRedditLogin}
-            className={styles.reddit_login_button}
-            disabled={isLoading}
+        <div >
+          <button onClick={handleRedditLogin}  className={styles.authButtonReddit}  disabled={isLoading}
           >
             {isLoading ? "Loading..." : "With Reddit"}
           </button>

@@ -1,6 +1,174 @@
+/* Importation de la police 'Anta' depuis Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Anta&display=swap');
+
+
+
 /* =========================
    Account Main 
 ========================= */
+
+.titlePage{
+   font-family: 'Anta', sans-serif;
+   color: #5c6bc0 !important;
+   margin-top: 5%;
+ }
+
+ .button{
+   background-color: #5c6bc0; 
+   color: white;
+   border: rgb(255, 255, 255) solid 2px;
+   border-radius: 6px;
+   padding: 8px 16px;
+   font-size: 14px;
+   cursor: pointer;
+   transition: background-color 0.2s; /* Transition douce pour le changement de couleur */
+   width: 38%; 
+   max-width: 280px; 
+   font-family: 'Anta', sans-serif;
+   display: block; /* Nécessaire pour que margin auto fonctionne */
+   margin: 0 auto; /*Centrer les boutons*/
+ }
+
+ .input {
+   font-family: 'Anta', sans-serif;
+ }
+
+ .titleProjects{
+   color: #5c6bc0;
+   font-family: 'Anta', sans-serif;
+   border: none;
+   border-bottom: solid 2px #5c6bc0; /* Ligne de séparation en bas */
+   box-shadow: 0 5px 10px -5px rgba(64, 153, 204, 0.9); /* Ombre uniquement sous la ligne */
+   padding: 10px 20px;
+   margin: 0 auto;
+   text-align: center;
+   max-width: 80%;
+   width: 80%;
+   display: block;
+ }
+
+ .titleSection{
+   color: #5c6bc0 !important;
+   font-weight: bold;
+ }
+
+ .conteneurSections {
+   display: flex;
+   flex-direction: row;
+   width: 100%;
+   align-items: stretch; /* Pour que les éléments s'étirent à la même hauteur */
+   gap: 1%; /* Espace entre les deux sections */
+   margin-top: 3%;
+   padding-right: 2%; /* Marge à droite */
+   font-family: 'Anta', sans-serif;
+ }
+ 
+ .sectionGauche {
+   background-color: #fff0f5; 
+   border: solid 1px rgb(223, 138, 231);
+   box-shadow: 0 10px 50px rgba(223, 138, 231, 0.8);
+   margin-left: 2%; /* Marge à gauche */
+   width: 35%; /* Modifié à 35% comme demandé */
+   height: 100%;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   padding: 30px 15px; /* Ajoute espace en haut/bas (30px) et sur les côtés (15px) */
+   text-align: center;
+   box-sizing: border-box; /* Maintient la largeur totale incluant padding */
+   overflow: auto; /* pour activer le défilement en cas de contenu trop large */
+ }
+
+ .photoContainer {
+   width: 100%;
+   display: flex;
+   justify-content: center;
+   padding-top: 20px;
+ }
+ 
+ .photoProfile {
+   max-width: 90%;
+   height: auto;
+   border-radius: 8px;
+   margin-bottom: 15px;
+   box-shadow: 0 10px 50px rgba(223, 138, 231, 0.5);
+ }
+
+ .userInfoGauche1{
+   display: flex;
+   gap: 10px; /* Espacement entre les éléments */
+   align-items: center; /* Aligne verticalement */
+ }
+
+ .userInfoGauche2{
+   display: flex;
+   gap: 10px; /* Espacement entre les éléments */
+   align-items: center; /* Aligne verticalement */
+ }
+
+ .passwordSection{
+   font-family: 'Anta', sans-serif;
+ }
+ 
+ .sectionDroite {
+   background-color: #fff0f5; 
+   border: solid 1px rgb(223, 138, 231);
+   box-shadow: 0 10px 50px rgba(223, 138, 231, 0.5);
+   margin-left: 0; 
+   width: 63%; /* Calcul: 100% - 35% - 2% (gap) */
+   height: 100%;
+   padding-left: 20px; /* Ajoute de l'espace à gauche */
+   box-sizing: border-box; /* Maintient la largeur totale incluant padding */
+   overflow: auto; /* pour activer le défilement en cas de contenu trop large */
+ }
+
+.titleSectionDroite{
+   color: #da46a1 ;
+   font-weight: bold;
+}
+
+.subtitleSectionDroite{
+   color: #5c6bc0 ;
+   font-weight: bold;
+   margin: 0;
+}
+
+.span{
+   font-weight: normal;
+   color: #0e0e0e;
+ }
+
+ .socialItem {
+   display: flex;
+   align-items: center;
+   margin-bottom: 10px;
+   gap: 10px; 
+ }
+
+ .socialIconFacebook {
+   color: #1877F2; 
+ }
+ 
+ .socialIconTwitter {
+   color: #1DA1F2; 
+ }
+ 
+ .socialIconInstagram {
+   color: #e440a0; 
+ }
+ 
+ .socialIconLinkedin {
+   color: #0A66C2; 
+ }
+ 
+ .socialIconYoutube {
+   color: #FF0000; 
+ }
+ 
+ .socialIconGithub {
+   color: #333333; 
+ }
+
 
 /* =========================
    Add Category Ici pour retrouver correctement 

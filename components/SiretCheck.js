@@ -1,6 +1,6 @@
 import styles from '../styles/project.module.css';
 import { useState } from 'react';
-import styles from "../styles/siretCheck.module.css"
+/*import styles from "../styles/siretCheck.module.css"*/ /* SI CHANGMENT D'AVIS MERCI DE RAPPATRIER LE BOUTON CHECK ET L'IMPUT SIRET DE PROJECT MODULE CSS*/
 
 const API_SIRET_URL = "http://localhost:3000/users";
 
@@ -11,7 +11,7 @@ export default function SiretCheck({ onCompanyInfoChange }) {
 
     const handleSearch = async () => {
         if (siret.length !== 14 || isNaN(siret)) {
-            setError('Le SIRET doit contenir 14 chiffres.');
+            setError('The SIRET must contain 14 digits.');
             return;
         }
 
@@ -21,7 +21,7 @@ export default function SiretCheck({ onCompanyInfoChange }) {
                 method: 'GET',
             });
 
-            if (!response.ok) throw new Error('SIRET introuvable');
+            if (!response.ok) throw new Error('SIRET not found');
 
             const data = await response.json();
             setCompanyInfo(data);
@@ -29,22 +29,23 @@ export default function SiretCheck({ onCompanyInfoChange }) {
 
         } catch (err) {
             setCompanyInfo(null);
-            setError('Impossible de récupérer les informations.');
+            setError('Unable to retrieve information');
         }
     };
 
     return (
         <div className={styles.siretCheckContainer}>
-            <h3>Informations Entreprise</h3>
-            <input
+            <h3>Company Informations : </h3>
+            <br></br>
+            <input 
                 type="text"
-                placeholder="Entrez un numéro SIRET"
+                placeholder="Enter a SIRET number"
                 value={siret}
                 onChange={(e) => setSiret(e.target.value)}
                 className={styles.authInput}
             />
-            <button onClick={handleSearch} className={styles.authButton}>
-                Vérifier
+            <button onClick={handleSearch} className={styles.ButtonCheck}>
+            Check
             </button>
 
             {error && <p style={{ color: 'red' }}>{error}</p>}

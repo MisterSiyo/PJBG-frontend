@@ -9,6 +9,7 @@ export default function SignupUser() {
     return (
         <div className={styles.authContainer}>
             <SignupWithOAuth />
+            <h3>or</h3>
             <UserForm onSubmit={() => router.push('/')} />
         </div>
     );

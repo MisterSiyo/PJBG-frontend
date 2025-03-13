@@ -14,23 +14,26 @@ export default function SignupWithOAuth() {
 
   return (
     <div className={styles.authContainer}>
-      <h3>Sign Up Options</h3>
+      <h3 className={styles.titleSection}>Sign Up Options</h3>
+
+      <div className={styles.divider}></div>
 
       <button
-        className={styles.authButton}
+        className={styles.authButtonReddit}
         onClick={() => alert("Inscription via Reddit en cours...")}
-      >
-        Sign Up with Reddit
+      > 
+      With Reddit
       </button>
+      <br></br>
 
       <button
-        className={styles.authButton}
+        className={styles.authButtonGoogle}
         onClick={() => alert("Inscription via Google en cours...")}
       >
-        Sign Up with Google
+        With Google
       </button>
 
-      <h3 className={styles.separator}>or</h3>
+      <br></br>
     </div>
   );
 }

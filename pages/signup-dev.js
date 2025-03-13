@@ -11,7 +11,8 @@ export default function SignupDev() {
 
     return (
         <div className={styles.authContainer}>
-            <h2>Inscription Développeur</h2>
+            <h2 className={styles.titleSection}>Developer Registration</h2>
+            <br></br>
             <SiretCheck onCompanyInfoChange={setCompanyInfo} />
             <UserForm onSubmit={() => router.push('/')} companyInfo={companyInfo} />
         </div>

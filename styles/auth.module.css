@@ -1,13 +1,23 @@
+/* Importation de la police 'Anta' depuis Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Anta&display=swap');
+
+
 /* Auth Container */
 .authContainer {
     max-width: 420px;
     margin: 80px auto 50px auto; 
     padding: 30px;
     border-radius: 10px;
-    background: white;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    background: #fff0f5;
+    box-shadow: 0 10px 50px rgba(223, 138, 231, 0.5); 
     text-align: center;
+    font-family: 'Anta', sans-serif;
+    border: #fff0f5 2px solid;
 }
+
+.titleSection {
+    color: #5c6bc0 !important;
+  }
 
 /* Séparation entre les sections */
 .divider {
@@ -19,6 +29,7 @@
 
 /* Inputs */
 .authInput {
+    font-family: 'Anta', sans-serif;
     width: 100%;
     padding: 12px;
     margin: 10px 0;
@@ -33,17 +44,58 @@
     outline: none;
 }
 
+/* Style pour les boutons OAuth : Reddit  */
+.authButtonReddit {
+    font-family: 'Anta', sans-serif;
+    width: 42% !important;
+    max-width: 280px; 
+    background: #ffffff !important;
+    color: #ff6600 !important;
+    padding: 12px !important;
+    font-size: 14px !important;
+    border-radius: 6px !important;
+    margin-top: 10px !important;
+    border: #ff6600 solid 2px !important;
+    cursor: pointer !important;
+    display: block !important;
+    margin: 0 auto !important; /*Centrer les boutons*/
+    transition: background-color 0.2s!important; /* Transition douce pour le changement de couleur */
+    padding: 8px 16px !important;
+}
 
-.authButton {
-    width: 100%;
-    background: #6e8efb;
+/* Style pour les boutons OAuth : Google version bouton qui fonctioone pas (inscription) */
+.authButtonGoogle {
+    font-family: 'Anta', sans-serif;
+    width: 42% !important;
+    max-width: 280px; 
+    background: #ffffff !important;
+    color: #ff0000 !important;
+    padding: 12px !important;
+    font-size: 14px !important;
+    border-radius: 6px !important;
+    margin-top: 10px !important;
+    border: #ff0000 solid 2px !important;
+    cursor: pointer !important;
+    display: block !important;
+    margin: 0 auto !important; /*Centrer les boutons*/
+    transition: background-color 0.2s!important; /* Transition douce pour le changement de couleur */
+    padding: 8px 16px !important;
+}
+
+
+/* Style pour les boutons standards (exclut  boutons OAuth) */
+.button:not(.closeButton):not([class*="OAuthButton"]) {
+    background-color: #5c6bc0; 
     color: white;
-    padding: 12px;
-    font-size: 16px;
+    border: rgb(255, 255, 255) solid 2px;
     border-radius: 6px;
-    margin-top: 10px;
-}
-
-.authButton:hover {
-    background: #5a78e2;
-}
+    padding: 8px 16px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s; /* Transition douce pour le changement de couleur */
+    width: 38%; 
+    max-width: 280px; 
+    font-family: 'Anta', sans-serif;
+    display: block; /* Nécessaire pour que margin auto fonctionne */
+    margin: 0 auto; /*Centrer les boutons*/
+  }

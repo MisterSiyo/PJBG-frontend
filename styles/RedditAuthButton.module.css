@@ -1,3 +1,5 @@
+
+/* 
 .reddit_auth_container {
   font-family: Arial, sans-serif;
   padding: 15px;
@@ -14,7 +16,7 @@
 }
 
 .reddit_login_button {
-  background-color: #ff4500; /* Couleur orange de Reddit */
+  background-color: #ff4500; /* Couleur orange de Reddit *//* 
   color: white;
   border: none;
   border-radius: 4px;
@@ -88,3 +90,5 @@
   margin-top: 10px;
   text-align: center;
 }
+*/
+
