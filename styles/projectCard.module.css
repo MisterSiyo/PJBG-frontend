@@ -126,17 +126,22 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 1rem;
+  gap: 0.5rem; /* Slightly reduce gap to fit more tags */
   margin: 1rem auto 4rem;
   padding: 1rem;
+
+  /* Limit to two lines total */
+  line-height: 1.4;         /* Height for each line */
+  max-height: calc(1.4 * 3rem + 0.5rem); /* 2 lines + a little padding */
+  overflow: hidden;         /* Hide anything beyond two lines */
 }
 
 /* CATEGORY TAGS */
 .categoryTag {
   background: rgba(255, 255, 255, 0.2);
   border-radius: 1rem;
-  padding: 5px 15px;
-  font-size: 12px;
+  padding: 3px 10px; /* Slightly smaller padding */
+  font-size: 10px;   /* Reduced font size */
   font-weight: bold;
   text-transform: uppercase;
   display: inline-block;
