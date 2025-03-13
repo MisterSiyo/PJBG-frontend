@@ -2,6 +2,7 @@ import "../styles/globals.css";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
+import { Anta } from "next/font/google"
 
 // Imports nécessaires à l'utilisation du store (redux)
 import { Provider } from "react-redux";
@@ -14,6 +15,8 @@ import userReducer from "../reducers/user";
 import Head from "next/head"; // le header pour le SEO
 import Header from "../components/Header";
 import AuthHandler from "../components/AuthHandler";
+
+const anta = Anta({subsets: ["latin"]})
 
 // Configuration de redux-persist
 console.log("Configuration de redux-persist");
@@ -70,7 +73,7 @@ function MyApp({ Component, pageProps }) {
           </Head>
           <Header />
           <AuthHandler />
-          <Component {...pageProps} />
+          <main className={anta.className}><Component {...pageProps} /></main>
         </PersistGate>
       </Provider>
     </GoogleOAuthProvider>
