@@ -173,7 +173,10 @@
     background-color: #f0f8ff;
     border-radius: 10px;
     font-family: 'Anta';
+    min-width: 500px;
+    max-width: 500px;
 }
+
 
 .creatorInfo {
     height: 100%;
@@ -455,7 +458,10 @@
     padding: 20px;
     background-color: #f0f8ff;
     border-radius: 10px;
+    min-width: 500px;
+    max-width: 500px;
 }
+
 
 .newsTitle {
     font-size: larger;

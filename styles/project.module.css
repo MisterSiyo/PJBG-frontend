@@ -69,6 +69,7 @@
     background-color: #f0f8ff;
     border-radius: 10px;
     font-family: 'Anta';
+    min-width: 300px;
 }
 
 .creatorInfo{
