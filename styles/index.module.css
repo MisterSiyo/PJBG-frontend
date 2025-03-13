@@ -2,86 +2,460 @@
    CONTENEUR PRINCIPAL
 ========================= */
 .mainContainer {
-    max-width: 1200px;
+    max-width: 50%;
     margin: 0 auto;
-    padding-top: 80px; /* laisse la place au header fixé */
+    padding-top: 80px;
+    text-align: center;
+    font-family: sans-serif;
+    
+  }
+
+  /* =========================
+   CONTAINERS DES PARAGRAPHES
+========================= */
+.heroContainer {
+    background: #94c5f0;
+    border-radius: 15px;
+    padding: 1.5rem;
+    text-align: center;
+    color: white;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* =========================
+     SECTION HERO
+  ========================= */
+  .heroSection {
+    width: 100%;
+    padding-top: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .heroParagraphs {
+    display: flex;
+    flex-wrap: wrap; /* Permet le passage à la ligne si besoin */
+    justify-content: space-between;
+    gap: 2rem;
+    width: 100%;
+    max-width: 1000px;
+    margin: auto;
+    padding-top: 2rem;
+  }
+  .firstTwo {
+    flex: 1;
+    min-width: 20rem;
+    max-width: 40rem; /* Assure qu'ils restent côte à côte */
+  }
+  
+  /* Le dernier paragraphe prend toute la largeur */
+  .fullWidth {
+    min-width: 20rem;
+    max-width: 70rem; 
+    margin: auto;
+  }
+  
+  .heroBubble {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+ 
+  
+  .heroSubtitle {
+    font-size: 1rem;
+    line-height: 1.4;
+  }
+
+  /* =========================
+   TITRE PRINCIPAL
+========================= */
+.heroTitle {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 2rem;
     text-align: center;
   }
   
   /* =========================
-     TITRES, GRILLES, ETC.
-     (inchangé, adapté à la charte)
+     PARAGRAPHES INTRODUCTIFS
   ========================= */
+  .heroSubtitle {
+    font-size: 24px;
+    line-height: 1.5;
+    color: #333;
+  }
+  
+  /* =========================
+     TITRES GÉNÉRIQUES
+  ========================= */
+  .sectionTitle {
+    font-size: 32px;
+    font-weight: bold;
+    margin: 30px 0;
+    text-align: center;
+    display: inline-block;
+    border-bottom: 2px solid #6e8efb;
+  }
+  
   /* ==================================
      TITRE "Discover our top projects"
      Avec petite ligne stylisée
   ================================== */
+  .containerProjects {
+    margin: 1rem;
+  }
   .discoverTitle {
-    top:5rem;
-    right: 25rem;
     position: relative;
-    font-size: 1.6rem;
-    margin: 20px auto 30px;
-    text-align: center;
-    display: inline-block;
+    display: flex;
+    align-items: center;
+    justify-content: left; /* Ensures centered alignment */
+    font-size: 28px;
+    margin: 100px auto;
     color: #3c3c3c;
+    left: -100px; 
     font-weight: bold;
+    text-align: center;
+    padding-bottom: 20px;
+    width: 100%;
+    max-width: 800px;
   }
-  .discoverTitle::before {
-    content: "";
-    position: absolute;
-    left: -30px;
-    top: 100%;
-    transform: translateY(-50%);
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: #5c1c1c; /* point rouge ou marron */
-  }
+  
+  /* -- Trait décoratif sous le texte -- */
   .discoverTitle::after {
     content: "";
     position: absolute;
-    right: -9rem;
-    top: 100%;
-    transform: translateY(-50%);
-    width: 30rem;
-    height: 2px;
-    background: #5c1c1c; /* trait horizontal */
+    bottom: 0px; 
+    left: -3rem;
+    width: 400px; 
+    max-width: 30rem; 
+    height: 3px;
+    background: #000000;
   }
   
-  .sectionTitle {
-    font-size: 1.8rem;
-    font-weight: bold;
-    margin: 30px 0;
-    text-align: center;
-    border-bottom: 2px solid #6e8efb;
-    display: inline-block;
-    
+  /* -- Cercle décoratif à gauche du titre -- */
+  .discoverTitle::before {
+    content: "";
+    position: absolute;
+    bottom: -3px;
+    left: -3rem;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #000000;
   }
   
+
+  
+  
+  
+  /* =========================
+     GRILLE DE PROJETS
+  ========================= */
   .projectGrid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(250px, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(3, 1fr); /* 3 cartes par ligne */
+    gap: 3rem; /* Espacement entre les cartes */
     justify-content: center;
-    align-items: center;
-    max-width: 1200px;
+    align-items: stretch;
+    max-width: 800px;
     margin: 5rem auto;
+    padding: 1rem;
+  }
+  
+  /* =========================
+     SECTION "USEFUL LINKS"
+  ========================= */
+  .usefulLinks {
+    margin: auto;
+    text-align: center;
+    margin-top: 5rem;
+   
+  }
+  .usefulTitle {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: left; /* Ensures centered alignment */
+    font-size: 28px;
+    margin: 100px auto;
+    color: #3c3c3c;
+    left: -100px; 
+    font-weight: bold;
+    text-align: center;
+    padding-bottom: 20px;
+    width: 100%;
+    max-width: 800px;
+  }
+  .usefulTitle::after {
+    content: "";
+    position: absolute;
+    bottom: 0px; 
+    left: -3rem;
+    width: 400px; 
+    max-width: 30rem; 
+    height: 3px;
+    background: #000000;
+  }
+  .usefulTitle::before {
+    content: "";
+    position: absolute;
+    bottom: -3px;
+    left: -3rem;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #000000;
+  }
+  
+  .linksContainer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);; /* Auto-adjust like projectGrid */
+    gap: 2rem;
+    justify-content: center;
+    align-items: start;
+    max-width: 1200px;
+    margin: auto;
     padding: 2rem;
   }
   
-  @media (max-width: 1024px) {
-    .projectGrid {
-      grid-template-columns: repeat(2, minmax(250px, 1fr));
-    }
+  .linkCard {
+    background: #ffeef0;
+    border: 1px solid #ffd2d6;
+    border-radius: 6px;
+    padding: 1.5rem; /* Match padding with projectCard */
+    width: 300px; /* Match projectCard width */
+    height: 400px; /* Match projectCard height */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    margin: auto; /* Centers the cards */
+  }
+  .linkCard:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
   }
   
-  @media (max-width: 768px) {
-    .projectGrid {
-      grid-template-columns: repeat(1, minmax(250px, 1fr));
-    }
-    .sortContainer {
-      flex-direction: column;
-      gap: 5px;
-    }
+  .linkImage {
+    max-width: 100px;
+    margin-bottom: 0.5rem;
   }
+  .linkCard a {
+    display: block;
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    margin-top: 0.5rem;
+  }
+  .linkCard a:hover {
+    color: #666;
+  }
+
+  /* =========================
+   RESPONSIVE DESIGN
+========================= */
+
+/* Tablet View (Max Width: 1024px) */
+@media (max-width: 1024px) {
+  .mainContainer {
+    max-width: 80%;
+  }
+
+  .heroParagraphs {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .firstTwo,
+  .fullWidth {
+    max-width: 100%;
+  }
+
+  .discoverTitle,
+  .usefulTitle {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: left; /* Ensures centered alignment */
+    font-size: 24px;
+    margin: 100px auto;
+    color: #3c3c3c;
+    left: -50px; 
+    font-weight: bold;
+    text-align: center;
+    padding-bottom: 20px;
+    width: 100%;
+    max-width: 800px;
+    /* font-size: 24px;
+    text-align: center;
+    left: 0;
+    max-width: 600px; */
+  }
+
+  .discoverTitle::after,
+  .usefulTitle::after {
+    content: "";
+    position: absolute;
+    bottom: 0px; 
+    left: -2rem;
+    width: 500px; 
+    height: 3px;
+    background: #000000;
+  }
+
+  .discoverTitle::before,
+  .usefulTitle::before {
+    content: "";
+    position: absolute;
+    bottom: -3px;
+    left: -2rem;
+    width: 10px;
+    height: 9px;
+    border-radius: 50%;
+    background: #000000;
+    /* left: 50%;
+    transform: translateX(-50%); */
+  }
+
+  .projectGrid {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 90%;
+  }
+
+  .linksContainer {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .linkCard {
+    width: 250px;
+    height: 350px;
+  }
+}
+
+/* Mobile View (Max Width: 768px) */
+@media (max-width: 768px) {
+  .mainContainer {
+    max-width: 95%;
+  }
+
+  .discoverTitle,
+  .usefulTitle {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: left; /* Ensures centered alignment */
+    font-size: 28px;
+    margin: 100px auto;
+    color: #3c3c3c;
+    left: 0px; 
+    font-weight: bold;
+    text-align: center;
+    padding-bottom: 20px;
+    width: 100%;
+    max-width: 800px;
+    /* font-size: 22px;
+    margin: 50px auto; */
+  }
+
+  .discoverTitle::after,
+  .usefulTitle::after {
+    content: "";
+    position: absolute;
+    bottom: 0px; 
+    left: -1rem;
+    width: 400px; 
+    max-width: 30rem; 
+    height: 3px;
+    background: #000000;
+    /* width: 250px; */
+  }
+
+  .discoverTitle::before,
+  .usefulTitle::before {
+    content: "";
+    position: absolute;
+    bottom: -3px;
+    left: -1rem;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #000000;
+    /* left: 50%;
+    transform: translateX(-50%); */
+  }
+
+  .projectGrid {
+    grid-template-columns: repeat(1, 1fr);
+    max-width: 100%;
+  }
+
+  .linksContainer {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .linkCard {
+    width: 100%;
+    height: auto;
+  }
+}
+
+/* Small Mobile View (Max Width: 480px) */
+@media (max-width: 480px) {
+  .heroTitle {
+    font-size: 1.5rem;
+  }
+
+  .discoverTitle,
+  .usefulTitle {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: left; /* Ensures centered alignment */
+    font-size: 28px;
+    margin: 100px auto;
+    color: #3c3c3c;
+    left: -100px; 
+    font-weight: bold;
+    text-align: center;
+    padding-bottom: 20px;
+    width: 100%;
+    max-width: 800px;
+  }
+
+  .discoverTitle::after,
+  .usefulTitle::after {
+    content: "";
+    position: absolute;
+    bottom: 0px; 
+    left: -3rem;
+    width: 400px; 
+    max-width: 30rem; 
+    height: 3px;
+    background: #000000;
+    /* width: 200px; */
+  }
+
+  .discoverTitle::before,
+  .usefulTitle::before {
+    content: "";
+    position: absolute;
+    bottom: -3px;
+    left: -3rem;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #000000;
+    /* left: 50%;
+    transform: translateX(-50%); */
+  }
+
+  .linkCard {
+    width: 90%;
+    padding: 1rem;
+  }
+}
+
+  
