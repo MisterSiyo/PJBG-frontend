@@ -67,6 +67,7 @@
    max-width: 80%;
    width: 80%;
    display: block;
+   
  }
 
  .titleSection{
@@ -84,6 +85,7 @@
    padding-right: 2%; /* Marge à droite */
    font-family: 'Anta', sans-serif;
  }
+
  
  .sectionGauche {
    background-color: #fff0f5; 
@@ -206,3 +208,33 @@
   padding-top: 1rem;  /* Ajoute un peu d'espace supplémentaire en haut */
   padding-bottom: 4rem;  /* Ajoute un peu d'espace supplémentaire en bas */
 }
+
+.projectContainer {
+  width: 30rem;
+  max-width: 500px; /* Adjust width based on your design */
+  height: 35rem; /* Ensures scrolling happens */
+  margin: 1rem;
+  padding: 1rem;
+  overflow-y: auto; /* Enables vertical scrolling */
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background-color: #f9f9f900; /* Optional */
+  border: 1px solid #dddddd00; /* Optional */
+  border-radius: 8px;
+  scrollbar-width: none; /* Makes scrollbar less intrusive */
+  position: relative;
+  /* scrollbar-color: #6666rgba(221, 221, 221, 0) #ddd; Custom scrollbar */
+}
+.projectContainContainer {
+  display: flex;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive */
+  gap: ;
+  justify-content: center;
+  align-items: start;
+  max-width: 80%;
+  margin: auto;
+  margin-bottom: 0px;
+  padding: 1rem;
+
+ }

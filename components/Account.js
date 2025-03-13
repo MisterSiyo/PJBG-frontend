@@ -605,33 +605,39 @@ if (!user.token) {
 
 
             <br/><br/>
+            <div className={styles.projectContainContainer}>
+            <div className={styles.projectContainer}>
             <h4 className={styles.titleProjects}>Favorite Projects :</h4>
-            {user.followedProjects?.length > 0 ? (
-                user.followedProjects.map((proj, i) => <ProjectCard key={i} project={proj} />)
-            ) : (
-                <p className={styles.noProjectsYet}>You don't have any favorite project yet</p>
-            )}
-
+                {user.followedProjects?.length > 0 ? (
+                    user.followedProjects.map((proj, i) => <ProjectCard key={i} project={proj} />)
+                ) : (
+                    <p className={styles.noProjectsYet}>You don't have any favorite project yet</p>
+                )}
+            </div>
             <br/><br/>
 
             {/* Section spécifique aux patrons */}
             {user.role === "patron" && (
                 <>
+            <div className={styles.projectContainer}>
                    <h4 className={styles.titleProjects}>Funded Projects :</h4>
+                   
                     {user.fundedProjects?.length > 0 ? (
                               user.fundedProjects.map((proj, i) => <ProjectCard key={i} project={proj.project} />)
                             ) : (
                               <p className={styles.noProjectsYet}>You did not fund any project yet</p>
                             )}
-
+            </div>
             <br/><br/>
         
+                   <div className={styles.projectContainer}>
                    <h4 className={styles.titleProjects}>Created Projects :</h4>
-                    {user.createdProjects && user.createdProjects.length > 0 ? (
-                              user.createdProjects.map((proj, i) => <ProjectCard key={i} project={proj} />)
-                            ) : (
+                        {user.createdProjects && user.createdProjects.length > 0 ? (
+                            user.createdProjects.map((proj, i) => <ProjectCard key={i} project={proj} />)
+                        ) : (
                             <p className={styles.noProjectsYet}>You have not created any project yet</p>
-                            )}
+                        )}
+                    </div>
                 </>
 )}
 
@@ -640,22 +646,34 @@ if (!user.token) {
             {user.role === "studio" && (
                 <>
                     <h4 className={styles.titleProjects}>Chosen Projects :</h4>
+                <div className={styles.projectContainer}>
+                    
+
                     {user.studio?.chosenProjects?.length > 0 ? (
-                            user.studio.chosenProjects.map((proj, i) => <ProjectCard key={i} project={proj} />)
+                        user.studio.chosenProjects.map((proj, i) => <ProjectCard key={i} project={proj} />)
                     ) : (
                         <p className={styles.noProjectsYet}>No chosen projects yet</p>
                     )}
+                    </div>
 
                     <br/><br/>
                     <h4 className={styles.titleProjects}>Developed Projects :</h4>
+                    
+            <div className={styles.projectContainer}>
+
                     {user.studio?.developedProjects?.length > 0 ? (
-                            user.studio.developedProjects.map((proj, i) => <ProjectCard key={i} project={proj} />
-                            )
-                    ) : (
-                        <p className={styles.noProjectsYet}>No developed projects yet</p>
-                    )}
+                        user.studio.developedProjects.map((proj, i) => <ProjectCard key={i} project={proj} />
+                    )
+                ) : (
+                    <p className={styles.noProjectsYet}>No developed projects yet</p>
+                )
+            }
+            </div>
                 </>
-            )}
+                
+            )
+        }
+        </div>
         </div>
     );
 };
