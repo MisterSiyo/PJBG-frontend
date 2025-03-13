@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import useRequireAuth from "../hooks/useRequireAuth";
-import styles from "../styles/profil.module.css"
+import styles from "../styles/profile.module.css"
 
 export default function ProfilePage() {
   const { user, isLoggedIn } = useRequireAuth();
