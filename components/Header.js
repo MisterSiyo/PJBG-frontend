@@ -154,10 +154,11 @@ export default function Header() {
             ⬅ Back
           </button>
         )}
-
+        <div className={styles.logoContainer}>
           <h1 className={styles.title} onClick={() => router.push("/")}>
             <img src="..\images\logo_controller.png" alt="Logo" className={styles.logoIcon} />
           </h1>
+        </div>
 
         {!hideLoginButton &&
           (isLoggedIn ? (

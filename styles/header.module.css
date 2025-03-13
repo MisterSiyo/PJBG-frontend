@@ -37,27 +37,20 @@
     background-color: #acc3e8;
   }
   
-  /* = Logo + Titre centré
-     On utilise un conteneur flex pour séparer la zone gauche/droite,
-     mais on centre le logo dans la zone médiane */
+  /* = Logo + Titre centré */
+     
+  .logoContainer {
+      margin-left: 5%;
+  }
   .title {
-    flex-grow: 1;
-    text-align: center;
-    font-size: 1.8rem;
-    font-weight: bold;
-    color: #214e7b;
-    cursor: pointer;
-    margin: 0;
-    user-select: none;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+    margin:0px;
+    font-family: 'Anta', sans-serif;
   }
   
   .logoIcon {
-    height: 6rem;
-    width: auto;
-    display: block;
+    height: 7rem;
+    /* width: auto; */
+    display: block;          
   }
   
   /* = Bouton "Login / Register" en haut à droite 
@@ -82,6 +75,7 @@
     position: relative;
     display: flex;
     align-items: center;
+    font-family: 'Anta', sans-serif;
   }
   
   /* Texte "Welcome, user!" */
@@ -89,6 +83,7 @@
     margin-right: 10px;   /* écarte du bouton menu */
     color: #214e7b;
     font-weight: bold;
+    
   }
   
   /* Bouton "Menu ▼" */
@@ -101,6 +96,7 @@
     border: 1px solid #1484c4;
     cursor: pointer;
     transition: background-color 0.3s;
+    font-family: 'Anta', sans-serif;
   }
   .navButton:hover {
     background-color: #acc3e8;
@@ -119,6 +115,7 @@
     display: flex;
     flex-direction: column;
     min-width: 180px;
+    
   }
   
   /* Items du sous-menu */
@@ -183,6 +180,7 @@
 
 .titleSection {
   color: #5c6bc0 !important;
+  font-family: 'Anta', sans-serif;
 }
 
 /* Style du bouton de fermeture (×) */
@@ -202,6 +200,7 @@
   text-align: center;
   display: inline-block;
   line-height: 0.8; /* Ajustement de la hauteur de ligne pour centrer le × */
+  font-family: 'Anta', sans-serif;
 }
 
 /* Effet au survol du bouton de fermeture */
@@ -230,6 +229,7 @@
 .loginOptionsText {
   margin-top: 15px;
   margin-bottom: 8px;
+  font-family: 'Anta', sans-serif;
 }
 
 /* Style des champs de saisie */
@@ -401,6 +401,7 @@ HEADER
   border: none;
   cursor: pointer;
   transition: background-color 0.3s;
+  
 }
 
 .backButton:hover,
@@ -499,6 +500,7 @@ HEADER
   border: none;
   font-size: 20px;
   cursor: pointer;
+  font-family: 'Anta', sans-serif;
 }
   
 }

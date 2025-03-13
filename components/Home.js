@@ -215,7 +215,7 @@ export default function Home() {
         // default = ordre non modifié
         break;
     }
-
+console.log(result)
     // Mettre à jour l'état 'filteredProjects' avec le résultat final
     setFilteredProjects(result);
   }, [projects, selectedGenres, searchQuery, sortOption]);
@@ -244,11 +244,13 @@ export default function Home() {
     <div className={styles.mainContainer}>
       
       {/* -------------------------------- SearchBar -------------------------------- */}
-      <SearchBar
-        searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
-        allSearchableTerms={allSearchableTerms}
-      />
+      <div className={styles.searchBarContainer}>
+        < SearchBar
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+          allSearchableTerms={allSearchableTerms}
+        />
+      </div>
       {/* ------------------------ Carrousel de GMTypes------------------------ */}
 
       {gmTypes.length > 0 ? (
@@ -291,7 +293,7 @@ export default function Home() {
       )}
 {/* -------------------------------- Titre section ---------------------------------------- */}
 
-      <h2 className={styles.sectionTitle}>Discover our top projects</h2>
+      <h2 className={styles.sectionTitle}>Discover our projects</h2>
 
       {/* Options de tri (uniquement si user est connecté) */}
       {user?.token && (
@@ -313,6 +315,7 @@ export default function Home() {
       )}
 {/* -------------------------------- Liste des projets filtrés et triés -------------------------------- */}
 
+ <div className={styles.containerProjects}>
       <div className={styles.projectGrid}>
         {filteredProjects.length > 0 ? (
           filteredProjects.map((project, index) => (
@@ -321,8 +324,8 @@ export default function Home() {
         ) : (
           <p>Loading projects...</p>
         )}
+       </div>
       </div>
-      
     </div>
     
   );

@@ -1,80 +1,115 @@
-/* Conteneur principal */
+@import url('https://fonts.googleapis.com/css2?family=Anta&display=swap');
+/* =========================
+   SEARCH BAR CONTAINER
+========================= */
 .searchBarContainer {
   position: relative;
-  display: inline-block;
-  width: 300px;
+  display: inline-block; 
+  width: 50rem;
   margin-bottom: 1rem;
+
+  /* optional if you want consistent font family or color:
+  font-family: 'Anta', sans-serif;
+  color: #fff; 
+  */
 }
 
-/* Champ de saisie */
+/* =========================
+   SEARCH INPUT
+========================= */
 .searchInput {
   width: 100%;
   padding: 0.6rem 1rem;
+  text-align: center;
   font-size: 0.95rem;
-  background-color: #f9f9f9;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  background-color: #f9f9f9;        /* Light background for text contrast */
+  border: 1px solid #ddd;          /* Subtle gray border */
+  border-radius: 4px;              /* Rounded corners */
   outline: none;
   transition: border 0.2s ease, box-shadow 0.2s ease;
+  font-family: 'Anta', sans-serif; /* Matches your project font */
 }
 
+/* Focus effect */
 .searchInput:focus {
   border-color: #bbb;
   box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
 }
 
-/* Liste déroulante */
+/* =========================
+   SUGGESTIONS LIST DROPDOWN
+========================= */
 .suggestionsList {
   position: absolute;
   top: 100%;
   left: 0;
   right: 0;
-
   margin: 0;
   padding: 0;
   list-style: none;
-
-  background-color: rgba(50, 50, 50, 0.85); /* Fond gris foncé transparent */
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-top: none;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
-
-  color: white; /* Texte blanc */
-  font-size: 0.9rem;
   z-index: 999;
+  
+  /* Dark-ish overlay background consistent with your palette */
+  background-color: rgba(30, 39, 97, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
   border-radius: 10px;
   overflow: hidden;
+  
+  /* If you want slightly smaller text to match your cards style */
+  font-size: 0.85rem;
+  color: #ffffff; 
 }
 
-/* Section titre (Projets / Mechanics) */
+/* Section title (e.g. "Projects" / "Mechanics") */
 .sectionTitle {
   font-size: 0.9rem;
   font-weight: bold;
   text-transform: uppercase;
   padding: 0.5rem 1rem;
-  background-color: rgba(60, 66, 105, 0.519);
+  background-color: rgba(60, 66, 105, 0.52); 
   color: #ffffff;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-/* Séparateur entre projets et mécaniques */
-/* .separator {
-  height: 1px;
-  background-color: rgba(255, 255, 255, 0.3);
-  margin: 0.3rem 0;
-} */
-
-/* Élément de suggestion */
+/* =========================
+   SUGGESTION ITEMS
+========================= */
 .suggestionItem {
-    color: #000000;
-    background-color: #cae7ffdd;
-    font-size: 0.rem;
-  padding: 0.8rem 3rem;
+  font-family: 'Anta', sans-serif; /* If you want consistent font */
+  font-size: 0.9rem;               /* Fixes the 0.rem bug */
+  color: #000;                     /* Dark text for contrast */
+  background-color: #cae7ffdd;     /* Light pastel highlight */
+  padding: 0.8rem 3rem;           /* Space to separate text from edges */
   cursor: pointer;
   transition: background 0.2s ease;
 }
 
-/* Effet au survol */
+/* Hover effect */
 .suggestionItem:hover {
-  background-color: rgba(255, 255, 255, 0.782);
+  background-color: rgba(255, 255, 255, 0.78);
+}
+
+@media (max-width: 768px) {
+  .searchBarContainer {
+    width: 30rem;
+  }
+  .searchInput {
+    font-size: 0.85rem;
+  }
+}
+
+/* Mobile Screens: Full width */
+@media (max-width: 480px) {
+  .searchBarContainer {
+    width: 90%;
+    max-width: 100%;
+  }
+  .searchInput {
+    font-size: 0.8rem;
+    padding: 0.5rem;
+  }
+  .suggestionsList {
+    font-size: 0.8rem;
+  }
 }
