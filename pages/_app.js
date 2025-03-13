@@ -73,7 +73,7 @@ function MyApp({ Component, pageProps }) {
           </Head>
           <Header />
           <AuthHandler />
-          <main className={anta.className}><Component {...pageProps} /></main>
+          <Component {...pageProps} />
         </PersistGate>
       </Provider>
     </GoogleOAuthProvider>
