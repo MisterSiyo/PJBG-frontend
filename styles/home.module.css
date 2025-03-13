@@ -131,7 +131,7 @@
     }
 
     .searchBarContainer {
-        /* max-width: 400px; */
+        max-width: 0;
     }
 
     .createProjectContainer button {
