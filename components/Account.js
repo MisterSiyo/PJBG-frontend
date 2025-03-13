@@ -503,6 +503,9 @@ if (!user.token) {
 
                         </>
                     )}
+                            <button className={styles.button} onClick={handleSave}>Save</button>
+                            <button className={styles.button} onClick={handleCancel}>Cancel</button>
+                            <br/><br/>
                  </div>
             ) : (
                 <div className={styles.sectionDroite}> {/* Affichage des informations lorsque l'édition n'est pas activée */}
@@ -561,9 +564,7 @@ if (!user.token) {
                             </div>        
                 </>
             )}
-            {/*)}*/}
-            </div> {/* Fin div conteneurSections*/}
-            )}
+             
                             {/* Pour les 2 roles */}
                             <br /><br /> 
                             <h4 className={styles.titleSectionDroite}>Social Links :</h4>
@@ -595,19 +596,12 @@ if (!user.token) {
 
                              <div>
                             {/* Boutons pour activer l'édition ou enregistrer et annuler les modifications */}  
-                            {!isEditing ? ( 
-                                <button className={styles.button} onClick={startEditing}>Modify my informations</button>
-                             ) : (
-                               <>
-                                <button onClick={handleSave}>Save</button>
-                                <button onClick={handleCancel}>Cancel</button>
-                                 </>
-                            )}
+                            <button className={styles.button} onClick={startEditing}>Modify my informations</button>
                             <br/><br/> 
                             </div>
                         </div>
-                         
-                         
+                         )}
+                  </div> {/* Fin div conteneurSections*/}       
 
 
             <br/><br/>
