@@ -33,7 +33,7 @@ export default function ProjectCard({ project }) {
             setProjectData(data.project)
         }
       })
-  }, [])
+  }, [project])
 
 ) : (
 
@@ -104,6 +104,7 @@ export default function ProjectCard({ project }) {
       ? [...projectData.histories].sort((a, b) => new Date(b.date) - new Date(a.date))[0]
           .message
       : "New Project, check it out !";
+
 
   return (
     <div
