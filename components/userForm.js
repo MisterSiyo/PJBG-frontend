@@ -60,7 +60,7 @@ export default function SignupForm({ onSubmit, companyInfo }) {
             alert('Please enter a password with 6 characters minimum')
             return;
         }
-        console.log("début")
+
         fetch('http://localhost:3000/users/register', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -74,7 +74,7 @@ export default function SignupForm({ onSubmit, companyInfo }) {
         })
         .then(response => response.json())
         .then(data => {
-            console.log(data)
+
             if (data.token) {
                 dispatch(addUserToStore(data)); // Ajoute l'utilisateur au store Redux
                 if (onSubmit) onSubmit();

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
-import styles from "../styles/layout.module.css";
+import styles from "../styles/home.module.css";
 import ProjectCard from "./ProjectCard"; // Composant pour afficher les projets
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -116,37 +116,6 @@ export default function Home() {
         setLoading(false);
       });
   }, []);
-
-  // re render du redux 
-  // useEffect(() => {
-  //   if (user.token) {
-  //     fetch('http://localhost:3000/users/reduxrender', {
-  //       method: 'POST',
-  //       headers: {'Content-Type': 'application/json'},
-  //       body: JSON.stringify({token : user.token})
-  //     })
-  //     .then(response => response.json())
-  //     .then(data => {
-  //       dispatch(addUserToStore(data.user))
-  //     })
-  //   }
-  // }, [])
-
-  // re render du redux 
-  // useEffect(() => {
-    
-  //   if (user.token) {
-  //     fetch('http://localhost:3000/users/reduxrender', {
-  //       method: 'POST',
-  //       headers: {'Content-Type': 'application/json'},
-  //       body: JSON.stringify({token : user.token})
-  //     })
-  //     .then(response => response.json())
-  //     .then(data => {
-  //       dispatch(addUserToStore(data.user))
-  //     })
-  //   }
-  // }, [])
 
   // 3) Filtrer ET trier les projets dès que 'projects', 'selectedGenres',
   //    'searchQuery' ou 'sortOption' change
@@ -350,9 +319,11 @@ export default function Home() {
             <ProjectCard key={index} project={project} />
           ))
         ) : (
-          <p>No project to show... Try other filters ?</p>
+          <p>Loading projects...</p>
         )}
       </div>
+      
     </div>
+    
   );
 }

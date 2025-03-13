@@ -1,0 +1,81 @@
+/* styles/Home.module.css */
+
+
+.mainContainer {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem; /* Espace vertical entre sections */
+    font-family: 'Roboto', sans-serif;
+    color: #333;
+  }
+  
+  .carouselContainer {
+    margin: 1rem 0;
+    overflow: hidden;
+  }
+  
+  .carouselItem {
+    padding: 0.5rem;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+  .carouselItem:hover {
+    transform: scale(1.03);
+  }
+  
+  .subCategory {
+    padding: 0.4rem 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    background-color: #fafafa;
+    font-size: 0.9rem;
+    transition: background-color 0.2s ease;
+    cursor: pointer;
+  }
+  .subCategory:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .sectionTitle {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+  
+  .sortContainer {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .projectGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+  }
+  
+  .createProjectContainer {
+    margin: 2rem 0 0;
+    text-align: center;
+  }
+  .createProjectContainer h2 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+  }
+  .createProjectContainer button {
+    background: #333;
+    color: #fff;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .createProjectContainer button:hover {
+    background: #555;
+  }
+  

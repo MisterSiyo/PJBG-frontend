@@ -1,4 +1,4 @@
-import styles from '../styles/checkoutPayment.module.css';
+import styles from '../styles/layout.module.css';
 import CheckoutPayment from '../components/CheckoutPayment';
 import { useRouter } from 'next/router';
 

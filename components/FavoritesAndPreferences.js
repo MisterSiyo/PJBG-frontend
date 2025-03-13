@@ -8,7 +8,6 @@ function FavoritesAndPreferences() {
   // Utiliser le hook d'authentification pour récupérer l'utilisateur connecté
   const { user, loading: authLoading } = useAuth();
   const isAuthenticated = !!user.token;
-  console.log('authentif data : ', user, 'is auth data : ', isAuthenticated, 'isauthloading data :', authLoading)
 
   // État pour gérer les colonnes et leurs items pour la sélection des favoris
   const [favoritesColumns, setFavoritesColumns] = useState({

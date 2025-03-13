@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { updateBacking } from "../reducers/user";
 import { useRouter } from "next/router";
-import Styles from "../styles/CheckoutPayment"
+// import Styles from "../styles/CheckoutPayment"
 
 export default function CheckoutPayment(props) {
 
@@ -21,7 +21,6 @@ const handlePayment = () => {
       setPayment('You already paid ! Thanks but no !')
         return;
     }
-    console.log('data to send to put/backin : gid:  ', gid, 'user.token', user.token, 'pid:', pid)
 
     fetch(`http://localhost:3000/projects/backing`, {
         method: 'PUT',
@@ -32,7 +31,6 @@ const handlePayment = () => {
         .then(data => {
                 
             if (data.result) {
-              console.log('le retour du checkout : ', data.newChecks)
                 dispatch(updateBacking(data.newChecks))
                 setPayment("Congratulations and thank you for your support")
                 setTimeout(() => {

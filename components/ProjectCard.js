@@ -8,12 +8,12 @@ import { faHeart as RegularHeart } from "@fortawesome/free-regular-svg-icons";
 import { faHeart as SolidHeart } from "@fortawesome/free-solid-svg-icons";
 
 export default function ProjectCard({ project }) {
-  console.log("voici ce que je recup de project : ", project);
+
   const router = useRouter();
   const [showNews, setShowNews] = useState(false);
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.value);
-  console.log('the project in the project card : ', project)
+
   const isLoggedIn = !!user?.token;
   const [projectData, setProjectData] = useState({});
   const isFollowed =
@@ -23,7 +23,7 @@ export default function ProjectCard({ project }) {
 
   // Si le projet n'existe pas, on ne retourne rien
   if (!project) return null;
-  console.log('LE SANDWICH ! : ', project)
+
   project.pageURL ? 
   (useEffect(() => {
     fetch(`http://localhost:3000/projects/${project.pageURL}`)
@@ -48,7 +48,7 @@ export default function ProjectCard({ project }) {
   }, [])
 
 )
-console.log('project Data blablabla : ', projectData)
+
   const handleFollowClick = async (e) => {
     e.stopPropagation();
     if (!isLoggedIn) {
@@ -78,10 +78,8 @@ console.log('project Data blablabla : ', projectData)
         // Optionnel : annuler le changement dans Redux si l'API échoue
         // dispatch(toggleFollowedProject({ projectId: project._id }));
       } else {
-        console.log(data.message);
         // Mettre à jour les projets suivis dans Redux avec les données du serveur
         // si vous avez un action setFollowedProjects
-        console.log('followed projects to reducer : ', data.followedProjects)
         const followedProjectsCopy = JSON.parse(JSON.stringify(data.followedProjects));
         dispatch(setFollowedProjects(followedProjectsCopy));
       }
@@ -132,12 +130,13 @@ console.log('project Data blablabla : ', projectData)
           color={isFollowed ? "#ff4d4d" : "#888"}
         />
       </button>
-
-      <h3>{projectData.title}</h3>
+      <div className={styles.nameContainer}>
+      <h3 className={styles.projectName}>{projectData.title}</h3>
+      </div>
 
       {/* Le pitch se trouve là */}
       <div className={styles.descriptionContainer}>
-        <p>{projectData.pitch}</p>
+        <p className={styles.projectDescription}>{projectData.pitch}</p>
       </div>
 
       {/* J'vais chercher les catégories ici et j'applique une couleur */}

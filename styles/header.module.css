@@ -13,8 +13,7 @@
     z-index: 1000;
   
     /* Astuce : on peut utiliser un léger dégradé de bleu rappelant ton screenshot */
-    background: linear-gradient(to bottom, #9ec9f7 0%, #bedff9 100%);
-    border-top: 5px solid #1484c4; /* petite bordure en haut pour rappeler la barre plus foncée */
+    background: linear-gradient(to bottom, #9ec9f7 0%, #bedff9 70%);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -22,8 +21,7 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
   
-  /* = Bouton "Back" à gauche (ou tout autre bouton à gauche)
-     On crée un effet "bulle" arrondi pour coller à ton screenshot */
+
   .backButton {
     background: #c3daf2;      /* bleu très clair */
     color: #214e7b;           /* texte bleu plus soutenu */
@@ -43,25 +41,21 @@
      On utilise un conteneur flex pour séparer la zone gauche/droite,
      mais on centre le logo dans la zone médiane */
   .title {
-    flex-grow: 1;             /* occupe l’espace central */
+    flex-grow: 1;
     text-align: center;
     font-size: 1.8rem;
     font-weight: bold;
-    color: #214e7b;           /* si jamais on affiche du texte */
+    color: #214e7b;
     cursor: pointer;
     margin: 0;
     user-select: none;
-    /* Pour masquer un éventuel texte et ne garder que l’icône,
-       tu peux mettre un display: inline-flex ou block selon le besoin */
     display: inline-flex;
     align-items: center;
     justify-content: center;
   }
   
-  /* = Logo éventuel au centre (icône coeur/manette)
-     Ajuste la taille de l’image si besoin */
   .logoIcon {
-    height: 40px;
+    height: 6rem;
     width: auto;
     display: block;
   }

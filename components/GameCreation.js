@@ -19,28 +19,24 @@ export default function GameCreation() {
     const [popoverPosition, setPopoverPosition] = useState({ x: 0, y: 0 });
 
     const user = useSelector((state) => state.user.value);
-    console.log(selectedGameMechanics, selectedPledges)
+
     useEffect(() => {
-         console.log('useEffect')
+
         fetch('http://localhost:3000/characteristics').then(response => response.json()).then(data => {
-            console.log('apres fetch')
             if (!data.result) {
-                console.log('not result')
                 return;
             }
-        console.log('result but before setters')
         setGameMechanics(data.gameMechanics);
         setPledges(data.pledges);
-        console.log(data)
          })
      },[])
 
-
+// choix du pledge
      const handleClickPledge = (pledge) => {
         setSelectedPledges((current) => current.filter(e => e.contributionLevel !== pledge.contributionLevel));
         setSelectedPledges((current) => [...current, pledge]);
      }
-
+// choix d'une game mechanic au clic
      const handleClickGM = (GM) => {
         setSelectedGameMechanics((current) => {
             if (current.includes(GM)) {
@@ -50,6 +46,7 @@ export default function GameCreation() {
         });
     };
     
+// génération des pledges
 const pledgesBoxes = pledges.map((data, i) => {
     let tier;
     switch(data.contributionLevel) {
@@ -93,7 +90,7 @@ const pledgesBoxes = pledges.map((data, i) => {
     )
 })
 
-
+// génération des boites de game mechanics
 const GMboxesByType = () => {
     const groupedMechanics = gameMechanics.reduce((acc, gm) => {
         if (!acc[gm.GMType]) {
@@ -129,6 +126,7 @@ const GMboxesByType = () => {
     ));
 };
 
+// handles des inputs
     const handleTitleChange = (e) => {
         if (title.length < 30 || key === 'Backspace' ) {
             setTitle(e.target.value);
@@ -156,6 +154,7 @@ const GMboxesByType = () => {
         }
     }
 
+    // envoi du formulaire de création de projet
     const handleSubmit = () => {
 
         if (!user.token){
@@ -184,22 +183,19 @@ const GMboxesByType = () => {
             })
     }
 
-    // la partie dure : mapper sur le tableau gameMecahnics, puis, à chaque itération,
-    // créer un regex à partir du string obtenu, plus rajouter quelques déclinaisons algorythmiques 
-    // basées sur les affixes et suffixes du mot pour être sur de la capter, 
-    // et éventuellement sur les doubles consommes manquantes si j'ai envie de m'amuser
-    // ensuite, le tester sur tout le string de la description. Si un match apparait, ajouter le matching
-    // (côté tableau) au selectedGM,
-
-
-    // la partie pas dure mais chiante : faire que lorsqu'un GM ou pledge apparait dans les
-    // variables d'état 'selected', qu'il apparaisse en bleu pour le user (pour qu'il voit ce qu'il a select)
-    // et le truc cool avec le regex, c'est que ça le mettrait direct en bleu sans que le user n'ait à le faire
-    // pb à prévoir : s'il veut le déselectionner, faut lui prévoir le droit de forcer la sortie
-    // sans que le re-render le rechoppe. donc là j'avoue je sais pas encore, mais j'y réfléchis.
-
-
-
+// le regex qui active les options de game mechanics basés sur ce qu'il écrit dans la description
+    const handleRegex = () => {
+        const tab = [];
+        for (let gm of gameMechanics) {
+            const gmName = gm.name;
+            const pattern = new RegExp(gmName, 'i');
+            const isGM = pattern.test(description);
+            if (isGM) {
+                tab.push(gm)
+            }
+        }
+        setSelectedGameMechanics([...selectedGameMechanics, ...tab])
+    }
 
     return (
     <>
@@ -215,6 +211,7 @@ const GMboxesByType = () => {
                     value={description} 
                     onKeyDown={(e) => setKey(e.key)}
                     ></textarea>
+                    <button className={styles.regexButton} onClick={() => handleRegex()}>Try our game mechanics detection feature !</button>
                 <input className={styles.inputField4} type='text' placeholder='How much should it cost ? (optional)' onChange={(e) => handleGoalChange(e)} value={goal} onKeyDown={(e) => setKey(e.key)}></input>
             </div>
             <div className={styles.pledgesSection}>
