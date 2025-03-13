@@ -41,7 +41,7 @@ function ProjectValidated() {
     if (!project) return;
     
 
-    fetch(`http://localhost:3000/projects/${project}`)
+    fetch(`https://pjbg-backend.vercel.app/projects/${project}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.result) {
@@ -60,7 +60,7 @@ function ProjectValidated() {
   const handleChat = () => {
     if (!chatMessage.trim()) return;
 
-    fetch(`http://localhost:3000/projects/messages/${project}`, {
+    fetch(`https://pjbg-backend.vercel.app/projects/messages/${project}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ token: userAccount.token, message: chatMessage }),
@@ -116,7 +116,7 @@ const payload = {
    
     // On envoie au backend
     const response = await fetch(
-      `http://localhost:3000/projects/update/${projectData._id}`,
+      `https://pjbg-backend.vercel.app/projects/update/${projectData._id}`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

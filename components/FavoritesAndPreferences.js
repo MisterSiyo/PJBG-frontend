@@ -118,7 +118,7 @@ function FavoritesAndPreferences() {
     try {
       setIsLoading(true);
       const response = await fetch(
-        `http://localhost:3000/users/favorites/${user.username}`
+        `https://pjbg-backend.vercel.app/users/favorites/${user.username}`
       );
 
       if (!response.ok) {
@@ -311,7 +311,7 @@ function FavoritesAndPreferences() {
 
       // Vérifier si le backend est en cours d'exécution
       try {
-        await fetch("http://localhost:3000/api/health");
+        await fetch("https://pjbg-backend.vercel.app/api/health");
       } catch (error) {
         console.error("Backend server is not running:", error);
         setMessage(
@@ -323,7 +323,7 @@ function FavoritesAndPreferences() {
 
       // Sauvegarder les favoris et la blacklist
       const favoritesResponse = await fetch(
-        `http://localhost:3000/users/favorites/${user.username}`,
+        `https://pjbg-backend.vercel.app/users/favorites/${user.username}`,
         {
           method: "POST",
           headers: {
@@ -372,7 +372,7 @@ function FavoritesAndPreferences() {
     try {
       setIsLoading(true);
       const response = await fetch(
-        `http://localhost:3000/users/favorites/${user.username}`,
+        `https://pjbg-backend.vercel.app/users/favorites/${user.username}`,
         {
           method: "POST",
           headers: {

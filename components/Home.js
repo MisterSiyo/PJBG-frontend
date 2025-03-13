@@ -48,7 +48,7 @@ export default function Home() {
 
   // 1) Récupération de tous les projets
   useEffect(() => {
-    fetch("http://localhost:3000/projects/get/all")
+    fetch("https://pjbg-backend.vercel.app/projects/get/all")
       .then((response) => response.json())
       .then((data) => {
         if (data.result) {
@@ -103,7 +103,7 @@ export default function Home() {
 
   // 2) Récupération de la liste de genres (pour le carrousel)
   useEffect(() => {
-    fetch("http://localhost:3000/genres")
+    fetch("https://pjbg-backend.vercel.app/genres")
       .then((response) => response.json())
       .then((data) => {
         if (data.result) {

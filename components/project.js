@@ -26,7 +26,7 @@ function Project(props) {
       return;
     }
 
-    fetch(`http://localhost:3000/projects/${project}`)
+    fetch(`https://pjbg-backend.vercel.app/projects/${project}`)
       .then((response) => response.json())
       .then((data) => {
         if (data.result) {
@@ -81,7 +81,7 @@ function Project(props) {
       return;
     }
 
-    fetch(`http://localhost:3000/projects/messages/${project}`, {
+    fetch(`https://pjbg-backend.vercel.app/projects/messages/${project}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ token: userAccount.token, message: chatMessage }),
@@ -178,7 +178,7 @@ function Project(props) {
         // Si l'utilisateur clique sur le même studio pour lequel il a déjà voté, changer le vote
         const newStudioId = votedStudioId === studioId ? null : studioId;
         
-        fetch('http://localhost:3000/projects/vote', {
+        fetch('https://pjbg-backend.vercel.app/projects/vote', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -197,7 +197,7 @@ function Project(props) {
                 setPleaseLoginMessage('');
                 
                 // Recharger les données du projet pour refléter le vote
-                fetch(`http://localhost:3000/projects/${project}`)
+                fetch(`https://pjbg-backend.vercel.app/projects/${project}`)
                     .then((response) => response.json())
                     .then((data) => {
                         if (data.result) {
@@ -388,7 +388,7 @@ function Project(props) {
       return;
     }
 
-    fetch("http://localhost:3000/projects/dev", {
+    fetch("https://pjbg-backend.vercel.app/projects/dev", {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ token: user.token, projectId: projectData._id }),

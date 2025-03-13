@@ -26,7 +26,7 @@ export default function ProjectCard({ project }) {
 
   project.pageURL ? 
   (useEffect(() => {
-    fetch(`http://localhost:3000/projects/${project.pageURL}`)
+    fetch(`https://pjbg-backend.vercel.app/projects/${project.pageURL}`)
       .then(response => response.json())
       .then(data => {
         if (data.result) {
@@ -38,7 +38,7 @@ export default function ProjectCard({ project }) {
 ) : (
 
     useEffect(() => {
-    fetch(`http://localhost:3000/projects/byId/${project}`)
+    fetch(`https://pjbg-backend.vercel.app/projects/byId/${project}`)
       .then(response => response.json())
       .then(data => {
         if (data.result) {

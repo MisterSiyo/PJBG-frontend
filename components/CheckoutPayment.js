@@ -22,7 +22,7 @@ const handlePayment = () => {
         return;
     }
 
-    fetch(`http://localhost:3000/projects/backing`, {
+    fetch(`https://pjbg-backend.vercel.app/projects/backing`, {
         method: 'PUT',
         headers: {'Content-Type' : 'application/json'},
         body: JSON.stringify({projectId: gid, token: user.token, pledgeId: pid})

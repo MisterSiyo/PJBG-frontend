@@ -2,7 +2,7 @@ import styles from '../styles/project.module.css';
 import { useState } from 'react';
 /*import styles from "../styles/siretCheck.module.css"*/ /* SI CHANGMENT D'AVIS MERCI DE RAPPATRIER LE BOUTON CHECK ET L'IMPUT SIRET DE PROJECT MODULE CSS*/
 
-const API_SIRET_URL = "http://localhost:3000/users";
+const API_SIRET_URL = "https://pjbg-backend.vercel.app/users";
 
 export default function SiretCheck({ onCompanyInfoChange }) {
     const [siret, setSiret] = useState('');

@@ -259,7 +259,7 @@ if (!user.token) {
             return;
         }
 
-        fetch(`http://localhost:3000/account/`, {
+        fetch(`https://pjbg-backend.vercel.app/account/`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(dataToSave),
@@ -328,7 +328,7 @@ if (!user.token) {
             newPassword: passwordData.newPassword
         };
 
-        fetch(`http://localhost:3000/account/password`, {
+        fetch(`https://pjbg-backend.vercel.app/account/password`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(passwordUpdateData),

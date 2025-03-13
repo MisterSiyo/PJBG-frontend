@@ -10,7 +10,7 @@ export default async function handler(req, res) {
 
     // Transférer la requête au backend
     const backendResponse = await fetch(
-      "http://localhost:3000/users/toggleFollow",
+      "https://pjbg-backend.vercel.app/users/toggleFollow",
       {
         method: "POST",
         headers: {

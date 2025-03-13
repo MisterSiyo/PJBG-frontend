@@ -7,7 +7,7 @@ export default async function handler(req, res) {
       const userId = username;
 
       // Appeler l'API backend
-      const response = await fetch("http://localhost:3000/api/preferences", {
+      const response = await fetch("https://pjbg-backend.vercel.app/api/preferences", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

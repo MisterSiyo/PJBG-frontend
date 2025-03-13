@@ -22,7 +22,7 @@ export default function GameCreation() {
 
     useEffect(() => {
 
-        fetch('http://localhost:3000/characteristics').then(response => response.json()).then(data => {
+        fetch('https://pjbg-backend.vercel.app/characteristics').then(response => response.json()).then(data => {
             if (!data.result) {
                 return;
             }
@@ -170,7 +170,7 @@ const GMboxesByType = () => {
         })
         
 
-        fetch('http://localhost:3000/projects/', {
+        fetch('https://pjbg-backend.vercel.app/projects/', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({token: user.token, title, pitch, description, goal, pledges: pledgesID, gameMechanics: GMID }),

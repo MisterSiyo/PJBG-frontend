@@ -32,7 +32,7 @@ export default function SignIn({ onSubmit }) {
     }
     // Tentative d'appel à l'API pour la connexion de l'utilisateur
     try {
-      const response = await fetch("http://localhost:3000/users/login", {
+      const response = await fetch("https://pjbg-backend.vercel.app/users/login", {
         method: "POST", // Méthode HTTP POST pour envoyer les données
         headers: { "Content-Type": "application/json" }, // En-tête indiquant que le corps de la requête est en JSON
         body: JSON.stringify(formData), // Conversion de formData en chaîne JSON pour l'envoyer au serveur

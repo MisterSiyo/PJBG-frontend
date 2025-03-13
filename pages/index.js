@@ -12,7 +12,7 @@ export default function Index() {
 
   useEffect(() => {
     if (!isLoggedIn) {
-      fetch("http://localhost:3000/projects/get/all")
+      fetch("https://pjbg-backend.vercel.app/projects/get/all")
         .then((response) => response.json())
         .then((data) => {
           if (data.result) {
